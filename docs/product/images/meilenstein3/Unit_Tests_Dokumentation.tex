@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\begin{document}
+
+\section{Dokumentation der Testdurchführung}
+
+\subsection{Ziel}
+Die Unit-Tests sollen zeigen, ob unsere Datenklassen richtig funktionieren und ob der
+\texttt{QuestionTypeAdapter} die JSON-Daten richtig einliest.
+
+\subsection{Testumgebung}
+Alle Tests wurden in Android Studio unter \texttt{src/test/java} ausgeführt.
+Die Tests laufen ohne Handy, nur auf der JVM. 
+
+\subsection{Durchführung}
+
+\subsubsection{AnswerTest}
+Hier wurde geprüft, ob die \texttt{Answer}-Klasse die Werte richtig speichert.
+Das hat funktioniert.
+
+\subsubsection{QuestionTest}
+Es wurde getestet, ob die verschiedenen Frageklassen
+(z.\,B.\ Slider, Yes/No, Multiple Choice) die Daten korrekt übernehmen.
+Auch das funktioniert.
+
+\subsubsection{QuestionTypeAdapterTest}
+Hier wurde geprüft, ob der Adapter aus dem \texttt{type}-Feld im JSON
+die richtige Frageart macht.  
+Beispiele:
+\begin{itemize}
+    \item \texttt{"QuestionSlider"} wird zu \texttt{QuestionSlider}
+    \item \texttt{"QuestionTime"} wird zu \texttt{QuestionTime}
+\end{itemize}
+
+Außerdem wurden zwei Fehler getestet:
+\begin{itemize}
+    \item wenn \texttt{type} im JSON fehlt
+    \item wenn ein falscher \texttt{type} drinsteht
+\end{itemize}
+In beiden Fällen wurde richtig eine Fehlermeldung ausgelöst.
+
+\subsection{Ergebnis}
+Alle Tests waren erfolgreich.  
+Die Daten werden richtig eingelesen und falsches JSON wird erkannt.
+
+\subsection{Fazit}
+Die wichtigsten Funktionen für den Fragebogen arbeiten wie erwartet.
+Damit ist die Grundlage für die weitere Entwicklung gelegt.
+
+
+
+\end{document}

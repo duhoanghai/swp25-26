@@ -1,0 +1,39 @@
+[
+  {
+    "type": "QuestionSlider",
+    "id": 0,
+    "title": "Scale question 1 to 10",
+    "explanation": "Description of the question",
+    "sliderMin": 1.0,
+    "sliderMax": 10.0
+  },
+
+  {
+    "type": "QuestionTime",
+    "id": 1,
+    "title": "Time question",
+    "explanation": "Hours - Minutes"
+  },
+
+  {
+    "type": "QuestionMultipleChoice",
+    "id": 2,
+    "title": "Multiple choice",
+    "explanation": "Select items",
+    "choices": ["OptionA", "OptionB", "OptionC"]
+  },
+
+  {
+    "type": "QuestionYesNo",
+    "id": 3,
+    "title": "Yes/No question",
+    "explanation": "Yes and No"
+  },
+
+  {
+    "type": "QuestionDate",
+    "id": 4,
+    "title": "Date selection",
+    "explanation": "Select date"
+  }
+]

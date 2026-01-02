@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard – Digitales Schlaftagebuch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="app">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">Logo</div>
+      <nav class="nav" aria-label="Seitennavigation">
+        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
+        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
+        <a href="bericht.html" data-page="bericht">Bericht</a>
+        <a href="patient.html" data-page="patient">Patient:in</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="home-icon" title="Home"></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="title">Digitales Schlaftagebuch</div>
+        <a class="logout" href="login.html" data-logout>Log out</a>
+      </div>
+
+      <div class="card">
+        <div class="pill" style="display:inline-block;margin-bottom:14px;">Willkommen, Dr. Weller!</div>
+
+        <div class="split" style="margin-bottom:14px;">
+          <div>
+            <div class="row" style="justify-content:space-between;">
+              <div>Aktuelle Patient:innen:</div>
+              <strong>3</strong>
+            </div>
+            <div class="row" style="justify-content:space-between;margin-top:10px;">
+              <div>Neue Berichte:</div>
+              <strong>1</strong>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-weight:600;margin-bottom:8px;">Letzte Aktivitäten:</div>
+            <div style="border-top:2px solid var(--line); padding-top:10px;">
+              <div style="margin-bottom:8px;">- 09.12 08:00 Zugangscode für Max Mustermann erstellt</div>
+              <div>- 10.12 09:00 Bericht abrufbar (Anna Müller)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

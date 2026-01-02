@@ -1,0 +1,303 @@
+\section{Architekturbeschreibung und Beschreibung Integrationstests}
+
+\subsection{Bausteinschicht}
+\subsubsection{Komponentendiagramm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/meilenstein2/komponentendiagramme.pdf} 
+	\caption{Komponentendiagramm}
+	\label{fig:komponentendiagramm}
+\end{figure}
+
+\subsubsection{Klassendiagramm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/klassendiagramme.pdf} 
+	\caption{Klassendiagramm}
+	\label{fig:klassendiagramm}
+\end{figure}
+
+\newpage
+
+\subsection{Laufzeitsicht}
+\subsubsection{Anmeldung}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/meilenstein2/Sequenz_Anmeldung.drawio.png} 
+	\caption{Anmeldung 1}
+	\label{fig:anmeldung1}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/meilenstein2/Sequenz_Anmeldung2.drawio.png} 
+	\caption{Anmeldung 2}
+	\label{fig:anmeldung2}
+\end{figure}
+
+\newpage 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/Aktivitaet_Anmeldung.drawio.png} 
+	\caption{Anmeldung 3}
+	\label{fig:anmeldung3}
+\end{figure}
+
+\subsubsection{Einwilligung erteilen}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/sqd_Einwilligung_erteilen_angepasst.png} 
+	\caption{Einwilligung erteilen}
+	\label{fig:einwilligung_erteilen}
+\end{figure}
+
+\newpage
+
+\subsubsection{Einstellungen verwalten}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/Einstellungen_verwalten_Sprache .drawio.png} 
+	\caption{Einstellungen verwalten Sprache}
+	\label{fig:einstellungen_verwalten_sprache}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/Einstellungen_verwalten_Zeit.png} 
+	\caption{Einstellungen verwalten Zeit}
+	\label{fig:einstellungen_verwalten_zeit}
+\end{figure}
+
+\newpage
+
+\subsubsection{Schlafprotokoll ausfüllen}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Protokoll_ausfullen.drawio.png} 
+	\caption{Schlafprotokoll ausfüllen}
+	\label{fig:schlafprotokoll_ausfüllen}
+\end{figure}
+
+\newpage
+
+\subsubsection{Bericht ansehen}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Bericht_ansehen_Patient.drawio.png} 
+	\caption{Bericht ansehen Patient:in}
+	\label{fig:bericht_ansehen_patient}
+\end{figure}
+
+\subsubsection{Bericht ansehen}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Bericht_ansehen_Arzt.drawio.png} 
+	\caption{Bericht ansehen Ärzt:in}
+	\label{fig:bericht_ansehen_arzt}
+\end{figure}
+
+\newpage
+
+\subsection{Verteilungssicht}
+\subsubsection{Deploymentdiagramm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/meilenstein2/deploymentdiagramm.pdf} 
+	\caption{Deploymentdiagramm}
+	\label{fig:deploymentdiagramm}
+\end{figure}
+
+\newpage
+
+\subsection{Integrationstests}
+
+\subsubsection*{1. Schlafprotokoll ausfüllen}
+
+\textbf{Test 1.1: Erfolgreich neues Schlafprotokoll speichern} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Prüfen, ob ein neuer Protokolleintrag korrekt von GUI \\
+    \hline
+    Vorbedingungen & Patient ist angemeldet \\
+    \hline
+    Eingaben (GUI) & Einschlafzeit: 22:30, Aufwachzeit: 07:10, Befunden: 4 und Datum wird automatisch eingetragen \\
+    \hline
+    Testschritte & 
+	1. Patient öffnet Protokollformular, GUI ruft \textit{ausfüllenFragebogen()} auf
+	2. GUI sendet Daten an Backend via \textit{neuenEintrag()} 
+	3. Backend validiert Daten 
+	4. Backend ruft DB-Methode \textit{insert(Schlafprotokoll)} auf \\
+    \hline
+    Erwartete Backend-DB Interaktionen & \textit{insert()} wird einmal mit vollständigem Datensatz ausgeführt \\
+    \hline
+    Erwartete Ausgabe (GUI) & „Eintrag erfolgreich erstellt" \\
+    \hline
+    Fehler & Keine \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 1.2: Ungültige Schlafzeiten} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Überprüfung von eingetragenen Daten \\
+    \hline
+    Eingabe & Einschlafzeit: 23:00, Aufwachzeit: 22:00 (am selben Tag) \\
+    \hline
+    Erwartetes Ergebnis & Backend erkennt den Fehler, sendet eine Fehlermeldung an GUI wie z.B. „ungültige Zeiten" und \textit{insert()} wird nicht ausgeführt. \\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\subsubsection*{2. Einwilligung erteilen}
+
+\textbf{Test 2.1: Einwilligung vorhanden} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Prüfen, dass Einwilligung korrekt gespeichert wird \\
+    \hline
+    Vorbedingung & Patient gibt Zugangscode eine \\
+    \hline
+    Schritte & 
+    1. GUI → Backend: \textit{informationErfragen()} 
+    2. Backend → DB: \textit{getConsentFormular(patientID)} 
+    3. Patient klickt „Einverstanden" → GUI → Backend: \textit{einwilligungSpeichern()} 
+    4. Backend → DB: \textit{save(patientID)} \\
+    \hline
+    Erwartet & DB speichert \textit{einverständnis=true}, GUI zeigt „Zugang freigeschaltet" \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 2.2: Einwilligung verweigert} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Verhindern, dass Minderjährige ohne Zustimmung starten \\
+    \hline
+    Schritte & Gleich wie oben, aber Patient „Ablehnen" \\
+    \hline
+    Erwartet & DB speichert \textit{false}, GUI zeigt „Zugang nicht möglich" \\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\subsubsection*{3. Bericht ansehen}
+
+\textbf{Test 3.1: PDF wird Korrekt generiert} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Prüfen, ob Backend die Richtigen Daten holt und PDF generiert. \\
+    \hline
+    Schritte & 
+    1. Arzt wählt Patient 
+    2. GUI → Backend: \textit{berichtErstellen(patientID)} 
+    3. Backend → DB: \textit{getReport(patientID)} 
+    4. Backend generiert PDF via \textit{generatePDF()} 
+    5. PDF an GUI senden \\
+    \hline
+    Erwartet & PDF enthält aller Einträge der Schlafprotokoll einer Patient \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 3.2: Keine Einträge vorhanden} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Kategorie & Beschreibung \\
+    \hline
+    Eingabe & PatientID existiert, aber keine Protokolle \\
+    \hline
+    Erwartet & Backend liefert eine PDF ohne Datensätze \\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\subsubsection*{4. Anmelden}
+
+\textbf{Test 4.1: Login möglich} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Ziel & Prüfen, dass Registrierung funktioniert \\
+    \hline
+    Schritte & 
+    1. GUI → Backend: \textit{validateCode(code)} 
+    2. Backend → DB: \textit{checkCode()} 
+    3. GUI → Backend: \textit{setPassword()} 
+    4. Backend → DB: \textit{changePassword()} \\
+    \hline
+    Erwartet & Passwort gehasht gespeichert, Login möglich \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 4.2: Kein Login möglich} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Kategorie & Beschreibung \\
+    \hline
+    Eingabe & Ungültiger Code als Passwort eingeben \\
+    \hline
+    Erwartet & Fehlermeldung: „Ungültiger Code" kein Passwort darf gespeichert werden \\
+    \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\subsubsection*{5. Einstellung verwalten}
+
+\textbf{Test 5.1: Sprache erfolgreich ändern} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Schritte & 
+    GUI → Backend: \textit{einstellungAnpassen("EN")} 
+    Backend → DB: \textit{updateUserSettings()} 
+    Backend lädt \textit{loadLanguageResources()} \\
+    \hline
+    Erwartet & GUI wird vollständig auf Englisch aktualisiertwerden \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 5.2: SprachPaket fehlt} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Schritte & Gleich wie oben \\
+    \hline
+    Erwartet & Backend-Fehler → GUI: „Sprache nicht verfügbar" \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 5.3: Erinnerung erfolgreich ändern} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Schritte & 
+    GUI → Backend: \textit{einstellungAnpassen(benachrichtigungsZeit)} 
+    Backend → DB: \textit{updateUserSettings()} 
+    Backend setzt Timer \\
+    \hline
+    Erwartet & Neue Zeit erscheint im GUI \\
+    \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textbf{Test 5.4: Ungültige Zeit auswählen} \\
+\begin{tabular}{|p{4cm}|p{10cm}|}
+    \hline
+    Eingabe & Uhrzeit: 99:99 \\
+    \hline
+    Erwartet & Fehlermeldung: „Ungültiger Code" kein Passwort darf gespeichert werden \\
+    \hline
+\end{tabular}
+

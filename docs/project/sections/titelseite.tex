@@ -1,0 +1,71 @@
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+%  				 LaTeX Titlepage File - Definition of the Title Page 
+% ---------------------------------------------------------------------------
+% ---------------------------------------------------------------------------
+\pdfbookmark[1]{dokumentation}{titlepage-anc}
+%
+\renewcommand{\titlepagestyle}{empty}
+\thispagestyle{empty}
+%
+%\capstartfalse
+\vspace*{-3cm}
+\begin{figure}[h]
+		\begin{minipage}[r]{0.45\textwidth}
+		\begin{flushleft}
+			\footnotesize{Fakultät 1} \\[.2em]
+			\textcolor{black}{Fachgebiet Praktische \\
+				Informatik/Softwaresystemtechnik} \\[.2em]
+			\footnotesize{Prof. Dr. rer. nat. Leen Lambers}
+		\end{flushleft}	
+	\end{minipage} 
+	\begin{minipage}[l]{0.55\textwidth}
+		\begin{flushright}	
+			\includegraphics[trim = 150mm 50mm 150mm 0mm, clip, scale=0.05, angle=0]{btu-quer}
+		\end{flushright}	
+	\end{minipage}%
+
+\end{figure}
+
+\begin{center}
+    \sffamily
+	\Large{\textbf{Modul 12202 - Softwarepraktikum}}\\
+	\Large{Wintersemester 2025/2026}
+    \rule{\textwidth}{0.6pt}\\[0.5cm]
+    %
+	\Large{\textbf{Gruppe Z}}
+    \rule{\textwidth}{0.6pt}\\[5.0em]
+	%
+
+    \Huge{\textbf{Projektdokumentation}\\[3.5em]}
+	%
+	\Large{vorgelegt von:} \\[0.3cm]
+	
+
+\large
+\begin{tabular}{c|c}
+	\hline
+	Autor & Matrikelnummer \\
+	\hline
+	NameA & 1234567 \\
+	NameB & 1234567 \\
+	
+	\hline
+\end{tabular}
+	%
+	\normalfont
+\end{center}
+
+\vspace{2em}
+%
+\vfill
+Cottbus, den \today \hfill Tutor: Name
+%
+\newpage
+%
+\cleardoublepage
+\pagestyle{scrheadings}
+\let\raggedsection\raggedright
+%
+% EOF
+%

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login – Digitales Schlaftagebuch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <header class="login-header">
+      <div class="logo">Logo</div>
+      <div class="login-title">Digitales Schlaftagebuch</div>
+    </header>
+
+    <main class="login-center">
+      <form class="login-form" id="loginForm">
+        <div style="display:grid; gap:12px; justify-items:center;">
+          <div style="width:100%; max-width:320px;">
+            <label for="email">E-Mail eingeben</label>
+            <input id="email" type="email" autocomplete="username" required />
+          </div>
+
+          <div style="width:100%; max-width:320px;">
+            <label for="pw">Passwort eingeben</label>
+            <input id="pw" type="password" autocomplete="current-password" required />
+          </div>
+
+          <div class="login-actions" style="width:100%; max-width:320px; justify-content:space-between;">
+            <label class="checkbox">
+              <input type="checkbox" id="remember" />
+              angemeldet bleiben
+            </label>
+
+            <button type="submit">Anmelden</button>
+          </div>
+
+          <div class="forgot">
+            <a href="#" onclick="alert('Passwort-Reset (Demo)'); return false;">Passwort vergessen?</a>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <footer style="text-align:center; color:var(--muted); font-size:12px;">
+      © Digitales Schlaftagebuch
+    </footer>
+  </div>
+
+  <script>
+    // Demo-Login: ohne Backend. Leitet einfach weiter.
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const remember = document.getElementById("remember").checked;
+
+      // Demo "Auth"
+      localStorage.setItem("auth_demo", "1");
+      if (!remember) {
+        // Falls nicht "angemeldet bleiben": simuliert Session durch Tab-Lebenszeit
+        // (hier super simpel: wir lassen es trotzdem im localStorage — wenn du willst,
+        // kann man das in sessionStorage ändern)
+      }
+
+      location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>

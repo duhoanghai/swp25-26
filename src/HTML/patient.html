@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patient:in – Digitales Schlaftagebuch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="app">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">Logo</div>
+      <nav class="nav" aria-label="Seitennavigation">
+        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
+        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
+        <a href="bericht.html" data-page="bericht">Bericht</a>
+        <a href="patient.html" data-page="patient">Patient:in</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="home-icon" title="Home"></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="title">Digitales Schlaftagebuch</div>
+        <a class="logout" href="login.html" data-logout>Log out</a>
+      </div>
+
+      <div class="card">
+        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
+          Digitales Schlaftagebuch – Patient:in
+        </div>
+
+        <div class="row" style="margin-bottom:18px;">
+          <div style="min-width:160px;">Patient:in auswählen:</div>
+          <select id="p-select">
+            <option value="anna">Anna Müller</option>
+            <option value="max">Max Mustermann</option>
+            <option value="lea">Lea Beispiel</option>
+          </select>
+        </div>
+
+        <div style="font-weight:600; margin-bottom:8px;">Daten:</div>
+        <div style="line-height:1.7;">
+          <div>- Geschlecht: <span id="p-g">Weiblich</span></div>
+          <div>- Geburtsdatum: <span id="p-b">23.10.2007</span></div>
+          <div>- Zugangscode: <span id="p-z">aktiv (AC3-DP0)</span></div>
+          <div>- Bericht: <span id="p-r">nicht verfügbar</span></div>
+          <div>- Termin: <span id="p-t">01.01.2026</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

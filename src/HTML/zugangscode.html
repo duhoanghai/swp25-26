@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zugangscode – Digitales Schlaftagebuch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="app">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">Logo</div>
+      <nav class="nav" aria-label="Seitennavigation">
+        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
+        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
+        <a href="bericht.html" data-page="bericht">Bericht</a>
+        <a href="patient.html" data-page="patient">Patient:in</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="home-icon" title="Home"></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="title">Digitales Schlaftagebuch</div>
+        <a class="logout" href="login.html" data-logout>Log out</a>
+      </div>
+
+      <div class="card">
+        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
+          Digitales Schlaftagebuch – Zugangscodes
+        </div>
+
+        <div class="row" style="margin-bottom:14px;">
+          <button type="button" onclick="alert('Liste anzeigen (Demo)')">aktuelle Zugangscodes einsehen</button>
+        </div>
+
+        <div style="margin-bottom:18px; color:var(--muted); font-size:13px;">
+          Patient | Code | Gültig bis | Status | [deaktivieren]
+        </div>
+
+        <div class="row" style="margin-bottom:14px;">
+          <button type="button" onclick="alert('Zugangscode erstellt (Demo)')">neuen Zugangscode erstellen</button>
+        </div>
+
+        <div class="row" style="margin-top:8px;">
+          <div>
+            <label for="zc-patient">Patient:</label>
+            <select id="zc-patient">
+              <option>Max Mustermann</option>
+              <option>Anna Müller</option>
+              <option>Lea Beispiel</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="zc-bis">Gültig bis:</label>
+            <input id="zc-bis" type="date" />
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

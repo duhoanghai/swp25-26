@@ -1,0 +1,25 @@
+{
+  "personal_data": [
+    {
+      "id": 1,
+      "type": "string",
+      "key": "last_name",
+      "title": "Nachname",      
+      "explanation": "Was ist dein Nachname?"
+    },
+    {
+      "id": 2,
+      "type": "string",
+      "key": "first_name",
+      "title": "Vorname",
+      "explanation": "Was ist dein Vorname?"
+    },
+    {
+      "id": 3,
+      "type": "QuestionDate",
+      "key": "birth_date",
+      "title": "Geburtsdatum",
+      "explanation": "Wann ist dein Geburtsdatum?"
+    }
+  ]
+}

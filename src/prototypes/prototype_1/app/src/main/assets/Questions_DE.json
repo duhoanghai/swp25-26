@@ -1,0 +1,39 @@
+[
+  {
+    "type": "QuestionSlider",
+    "id": 0,
+    "title": "Balkenfrage 1 bis 10",
+    "explanation": "Beschreibung der Frage",
+    "sliderMin": 1.0,
+    "sliderMax": 10.0
+  },
+
+  {
+    "type": "QuestionTime",
+    "id": 1,
+    "title": "Zeitfrage",
+    "explanation": "Stunden - Minuten"
+  },
+
+  {
+    "type": "QuestionMultipleChoice",
+    "id": 2,
+    "title": "Mehrfachauswahl",
+    "explanation": "wähle Elemente aus",
+    "choices": ["OptionA", "OptionB", "OptionC"]
+  },
+
+  {
+    "type": "QuestionYesNo",
+    "id": 3,
+    "title": "Ja/Nein Frage",
+    "explanation": "Ja und Nein"
+  },
+
+  {
+    "type": "QuestionDate",
+    "id": 4,
+    "title": "Datumsabfrage",
+    "explanation": "Datum auswählen"
+  }
+]

@@ -1,0 +1,41 @@
+% !TeX spellcheck = de_DE
+% LATEX VORLAGE IM RAHMEN DES SOFTWAREPRAKTIKUMS WiSe 25/26
+% Autoren:
+%	Lucas Sakizloglou
+%	Tim Liebscher
+%	Florian Ruehs
+%   Leen Lambers
+%   Taisiya Khakharova
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[headheight=100pt,fontsize=11pt, a4paper, german, parskip]{scrartcl}
+\usepackage{preamble}
+\usepackage{blindtext}
+
+
+\begin{document}
+
+
+	\input{sections/titelseite}
+	\tableofcontents
+	\pagebreak[1]
+	%\newpage
+	\listoffigures
+	\newpage
+	\input{sections/einleitung}
+	\newpage
+	\input{sections/ms1}
+	\newpage
+	\input{sections/ms2}
+	\newpage
+	\input{sections/ms3}
+	\newpage
+	\input{sections/ms4}
+	\newpage
+	
+	\input{sections/nicetoknow}
+	
+
+	\begin{thebibliography}{99}
+%		\bibitem{must} Musterquelle
+	\end{thebibliography}
+\end{document}

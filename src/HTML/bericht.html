@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bericht – Digitales Schlaftagebuch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="app">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="logo">Logo</div>
+      <nav class="nav" aria-label="Seitennavigation">
+        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
+        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
+        <a href="bericht.html" data-page="bericht">Bericht</a>
+        <a href="patient.html" data-page="patient">Patient:in</a>
+      </nav>
+      <div class="spacer"></div>
+      <div class="home-icon" title="Home"></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="title">Digitales Schlaftagebuch</div>
+        <a class="logout" href="login.html" data-logout>Log out</a>
+      </div>
+
+      <div class="card">
+        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
+          Digitales Schlaftagebuch – Bericht
+        </div>
+
+        <table aria-label="Berichte">
+          <thead>
+            <tr>
+              <th style="width:35%;">Patient</th>
+              <th style="width:25%;">Datum</th>
+              <th>Bericht</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mustermann,<br/>Max</td>
+              <td>10.12.2025</td>
+              <td>
+                <a href="#" onclick="alert('Download: PDF (Demo)'); return false;">PDF herunterladen</a><br/>
+                <a href="#" onclick="alert('Download: Tabelle (Demo)'); return false;">Tabelle herunterladen</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

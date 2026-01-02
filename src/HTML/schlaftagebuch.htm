@@ -1,0 +1,423 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitales Schlaftagebuch</title>
+<style>
+body{
+color: 696969;
+background-color: DCDCDC;
+font-size: 1.2em;
+}
+:root {
+	--bg:#fff;
+	--ink:#111;
+	--line:#222;
+	--muted:#666;
+	--sidebar-w: 220px;
+	--radius: 10px;
+}
+
+*{box-sizing:border-box}
+body{
+	margin:0;
+	font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	Color:var(--ink);
+	background:var(--bg);
+}
+
+/* Layout */
+.app{
+	min-height:100vh;
+	display: grid;
+	grid-template-columns: var(--sidebar-w) 1fr;
+}
+
+/* Navigation links */
+.sidebar{
+	border-right:2px solid var(--line);
+	padding:18px 14px;
+	display:flex;
+	flex-direction:column;
+	gap:14px;
+}
+
+.logo{
+	width:64px;height:64px;
+	border:2px solid var(--line);
+	border-radius: 50%;
+	display:grid;
+	place items:center;
+	font-size:12px;
+	margin-bottom:6px;
+}
+
+.nav{
+	display:flex;
+	flex-direction:column;
+	gap:10px;
+}
+
+.nav a{
+	text-decoration:none;
+	color:var(--ink);
+	border:2px solid var(--line);
+	border-radius:10px;
+	padding:10px 12px;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	transition: transform .05s ease;
+}
+
+.nav a:active{ transform: translateY(1px); }
+.nav a[aria-current="page"]{
+	background:#f1f1f1;
+}
+
+.spacer{ flex:1; }
+
+.home-icon{
+	width:54px;height:54px;
+	border:2px solid var(--line);
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	position:relative;
+	align-self:flex-start;
+	margin-top:10px;
+}
+
+.home-icon::before{
+	content:"";
+	position:absolute;
+	left:50%;
+	top:-18px;
+	transform:translateX(-50%);
+	width:0;height:0;
+	border-left:27px solid transparent;
+	border-right:27px solid transparent;
+	border-bottom:18px solid var(--line);
+}
+
+.home-icon::after{
+	content:"";
+	position:absolute;
+	left:50%;
+	top:-16px;
+	transform:translateX(-50%);
+	width:0;height:0;
+	border-left:25px solid transparent;
+	border-right:25px solid transparent;
+	border-bottom:16px solid var(--bg);
+}
+
+.main{
+	padding:22px 24px;
+}
+
+.topbar{
+	display:flex;
+	align-items:flex-start;
+	justify-content:space-between;
+	gap:12px;
+	margin-bottom:18px;
+}
+
+.title{
+	text-align:center;
+	width:100%;
+	font-weight:600;
+}
+
+.logout{
+	white-space:nowrap;
+	font-size:13px;
+	color:var(--ink);
+	text-decoration:none;
+	margin-left:auto;
+}
+
+.card{
+	border:2px solid var(--line);
+	border-radius:12px;
+	padding:16px;
+	max-width:900px;
+}
+
+ .row{
+	display:flex;
+	gap:14px;
+	flex-wrap:wrap;
+	align-items:center;
+}
+
+ .pill{
+	border:2px solid var(--line);
+	padding:8px 10px;
+	border-radius:8px;
+	display:inline-block;
+	background:#fff;
+}
+
+.page{ display:none; }
+.page.active{ display:block;}
+
+label{
+	display:block;
+	font-size:13px;
+	color:var(--muted);
+	margin-bottom:6px;
+}
+
+input, select, button{
+	font: inherit;
+	padding:9px 10px;
+	border:2px solid var(--line);
+	border-radius:8px;
+	background:#fff;
+}
+
+input{ width:280px; max-width:100%; }
+select{ width:280px; max-width:100%; }
+button{
+	cursor:pointer;
+}
+
+.hint-link{
+	display:inline-block;
+	margin-top:16px;
+	color:var(--ink);
+	text-decoration:underline;
+	font-size:13px;
+}
+
+table{
+	width:100%;
+	border-collapse:collapse;
+    }
+
+th, td{
+	border:2px solid var(--line);
+	padding:10px;
+	vertical-align:top;
+}
+
+th{
+	background:#f6f6f6;
+	text-align:left;
+}
+
+.split{
+	display:grid;
+	grid-template-columns: 1fr 1fr;
+	gap:18px;
+}
+
+@media (max-width: 860px){
+	.app{ grid-template-columns: 190px 1fr; }
+	.split{ grid-template-columns: 1fr; }
+}
+
+</style>
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+	<div class="app">
+	<aside class="sidebar">
+	<div class="logo">Logo</div>
+
+<nav class="nav" aria-label="Seitennavigation">
+<a href="#dashboard" data-page="dashboard" aria-current="page">Dashboard</a>
+<a href="#zugangscode" data-page="zugangscode">Zugangscode</a>
+<a href="#bericht" data-page="bericht">Bericht</a>
+<a href="#patient" data-page="patient">Patient:in</a>
+</nav>
+
+	<div class="spacer"></div>
+	<div class="home-icon" title="Home"></div>
+	</aside>
+
+<main class="main">
+	<div class="topbar">
+	<div class="title">Digitales Schlaftagebuch</div>
+<a class="logout" href="#logout">Log out</a>
+	</div>
+
+<section id="page-dashboard" class="page active">
+	<div class="card">
+	<div class="pill" style="display:inline-block;margin-bottom:14px;">Willkommen, Dr. Weller!</div>
+
+	<div class="split" style="margin-bottom:14px;">
+	<div>
+	<div class="row" style="justify-content:space-between;">
+	<div>Aktuelle Patient:innen:</div>
+	<strong>3</strong>
+	</div>
+
+	<div class="row" style="justify-content:space-between;margin-top:10px;">
+	<div>Neue Berichte:</div>
+	<strong>1</strong>
+	</div>
+	</div>
+
+<div>
+	<div style="font-weight:600;margin-bottom:8px;">Letzte Aktivitäten:</div>
+	<div style="border-top:2px solid var(--line); padding-top:10px;">
+	<div style="margin-bottom:8px;">- 09.12 08:00 Zugangscode für Max Mustermann erstellt</div>
+	<div>- 10.12 09:00 Bericht abrufbar (Anna Müller)</div>
+	</div>
+	</div>
+	</div>
+</div>
+</section>
+
+
+<section id="page-zugangscode" class="page">
+ 	<div class="card">
+	<div class="title" style="margin:0 0 14px 0; font-weight:600;">Digitales Schlaftagebuch – Zugangscodes</div>
+
+	<div class="row" style="margin-bottom:14px;">
+	<button type="button">aktuelle Zugangscodes einsehen</button>
+	</div>
+
+	<div style="margin-bottom:18px; color:var(--muted); font-size:13px;">
+            Patient | Code | Gültig bis | Status | [deaktivieren]
+        </div>
+
+        <div class="row" style="margin-bottom:14px;">
+        <button type="button">neuen Zugangscode erstellen</button>
+        </div>
+
+        <div class="row" style="margin-top:8px;">
+        <div>
+        <label for="zc-patient">Patient:</label>
+        <select id="zc-patient">
+                <option>Max Mustermann</option>
+                <option>Anna Müller</option>
+                <option>Lea Beispiel</option>
+	</select>
+	</div>
+
+         <div>
+         <label for="zc-bis">Gültig bis:</label>
+         <input id="zc-bis" type="date" />
+         </div>
+         </div>
+         </div>
+</section>
+
+
+<section id="page-bericht" class="page">
+	<div class="card">
+        <div class="title" style="margin:0 0 14px 0; font-weight:600;">Digitales Schlaftagebuch – Bericht</div>
+
+        <table aria-label="Berichte">
+        	<thead>
+                <tr>
+                <th style="width:35%;">Patient</th>
+                <th style="width:25%;">Datum</th>
+                <th>Bericht</th>
+                </tr>
+                </thead>
+                	<tbody>
+ 			<tr>
+                	<td>Mustermann,<br/>Max</td>
+                	<td>10.12.2025</td>
+                	<td>
+                  	<a href="#" onclick="alert('Download: PDF'); return false;">PDF herunterladen</a><br/>
+                  	<a href="#" onclick="alert('Download: Tabelle'); return false;">Tabelle herunterladen</a>
+                	</td>
+              		</tr>
+            		</tbody>
+	</table>
+        </div>
+</section>
+
+
+<section id="page-patient" class="page">
+	<div class="card">
+	<div class="title" style="margin:0 0 14px 0; font-weight:600;">Digitales Schlaftagebuch – Patient:in</div>
+
+	<div class="row" style="margin-bottom:18px;">
+	<div style="min-width:160px;">Patient:in auswählen:</div>
+	<select id="p-select">
+              <option value="anna">Anna Müller</option>
+              <option value="max">Max Mustermann</option>
+              <option value="lea">Lea Beispiel</option>
+         </select>
+         </div>
+
+	<div style="font-weight:600; margin-bottom:8px;">Daten:</div>
+	<div style="line-height:1.7;">
+	<div>- Geschlecht: <span id="p-g">Weiblich</span></div>
+	<div>- Geburtsdatum: <span id="p-b">23.10.2007</span></div>
+	<div>- Zugangscode: <span id="p-z">aktiv (AC3-DP0)</span></div>
+	<div>- Bericht: <span id="p-r">nicht verfügbar</span></div>
+	<div>- Termin: <span id="p-t">01.01.2026</span></div>
+        </div>
+        </div>
+</section>
+
+</main>
+</div>
+
+<script>
+	const navLinks = [...document.querySelectorAll(".nav a")];
+	const pages = {
+	dashboard: document.getElementById("page-dashboard"),
+	zugangscode: document.getElementById("page-zugangscode"),
+	bericht: document.getElementById("page-bericht"),
+	patient: document.getElementById("page-patient"),
+	};
+
+	function setActive(pageKey){
+	Object.entries(pages).forEach(([k, el]) => {
+        el.classList.toggle("active", k === pageKey);
+      	});
+
+      	navLinks.forEach(a => {
+        const isCurrent = a.dataset.page === pageKey;
+        a.toggleAttribute("aria-current", isCurrent);
+        if (isCurrent) a.setAttribute("aria-current","page");
+      	});
+
+	function pageFromHash(){
+      	const h = (location.hash || "#dashboard").replace("#","");
+      	return pages[h] ? h : "dashboard";
+    	}
+
+    	window.addEventListener("hashchange", () => setActive(pageFromHash()));
+    	setActive(pageFromHash());
+
+	const patientData = {
+      		anna: { g:"Weiblich", b:"23.10.2007", z:"aktiv (AC3-DP0)", r:"nicht verfügbar", t:"01.01.2026" },
+      		max:  { g:"Männlich",  b:"14.05.1999", z:"aktiv (MX1-KQ2)", r:"verfügbar",      t:"12.01.2026" },
+      		lea:  { g:"Divers",   b:"02.02.2003", z:"inaktiv",         r:"nicht verfügbar", t:"18.01.2026" }
+    	};
+
+    	const sel = document.getElementById("p-select");
+    	if (sel){
+      	sel.addEventListener("change", (e) => {
+        const d = patientData[e.target.value];
+        document.getElementById("p-g").textContent = d.g;
+        document.getElementById("p-b").textContent = d.b;
+        document.getElementById("p-z").textContent = d.z;
+        document.getElementById("p-r").textContent = d.r;
+        document.getElementById("p-t").textContent = d.t;
+      	});
+    	}
+
+</script>
+</body>
+</html>

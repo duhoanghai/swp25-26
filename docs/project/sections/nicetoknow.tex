@@ -1,0 +1,89 @@
+% !TeX spellcheck = de_DE
+\section{Nice to Know}
+Dieses Kapitel soll euch grundlegendes Befehle fuer die Arbeit in LaTeX mitbringen. Kommt in der Dokumentation nat\"urlich nicht vor!
+\subsection{Beispielkapitel}
+
+Dieses Beispielkapitel dient dem Zweck, Euch die Benutzung dieser LaTeX-Vorlage nahezulegen. Zu ladende Pakete lagert ihr am besten in \texttt{preamble.sty} aus. Sektionen und 
+evtl.\ auch Untersektionen sollten mit \texttt{\textbackslash{}input} in separate Texdateien ausgelagert werden. So bewahrt man den Überblick und kann bei Bedarf auch nur 
+ausgewählte Sektionen kompilieren.
+
+\centergraphics{example-image-a}{.4}{%
+	Ein schönes Beispielbild.
+}
+
+Grafiken sollten bitte zentriert eingefügt werden. Hierfür stellen wir das Kommando\linebreak{}\texttt{\textbackslash{}centergraphics} zur Verfügung. Es nimmt als Argument den 
+Dateipfad, die gewünschte Breite der einzufügenden Grafik als Faktor der Textweite (beispielsweise $.8$ für 80\%), sowie die Bildunterschrift entgegen. Standardmäßig wird das B
+ild exakt an der Stelle im Text eingefügt, wo es im Code spezifiziert wurde (normalerweise fließen Bilder in LaTeX an Anfang oder Ende der Seite, damit sie beim Lesen nicht 
+\enquote{im Weg} sind). Wer sich eher das Standardverhalten wünscht, kann die Definition in \texttt{\textbackslash{}preamble.sty} gerne noch verändern und auf eigene Bedürfnisse 
+anpassen, solange man sich nicht zu weit vom Standardverhalten entfernt.
+
+\centergraphicslongcapt{images/BTULogoKompakt}{1.0}{Ein Beispielbild größer als die Textbreite}{%
+	Ein Beispielbild größer als die Textbreite. Dieses Beispielbild hat außerdem eine lange Bildbeschreibung, die nötige Infos zum Verständnis des Bildes enthalten kann, aber 
+	jedenfalls keine Interpretationen beinhalten darf.
+}
+
+
+Nun ist es natürlich so, dass wir teilweise auch mit recht großen Diagrammen arbeiten. Zum Beispiel kann es hier sinnvoll sein, die Grafiken im Querformat einzufügen (siehe 
+hierzu das Paket \texttt{pdflscape} und das \texttt{landscape} Environment). Wenn alle Stricke reißen, kann es \emph{ausnahmsweise} auch möglich sein, die großen Diagramme als 
+extra PDF-Seiten einzufügen via \texttt{\textbackslash{}includepdf}, welche dann beliebig große Seitendimensionen haben. So etwas lässt sich dann natürlich nicht mehr anständig 
+drucken, für eine bloße Digitalversion eines Dokuments funktioniert das aber.
+
+%\newpage
+Solltet Ihr Code-Listings einfügen wollen, so liefern wir hierfür einmal die Umgebungen \texttt{lstpseudo} für Pseudocode und \texttt{lstjava} für Java-Code. Das geht dann zum 
+Beispiel so:
+\begin{lstjava}
+	// Array deklarieren und initialisieren
+	int[] nums = new int[] {1, 3, 5};
+
+	// Ausgabe des zweiten Elements: 3
+	System.out.println(nums[1])
+\end{lstjava}
+
+Um Support für andere Sprachen zu erhalten, seht Euch einmal die Stelle \begin{verbatim}
+	\lstnewenvironment{lstjava}[1][]
+\end{verbatim}
+in \texttt{preamble.sty} an und definiert basierend darauf eine neue Umgebung für eure gewünschte Sprache. Man kann übrigens auch Code aus einer Datei hereinladen und so Automatisch 
+von LaTeX formatieren lassen (siehe Dokumentation des Pakets \texttt{listings} auf ctan). Auf \url{www.ctan.org} sind allgemein alle Handbücher und Ressourcen rund um LaTeX Pakete 
+zu finden.
+
+\subsection{Wie formatiere ich in LaTeX?}
+
+Nicht nur Grafiken, auch Auflistung sowie deren Nummerierung sind wichtige Elemente in \LaTeX:
+\begin{itemize}
+	\item First level, itemize, first item
+		\begin{itemize}
+			\item Second level, itemize, first item
+			\item Second level, itemize, second item
+			\begin{enumerate}
+				\item Third level, enumerate, first item
+				\item Third level, enumerate, second item
+			\end{enumerate}
+		\end{itemize}
+	\item First level, itemize, second item
+\end{itemize}
+
+Diese können beliebig mit einander verschachtelt werden. Alternativ gibt es noch eine Beschreibung (auch verschachtelbar mit den zuerst genannten):
+
+\begin{description}
+  \item[Erster Begriff] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  \item[Zweiter Begriff] Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  \item[Dritter Begriff] The third etc \ldots
+\end{description}
+
+\subsection{Was ist sonst noch wichtig?}
+
+Sollte man direkt den Text formatieren wollen, so gibt es folgende grundlegende Möglichkeiten. Der Text kann \textbf{fett}, \emph{kursiv}, oder in \texttt{Schreibmaschinenschrift} geschrieben werden.
+ 
+\subsection*{Tabellen} % * = keine Nummer 
+
+Über Tabellen in \LaTeX \ gibt es so viel zu sagen, dass man damit ganze 
+Bücher füllen könnte bzw. dies auch gesehen ist. Eine kleine 
+Beispieltabelle finden Sie im Folgenden:
+
+\begin{tabular}{|c|c|c|l|r|}
+\hline
+\multicolumn{3}{|l|}{test} & A & B \\
+\hline
+ 1 & 2 & 3 & 4 & 5 \\
+\hline
+\end{tabular} 
