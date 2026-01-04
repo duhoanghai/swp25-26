@@ -1,9 +1,11 @@
 package com.example.schlaftagebuch_vers_1.api
 
+import com.example.schlaftagebuch_vers_1.api.protocol.ProtocolApi
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.example.schlaftagebuch_vers_1.api.auth.AuthApi
 
 object ApiClient {
 
@@ -34,5 +36,14 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ProtocolApi::class.java)
+    }
+
+    val authApi: AuthApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttp)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AuthApi::class.java)
     }
 }

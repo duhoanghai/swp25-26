@@ -163,18 +163,16 @@ public class AuthService {
                 .addGiven(req.givenName)
                 .setFamily(req.familyName);
 
-        // Geburtsdatum: YYYY-MM-DD oder YYYY
+        // Geburtsdatum: ISO-Format YYYY-MM-DD (Pflichtfeld)
+        if (req.birthDate == null || req.birthDate.isBlank()) {
+            throw new IllegalArgumentException("birthDate is required (YYYY-MM-DD)");
+        }
+
         LocalDate birthDate;
-        if (req.birthDate != null && !req.birthDate.isBlank()) {
-            try {
-                birthDate = LocalDate.parse(req.birthDate);
-            } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("birthDate must be ISO format YYYY-MM-DD");
-            }
-        } else if (req.birthYear != null) {
-            birthDate = LocalDate.of(req.birthYear, 1, 1);
-        } else {
-            throw new IllegalArgumentException("Either birthDate or birthYear is required");
+        try {
+            birthDate = LocalDate.parse(req.birthDate);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("birthDate must be ISO format YYYY-MM-DD");
         }
 
         patient.setBirthDate(java.sql.Date.valueOf(birthDate));

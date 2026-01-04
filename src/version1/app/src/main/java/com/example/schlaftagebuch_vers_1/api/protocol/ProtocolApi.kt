@@ -1,4 +1,4 @@
-package com.example.schlaftagebuch_vers_1.api
+package com.example.schlaftagebuch_vers_1.api.protocol
 
 import retrofit2.http.Body
 import retrofit2.http.POST

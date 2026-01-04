@@ -6,30 +6,51 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.example.schlaftagebuch_vers_1.api.Session
-
-const val firstTime: Boolean = false
+import com.example.schlaftagebuch_vers_1.api.protocol.ProtocolAnswerDto
+import com.example.schlaftagebuch_vers_1.api.protocol.ProtocolSubmissionRequest
+import java.time.Instant
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Session.jwt = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJQYXRpZW50L2Rldi1wYXRpZW50LXRlc3QiLCJ1c2VybmFtZSI6InBhdGllbnRfdGVzdCIsInJvbGUiOiJQQVRJRU5UIiwiaWF0IjoxNzY3Mjc2MDg4LCJleHAiOjE3NjczMTkyODh9.row5dlxCZ7tXt6hqEGzvEZGr8HxLQU9_r2ssPcj6lJdeN4VYBr9ynPQDavwxziKJ" // ВРЕМЕННО! ТОЛЬКО ДЛЯ ТЕСТА, ПОКА НЕТ АВТОРИЗАЦИИ!
+        // ВАЖНО: убрали тестовый JWT, иначе логика first-login никогда не будет честной
+        // Session.jwt = "..."  // НЕ НУЖНО
 
         setContent {
             val context = LocalContext.current
 
-            //Sprache laden
+            // 1) Загружаем сохранённый токен
+            val savedJwt = remember {
+                com.example.schlaftagebuch_vers_1.api.SessionStorage.loadJwt(context)
+            }
+
+            // 2) Стартовый экран: если токен есть -> Menu, иначе -> PrivacyPolicy
+            var currentScreen by remember {
+                mutableStateOf(
+                    if (savedJwt.isNullOrBlank()) Screen.PrivacyPolicy else Screen.Menu
+                )
+            }
+
+            // 3) Прокидываем токен в Session при старте
+            LaunchedEffect(savedJwt) {
+                Session.jwt = savedJwt
+            }
+
+            // ========= Onboarding / First Login flow state =========
+            var consentAccepted by remember { mutableStateOf(false) }
+            var createdJwt by remember { mutableStateOf<String?>(null) }
+            var createdUsername by remember { mutableStateOf<String?>(null) }
+
+            // ========= Sprache laden =========
             var currentLanguage by remember {
                 mutableStateOf(DataLoader.getSavedLanguage(context))
             }
 
-            //Fragen laden
+            // ========= Fragen laden =========
             val allQuestions by remember(currentLanguage) {
                 val loadedList = DataLoader.getQuestions(context, currentLanguage)
                 mutableStateOf(loadedList.sortedBy { it.id })
@@ -40,23 +61,57 @@ class MainActivity : ComponentActivity() {
             val visibleQuestions by remember(allQuestions) {
                 derivedStateOf {
                     allQuestions.filter { candidate ->
-                        //auf Bool Fälle achten
-                        val blockers = allQuestions.filterIsInstance<QuestionYesNo>().filter { boolQ ->
-                            answers[boolQ.id] == "Nein" //filtert nach falscher Antwort
-                        }
-                        //Skip Listen
+                        val blockers = allQuestions
+                            .filterIsInstance<QuestionYesNo>()
+                            .filter { boolQ -> answers[boolQ.id] == "Nein" }
+
                         val isHidden = blockers.any { it.skipIfNo.contains(candidate.id) }
                         !isHidden
                     }
                 }
             }
 
-            val startDestination = if (firstTime) Screen.PrivacyPolicy else Screen.Menu
-            var currentScreen by remember { mutableStateOf(startDestination) }
             var questionIndex by remember { mutableIntStateOf(0) }
 
-            //Auflistung der Seiten
+            // ========= Auflistung der Seiten =========
             when (currentScreen) {
+
+                // 1) Datenschutz -> дальше FirstLogin
+                Screen.PrivacyPolicy -> {
+                    PrivacyPolicyScreen { accepted ->
+                        consentAccepted = accepted
+                        currentScreen = Screen.FirstLogin
+                    }
+                }
+
+                // 2) Первый вход: код + имя/фамилия/др + пароль -> получаем jwt + username
+                Screen.FirstLogin -> {
+                    FirstLoginScreen(
+                        consentAccepted = consentAccepted,
+                        onSuccess = { jwt, username ->
+                            createdJwt = jwt
+                            createdUsername = username
+                            currentScreen = Screen.CredentialsInfo
+                        }
+                    )
+                }
+
+                // 3) Показываем username, просим сохранить -> сохраняем jwt и пускаем в Menu
+                Screen.CredentialsInfo -> {
+                    CredentialsInfoScreen(
+                        username = createdUsername ?: "unbekannt",
+                        onContinue = {
+                            val jwt = createdJwt
+                            if (!jwt.isNullOrBlank()) {
+                                Session.jwt = jwt
+                                com.example.schlaftagebuch_vers_1.api.SessionStorage.saveJwt(context, jwt)
+                            }
+                            currentScreen = Screen.Menu
+                        }
+                    )
+                }
+
+                // 4) Главное меню (разблокировано)
                 Screen.Menu -> {
                     MainMenuScreen(
                         onStartQuestions = {
@@ -65,7 +120,8 @@ class MainActivity : ComponentActivity() {
                             currentScreen = Screen.Questions_Protocol
                         },
                         onStartPersonalQuestions = {
-                            currentScreen = Screen.PrivacyPolicy
+                            // если у вас есть отдельный экран — поменяй сюда нужный Screen.*
+                            currentScreen = Screen.Questions_Personal
                         },
                         currentLanguage = currentLanguage,
                         onLanguageChange = { newLang ->
@@ -81,26 +137,13 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                Screen.PrivacyPolicy -> {
-                    PrivacyPolicyScreen(
-                        onAccept = {
-                            currentScreen = Screen.Registration
-                        }
-                    )
-                }
-
-                Screen.Registration -> {
-                    RegistrationScreen(
-                        onFinish = {
-                            Toast.makeText(context, "Daten aufgenommen (Simuliert)", Toast.LENGTH_SHORT).show()
-                            currentScreen = Screen.Menu
-                        }
-                    )
+                // (Пока заглушка, чтобы не было "пустого" перехода)
+                Screen.Questions_Personal -> {
+                    androidx.compose.material3.Text("Personal questions: coming soon.")
                 }
 
                 Screen.Questions_Protocol -> {
                     if (visibleQuestions.isNotEmpty()) {
-                        // Index-Korrektur falls Liste durch Filter schrumpft
                         if (questionIndex >= visibleQuestions.size) {
                             questionIndex = visibleQuestions.size - 1
                         }
@@ -141,52 +184,54 @@ class MainActivity : ComponentActivity() {
 
                 Screen.Summary -> {
                     SummaryScreen(
-                        questions = visibleQuestions, // Nur sichtbare anzeigen
+                        questions = visibleQuestions,
                         answers = answers,
                         onBack = {
                             currentScreen = Screen.Questions_Protocol
                         },
                         onSave = {
-                            // Nur Antworten speichern, die zu sichtbaren Fragen gehören
                             val relevantAnswers = answers.filterKeys { id ->
                                 visibleQuestions.any { it.id == id }
                             }
 
                             val answerList = relevantAnswers.map { (id, value) -> Answer(id, value) }
                             DataLoader.saveAnswers(context, answerList)
-                            // 2) отправить на бэкенд
+
+                            // отправка на бэкенд
                             kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
                                 try {
-                                    val req = com.example.schlaftagebuch_vers_1.api.ProtocolSubmissionRequest(
+                                    val req = ProtocolSubmissionRequest(
                                         templateKey = "schlaftagebuch_v1",
                                         locale = "de",
-                                        filledAt = java.time.Instant.now().toString(),
+                                        filledAt = Instant.now().toString(),
                                         answers = answers.entries
                                             .sortedBy { it.key }
-                                            .map { com.example.schlaftagebuch_vers_1.api.ProtocolAnswerDto(it.key, it.value) }
+                                            .map { ProtocolAnswerDto(it.key, it.value) }
                                     )
 
-                                    val resp = com.example.schlaftagebuch_vers_1.api.ApiClient.protocolApi.submit(req)
+                                    val resp = com.example.schlaftagebuch_vers_1.api.ApiClient
+                                        .protocolApi
+                                        .submit(req)
 
-                                    // показать тост надо на Main thread
                                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                        android.widget.Toast.makeText(
+                                        Toast.makeText(
                                             context,
                                             "Auf Server gespeichert! ID=${resp.submissionId}",
-                                            android.widget.Toast.LENGTH_LONG
+                                            Toast.LENGTH_LONG
                                         ).show()
                                     }
 
                                 } catch (e: Exception) {
                                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                                        android.widget.Toast.makeText(
+                                        Toast.makeText(
                                             context,
                                             "Server-Fehler: ${e.message}",
-                                            android.widget.Toast.LENGTH_LONG
+                                            Toast.LENGTH_LONG
                                         ).show()
                                     }
                                 }
                             }
+
                             Toast.makeText(context, "Gespeichert!", Toast.LENGTH_SHORT).show()
                             currentScreen = Screen.Menu
                         }

@@ -20,10 +20,8 @@ public class PatientFirstLoginRequest {
     @NotBlank
     public String familyName; // Nachname
 
-    // Entweder komplettes Geburtsdatum (YYYY-MM-DD) oder nur Geburtsjahr
-    public String birthDate; // optional
-
-    public Integer birthYear; // optional
+    @NotNull
+    public String birthDate; //
 
     @NotBlank
     public String password; // selbst gewähltes Login-Passwort des Patienten

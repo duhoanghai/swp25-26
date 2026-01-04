@@ -9,13 +9,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
 
 /**
  * Globale Sicherheitskonfiguration der REST-API.
@@ -24,7 +17,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
  * - Rollenbasierter Zugriff für Arzt/Patient
  */
 
-@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 
