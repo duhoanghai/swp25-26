@@ -1,75 +1,819 @@
 \section{Dokumentation der Testdurchführung}
 
-\subsection{Ziel}
-Die Unit-Tests sollen zeigen, ob unsere Datenklassen richtig funktionieren und ob der
-\texttt{QuestionTypeAdapter} die JSON-Daten richtig einliest.
 
-\subsection{Testumgebung}
-Alle Tests wurden in Android Studio unter \texttt{src/test/java} ausgeführt.
-Die Tests laufen ohne Handy, nur auf der JVM. 
+\subsection{Android Unit-Tests}
+Die Tests zeigen, dass zentrale Funktionen der Anwendung korrekt arbeiten. 
+Abgedeckt werden insbesondere:
 
-\subsection{Durchführung}
-
-\subsubsection{AnswerTest}
-Hier wurde geprüft, ob die \texttt{Answer}-Klasse die Werte richtig speichert.
-Das hat funktioniert.
-
-\subsubsection{QuestionTest}
-Es wurde getestet, ob die verschiedenen Frageklassen
-(z.\,B.\ Slider, Yes/No, Multiple Choice) die Daten korrekt übernehmen.
-Auch das funktioniert.
-
-\subsubsection{QuestionTypeAdapterTest}
-Hier wurde geprüft, ob der Adapter aus dem \texttt{type}-Feld im JSON
-die richtige Frageart macht.  
-Beispiele:
 \begin{itemize}
-    \item \texttt{"QuestionSlider"} wird zu \texttt{QuestionSlider}
-    \item \texttt{"QuestionTime"} wird zu \texttt{QuestionTime}
+  \item Verarbeitung von Authentifizierungsdaten (JWT, Session-Handling)
+  \item Speicherung von Einstellungen und Sitzungsdaten über SharedPreferences
+  \item Konstruktion und Serialisierung von Data Classes und DTOs
+  \item JSON-Verarbeitung (Serialisierung, Deserialisierung, Fehlerfälle)
+  \item Fragen-Hierarchie und polymorphe Vererbung
+  \item Zeit-, Alarm- und Locale-Verwaltung
+  \item Utility- und Helper-Funktionen
 \end{itemize}
+Bei den vorliegenden Tests handelt es sich ausschließlich um lokale
+Unit-Tests, welche im Verzeichnis \texttt{src/test/unit} ausgeführt werden.
+Diese Tests sind bewusst plattformunabhängig gehalten und testen keine
+direkten Android-UI-Komponenten oder Framework-Klassen.
 
-Außerdem wurden zwei Fehler getestet:
-\begin{itemize}
-    \item wenn \texttt{type} im JSON fehlt
-    \item wenn ein falscher \texttt{type} drinsteht
-\end{itemize}
-In beiden Fällen wurde richtig eine Fehlermeldung ausgelöst.
-
-\subsection{Ergebnis}
-Alle Tests waren erfolgreich.  
-Die Daten werden richtig eingelesen und falsches JSON wird erkannt.
-
-\subsection{Fazit}
-Die wichtigsten Funktionen für den Fragebogen arbeiten wie erwartet.
-Damit ist die Grundlage für die weitere Entwicklung gelegt.
-
-\begin{table}[h!]
+Android-spezifische Funktionalitäten wie Activities, Fragments,
+Navigation, Layouts oder reale Benachrichtigungen wurden nicht getestet,
+da diese typischerweise über Instrumentation-Tests
+(\texttt{src/androidTest}) abgesichert werden.
+Die Entscheidung, den Fokus auf Unit-Tests zu legen, ermöglicht schnelle,
+zuverlässige und reproduzierbare Tests der Kernlogik. Android-spezifische Abhängigkeiten (z.B. \texttt{Context}, \texttt{SharedPreferences}) werden mittels Mockito gemockt, um isolierte Tests ohne Android-Umgebung zu ermöglichen.
+\subsubsection{AlleApiTests.kt}
+Diese Testklasse enthält Unit Tests für verschiedene API-bezogene Komponenten unserer Android-Anwendung. Sie testet JWT-Verarbeitung, Session-Management und Data Classes für Authentifizierung und Protokoll-API.
+Getestete Komponenten sind \textit{JWT Utils, Session, SessionStorage, Auth DTOsund Protocol DTOs}\\
 
 
-\begin{tabular}{|p{5cm}|p{7cm}|p{3cm}|}
 
+\begin{tabularx}{\textwidth}{|l|X|l|}
 \hline
-\textbf{Testname} & \textbf{Was wurde getestet?} & \textbf{Status} \\ \hline
+\textbf{Testfall} & \textbf{ Beschreibung} & \textbf{Status} \\
+\hline
+1. JWT ohne Username & Gibt null zurück bei JWT ohne username-claim & Bestanden\\
+\hline
+2. Session Management & Setzt und liest JWT in Session-Klasse & Bestanden\\
+\hline
+3. Session null setzen & Setzt Session-JWT korrekt auf null zurück & Bestanden\\
+\hline
+4. SessionStorage speichern & Speichert JWT in SharedPreferences (Mock) & Bestanden\\
+\hline
+5. SessionStorage laden & Lädt JWT aus SharedPreferences (Mock) & Bestanden\\
+\hline
+6. SessionStorage löschen & Löscht JWT aus SharedPreferences (Mock) & Bestanden\\
+\hline
+7. Login Request & Testet alle Properties der Login-Data-Class & Bestanden\\
+\hline
+8. Token Response & Testet TokenResponse Data Class Konstruktor & Bestanden\\
+\hline
+9. Protocol Answer DTO & Testet einfache ProtocolAnswerDto Data Class & Bestanden\\
+\hline
+10. Protocol Submission Request & Testet komplexe Request mit Antwortliste & Bestanden\\
+\hline
+11. Protocol Submission Response & Testet Response Data Class mit 3 Feldern & Bestanden\\
+\hline
+12. Data Class equals() & Vergleicht zwei identische Data Class Objekte & Bestanden\\
+\hline
+13. Data Class toString() & Überprüft String-Repräsentation der Data Class & Bestanden\\
+\hline
+14. Leere Antwort & Testet Edge Case mit leerem Ergebnis-String & Bestanden\\
+\hline
+15. Sonderzeichen Passwort & Testet Passwort mit Sonderzeichen & Bestanden\\
+\hline
+16. Cleanup & Bereinigt Session nach jedem Test & Bestanden\\
+\hline
 
-\textbf{AnswerTest} & 
-Prüft, ob die \texttt{Answer}-Klasse Werte wie \texttt{id} und \texttt{result} korrekt speichert. &
-Bestanden\\ \hline
+\end{tabularx}
 
-\textbf{QuestionTest} & 
-Testet, ob die verschiedenen Frageklassen ihre Felder korrekt speichern.
- & 
-Bestanden \\ \hline
+\subsubsection{AlleDataServiceTests.kt}
+Diese Testklasse enthält Unit Tests für alle DataService-Komponenten der App. Sie testet Datenklassen, SharedPreferences-Operationen, JSON-Serialisierung und Fragen-Hierarchien.
+Getestete Komponenten sind \textit{Answer.kt, DataLoader.kt, Question.kt, QuestionTypeAdapter.kt}\\
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Answer Konstruktor & Testet Answer-Data-Class mit id und result & Bestanden\\
+\hline
+2. QuestionSlider Properties & Testet alle Properties von QuestionSlider & Bestanden\\
+\hline
+3. QuestionTime Properties & Testet alle Properties von QuestionTime & Bestanden\\
+\hline
+4. QuestionDuration Properties & Testet alle Properties von QuestionDuration & Bestanden\\
+\hline
+5. QuestionMultipleChoice Properties & Testet Multiple-Choice-Fragen mit Auswahlmöglichkeiten & Bestanden\\
+\hline
+6. QuestionYesNo Properties & Testet Ja/Nein-Fragen mit skipIfNo Logik & Bestanden\\
+\hline
+7. QuestionYesNo Empty Skip & Testet Ja/Nein-Fragen ohne skipIfNo Liste & Bestanden\\
+\hline
+8. QuestionDate Properties & Testet alle Properties von QuestionDate & Bestanden\\
+\hline
+9. Question Vererbung & Prüft dass alle Fragetypen von Question erben & Bestanden\\
+\hline
+10. DataLoader Sprache speichern & Speichert Sprache in SharedPreferences & Bestanden\\
+\hline
+11. DataLoader Sprache laden & Lädt Sprache aus SharedPreferences & Bestanden\\
+\hline
+12. DataLoader Default Sprache & Lädt Standardsprache DE bei null & Bestanden\\
+\hline
+13. DataLoader Alarm Status speichern & Speichert Alarm-aktiviert Status & Bestanden\\
+\hline
+14. DataLoader Alarm Status laden & Lädt Alarm-aktiviert Status & Bestanden\\
+\hline
+15. DataLoader Alarm Zeit speichern & Speichert Alarmzeit als LocalTime & Bestanden\\
+\hline
+16. DataLoader Alarm Zeit laden & Lädt Alarmzeit aus SharedPreferences & Bestanden\\
+\hline
+17. DataLoader Default Alarmzeit & Lädt Standard-Alarmzeit (20:00) & Bestanden\\
+\hline
+18. DataLoader Farbschema speichern & Speichert Farbschema-Einstellung & Bestanden\\
+\hline
+19. DataLoader Farbschema laden & Lädt Farbschema aus SharedPreferences & Bestanden\\
+\hline
+20. DataLoader Default Farbschema & Lädt Standard-Farbschema system & Bestanden\\
+\hline
+21. Fragen-Datei nicht gefunden & Handhabt IOException bei fehlender JSON-Datei & Bestanden\\
+\hline
+22. Erster Start Default & Lädt Default-Wert für First-Time-Flag & Bestanden\\
+\hline
+23. FirstTime Completed setzen & Setzt First-Time-Flag auf false & Bestanden\\
+\hline
+24. Username speichern & Speichert Benutzername in SharedPreferences & Bestanden\\
+\hline
+25. Username laden & Lädt gespeicherten Benutzernamen & Bestanden\\
+\hline
+26. Gson Answer Serialisierung & Serialisiert Answer-Objekt zu JSON & Bestanden\\
+\hline
+\end{tabularx}
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+27. Gson Answer Deserialisierung & Deserialisiert JSON zu Answer-Objekt & Bestanden\\
+\hline
+28. Gson Question Liste & Serialisiert Liste von Answer-Objekten & Bestanden\\
+\hline
+29. Gson QuestionSlider Roundtrip & Vollständiger Serialisierungs/Deserialisierungs-Test & Bestanden\\
+\hline
+30. QuestionTypeAdapter TypeMap & Testet TypeAdapter für Frage-Typen & Bestanden\\
+\hline
+31. Deserialisierung QuestionSlider & Deserialisiert QuestionSlider aus JSON & Bestanden\\
+\hline
+32. Deserialisierung MultipleChoice & Deserialisiert QuestionMultipleChoice aus JSON & Bestanden\\
+\hline
+33. Deserialisierung QuestionYesNo & Deserialisiert QuestionYesNo aus JSON & Bestanden\\
+\hline
+34. Deserialisierung QuestionTime & Deserialisiert QuestionTime aus JSON & Bestanden\\
+\hline
+35. Deserialisierung QuestionDuration & Deserialisiert QuestionDuration aus JSON & Bestanden\\
+\hline
+36. Deserialisierung QuestionDate & Deserialisiert QuestionDate aus JSON & Bestanden\\
+\hline
+37. Deserialisierung ungültiger Typ & Wirft Exception bei unbekanntem Typ & Bestanden\\
+\hline
+38. Deserialisierung ohne Typ & Wirft Exception bei fehlendem Typ-Feld & Bestanden\\
+\hline
+39. Deserialisierung leerer Typ & Wirft Exception bei leerem Typ-Feld & Bestanden\\
+\hline
+40. DataLoader Antworten speichern & Schreibt Antworten in Datei & Bestanden\\
+\hline
+41. Frage-Hierarchie & Testet Vererbungshierarchie aller Fragetypen & Bestanden\\
+\hline
+42. Answer Listen Operationen & Testet Listen-Operationen mit Answer-Objekten & Bestanden\\
+\hline
+43. Edge Cases - leere Strings & Testet mit leeren Strings in Antworten & Bestanden\\
+\hline
+44. Edge Cases - Sonderzeichen & Testet Umlaute und Sonderzeichen in Texten & Bestanden\\
+\hline
+45. Edge Cases - Maximalwerte & Testet mit Maximalwerten für IDs und Floats & Bestanden\\
+\hline
+46. Edge Cases - negative Werte & Testet mit negativen Werten für Slider & Bestanden\\
+\hline
+47. Liste contains Operation & Testet Listen-Operationen in QuestionYesNo & Bestanden\\
+\hline
+48. JSON Format mit Quotes & Testet JSON-Serialisierung mit Anführungszeichen & Bestanden\\
+\hline
+\end{tabularx}
 
 
-\textbf{QuestionTypeAdapterTest} &
-Prüft, ob der Adapter den richtigen Fragetyp aus der JSON-Datei erkennt und
-Fehler bei fehlendem oder falschem \texttt{type} auslöst. &
-Bestanden \\ \hline
+
+\subsubsection{AlleHelperTests.kt}
+Diese Testklasse enthält Unit Tests für alle Helper-Klassen der App. Sie testet Notification-Logik, Alarm-Berechnungen, Locale-Verwaltung und verschiedene Hilfsfunktionen.
+Getestete Komponenten sind \textit{NotificationHelper, AlarmReceiver (indirekt), updateLocale Funktion und Validierungs-Helfer}\\
+\vspace{1em}
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Alarm-Berechnung heute & Berechnet Alarmzeit für heute (Zeit in Zukunft) & Bestanden\\
+\hline
+2. Alarm-Berechnung morgen & Berechnet Alarmzeit für morgen (Zeit bereits vorbei) & Bestanden\\
+\hline
+3. Millisekunden Konvertierung & Konvertiert LocalDateTime zu Millisekunden & Bestanden\\
+\hline
+4. Alarm Edge Cases & Testet Mitternacht und gleiche Zeiten & Bestanden\\
+\hline
+5. AlarmReceiver Konstanten & Testet Notification-ID (hardcoded) & Bestanden\\
+\hline
+6. Notification Properties & Testet Channel-ID und Priority & Bestanden\\
+\hline
+7. updateLocale Deutsch & Testet deutsche Locale Erstellung & Bestanden\\
+\hline
+8. updateLocale Englisch & Testet englische Locale Erstellung & Bestanden\\
+\hline
+9. updateLocale Default & Testet Default Locale & Bestanden\\
+\hline
+10. Zeitvalidierung gültig & Testet gültige Uhrzeiten (00:00 - 23:59) & Bestanden\\
+\hline
+11. Zeitvalidierung ungültig & Testet ungültige Uhrzeiten (negative/zu große Werte) & Bestanden\\
+\hline
+12. Zeitformatierung & Formatiert Uhrzeiten als HH:mm und mit "Uhr" & Bestanden\\
+\hline
+13. Datumsformatierung & Formatiert Datum als TT.MM.JJJJ & Bestanden\\
+\hline
+14. Intent Actions & Testet Android Intent-Action Konstanten & Bestanden\\
+\hline
+15. Package URI Format & Testet URI Format für Package-Namen & Bestanden\\
+\hline
+16. SharedPreferences Keys & Testet Konsistenz der SharedPreferences Keys & Bestanden\\
+\hline
+17. Mock Context & Testet Mock-Setup für Context und SharedPreferences & Bestanden\\
+\hline
+18. Android Version Checks & Testet Android SDK Version Konstanten & Bestanden\\
+\hline
+19. Alarm-Berechnung Helper & Testet Hilfsfunktion für Alarmzeit-Berechnung & Bestanden\\
+\hline
+20. Locale Funktionalität & Testet Locale-Klassenmethoden & Bestanden\\
+\hline
+21. String Resources Mock & Testet String-Resource-Namen & Bestanden\\
+\hline
+22. Edge Cases Zeiten & Testet Extremfälle für Uhrzeiten & Bestanden\\
+\hline
+23. Edge Cases Daten & Testet besondere Daten (Schaltjahre, 2038-Problem) & Bestanden\\
+\hline
+24. TimeZone Handling & Testet Zeitzonen-Verarbeitung & Bestanden\\
+\hline
+25. PendingIntent Flags & Testet Kombination von PendingIntent Flags & Bestanden\\
+\hline
+\end{tabularx}
+\subsection{Android Integrationstests}
+Die durchgeführten Integrationstests folgen einer use-case-basierten Teststrategie, 
+bei der typische Nutzungsszenarien der App mit der Backend-API simuliert werden. 
+Jeder Test repräsentiert einen konkreten Anwendungsfall aus der Benutzerperspektive.
+
+\noindent\textbf{Technische Architektur:}
+
+\begin{itemize}
+  \item \textbf{MockWebServer:} Lokaler HTTP-Server von OkHttp, der API-Antworten simuliert
+  \item \textbf{Retrofit:} HTTP-Client für API-Kommunikation
+  \item \textbf{Gson:} JSON-Serialisierung/Deserialisierung
+  \item \textbf{Kotlin Coroutines:} Asynchrone Ausführung der API-Aufrufe
+  \item \textbf{Test-Location:} \texttt{src/test/integration/}
+\end{itemize}
+
+\noindent\textbf{Test-Strategie:}
+
+\begin{itemize}
+  \item \textbf{Success-Fälle:} Korrekte Requests führen zu erwarteten Responses
+  \item \textbf{Error-Fälle:} HTTP-Fehler (400, 401, 404) werden korrekt behandelt
+  \item \textbf{Validierung:} Request-Methoden, Pfade, Headers und Body-Inhalte
+  \item \textbf{Edge-Cases:} Ungültige JSON-Strukturen, fehlende Felder, leere Antworten
+\end{itemize}
+
+\noindent\textbf{Setup-Prozess:}
+\begin{enumerate}
+  \item MockWebServer starten auf zufälligem Port
+  \item Retrofit-Instanz mit MockWebServer-URL konfigurieren
+  \item API-Interface über Retrofit instanziieren
+  \item Mock-Antworten mit \texttt{MockResponse} vorbereiten
+  \item Tests mit \texttt{runBlocking} für Coroutine-Support ausführen
+  \item MockWebServer nach jedem Test herunterfahren
+\end{enumerate}
+
+\subsubsection{AuthApiIntegrationTest.kt}
+Testet die Authentifizierungs-API-Endpunkte für Patient Login und First-Login.
+
+\textbf{Getestete Endpunkte:}
+\begin{itemize}
+  \item \texttt{POST /api/auth/patient/first-login} - Erstanmeldung mit Aktivierungscode
+  \item \texttt{POST /api/auth/patient/login} - Reguläre Anmeldung mit Username/Password
+\end{itemize}
+
+\textbf{Test-Szenarien:}
+\begin{itemize}
+  \item Erfolgreiche Authentifizierung mit korrektem Token
+  \item Fehlerhafte Anfragen (ungültiger Code, falsche Credentials)
+  \item Server-Fehler (400 Bad Request, 401 Unauthorized)
+  \item Ungültige JSON-Responses
+  \item Sequenzielle API-Aufrufe
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Patient First-Login Success & Erfolgreiche Erstanmeldung mit Token-Rückgabe & Bestanden\\
+\hline
+2. Patient Login Success & Erfolgreiche reguläre Anmeldung & Bestanden\\
+\hline
+3. First-Login Invalid Code & HTTP 400 bei ungültigem Aktivierungscode & Bestanden\\
+\hline
+4. Login Wrong Credentials & HTTP 401 bei falschen Anmeldedaten & Bestanden\\
+\hline
+5. Invalid JSON Response & Exception bei ungültiger JSON-Struktur & Bestanden\\
+\hline
+6. Multiple Sequential Requests & Korrekte Verarbeitung sequentieller Aufrufe & Bestanden\\
+\hline
+\end{tabularx}
+
+\subsubsection{ProtocolApiIntegrationTest.kt}
+Testet das Absenden von ausgefüllten Schlafprotokollen an die Backend-API.
+
+\textbf{Getesteter Endpunkt:}
+\begin{itemize}
+  \item \texttt{POST /api/protocols/submissions} - Übermittlung ausgefüllter Protokolle
+\end{itemize}
+
+\textbf{Test-Szenarien:}
+\begin{itemize}
+  \item Erfolgreiche Protokoll-Übermittlung mit Submission-ID
+  \item Ungültige Protokolldaten (HTTP 400)
+  \item Fehlende/ungültige Authentifizierung (HTTP 401)
+  \item Validierung von Request-Body und JSON-Struktur
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Submit Protocol Success & Erfolgreiche Übermittlung mit Submission-ID & Bestanden\\
+\hline
+2. Submit Invalid Data & HTTP 400 bei ungültigen Protokolldaten & Bestanden\\
+\hline
+3. Submit Unauthorized & HTTP 401 bei fehlender Authentifizierung & Bestanden\\
+\hline
+\end{tabularx}
+
+\subsubsection{ReportApiIntegrationTest.kt}
+Testet den Download von PDF-Berichten mit verschiedenen Parametern.
+
+\textbf{Getesteter Endpunkt:}
+\begin{itemize}
+  \item \texttt{GET /api/reports/me/pdf} - Download persönlicher PDF-Berichte
+\end{itemize}
+
+\textbf{Test-Szenarien:}
+\begin{itemize}
+  \item Erfolgreicher PDF-Download mit korrekten Headers
+  \item Verschiedene Query-Parameter (Date-Range, days, allSubmissions)
+  \item Fehlende Authentifizierung (HTTP 401)
+  \item Keine Daten verfügbar (HTTP 404)
+  \item Validierung von Content-Type und Content-Disposition Headers
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. PDF Download Default & Erfolgreicher Download mit Standard-Parametern & Bestanden\\
+\hline
+2. PDF with Date Range & Download mit spezifischem Zeitraum & Bestanden\\
+\hline
+3. PDF Unauthorized & HTTP 401 bei fehlender Authentifizierung & Bestanden\\
+\hline
+4. PDF No Data & HTTP 404 wenn keine Daten vorhanden &Bestanden\\
+\hline
+\end{tabularx}
+\subsection{Backend-Modultests des Schlaftagebuch-Systems (Spring Boot)}
+
+\subsubsection{Getestete Module und Use Cases}
+
+Die Tests befinden sich unter \texttt{test/java/de.schlaftagebuch.schlaftagebuch\_backend/[Modul]} und umfassen die vier Kernmodule des Systems:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{0.60\textwidth}|}
+\hline
+\textbf{Modul} & \textbf{Funktionalität} \\
+\hline
+\textbf{Auth} & Arzt-/Patient-Login, Registrierung, JWT-Token, Passwort-Verschlüsselung \\
+\hline
+\textbf{ArztManagement} & Code-Generierung für Patienten, Arzt-Patienten-Zuordnung, Code-Verwaltung \\
+\hline
+\textbf{Protocol} & Erfassung und Verwaltung von Schlaftagebuch-Einträgen (CRUD) \\
+\hline
+\textbf{Report} & PDF-Generierung, Datenanalyse, Visualisierung, Export \\
+\hline
+\end{tabular}
+\caption{Getestete Module entsprechend der Use Cases}
+\end{table}
+
+Diese Module bilden die in den Use Cases definierten Hauptfunktionalitäten ab und enthalten die kritischen Sicherheits- und Geschäftslogik-Komponenten.
+
+\subsubsection{Teststrategie}
+
+Die Testimplementierung basiert auf einer \textbf{rein Unit-Test-basierten Strategie} mit Mockito. Services und Controller werden isoliert getestet, wobei alle Abhängigkeiten (Repositories, externe Services) gemockt werden. Diese fokussierte Herangehensweise ermöglicht schnelle Testausführungen und konzentriert sich auf die Validierung der Business-Logik unter kontrollierten Bedingungen.
+\subsubsection{Testszenarien}
+
+Die gewählten Unit-Test-Szenarien decken die Kernfunktionalitäten umfassend ab:
+
+\begin{itemize}
+    \item \textbf{Positivfälle:} Testung aller erwarteten Erfolgsszenarien mit gültigen Eingabedaten
+    \item \textbf{Negativfälle:} Systematische Testung von Grenzwerten und ungültigen Eingaben (24\% der Tests)
+    \item \textbf{Edge Cases:} Behandlung von Sonderfällen wie Null-Werten, leeren Listen, extremen Datenmengen
+    \item \textbf{Fehlerbehandlung:} Verifikation der korrekten Exception-Propagation von Service- zu Controller-Schicht
+    \item \textbf{Verhaltensverifikation:} Überprüfung der korrekten Interaktion mit gemockten Abhängigkeiten
+\end{itemize}
+
+\subsubsection{Technische Infrastruktur}
+\begin{itemize}
+    \item Spring Boot 3.4.0, Java 17
+    \item \textbf{JUnit 5 + Mockito 5.x} für reine Unit-Tests
+    \item AssertJ für flüssige Assertions
+    \item Gradle mit JaCoCo Plugin für Coverage-Analyse
+\end{itemize}
+
+\subsubsection{Ausführung}
+
+\begin{verbatim}
+# Alle Tests
+./gradlew clean test
+
+# Mit Coverage-Report
+./gradlew test jacocoTestReport
+\end{verbatim}
+
+Report: \texttt{build/reports/jacoco/test/html/index.html}
+\subsubsection{Testergebnisse}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Getesteter Funktionsbereich} & \textbf{Status} \\
+\hline
+Arzt-Login (Erfolg, falsche Daten, falsche Rolle) & \checkmark \\
+\hline
+Patienten-Login (Erfolg, falsche Daten, falsche Rolle) & \checkmark \\
+\hline
+Einmal-Code-Erzeugung (neu / bestehender Patient) & \checkmark \\
+\hline
+Patienten-Erstlogin mit Einmal-Code & \checkmark \\
+\hline
+Validierung von Codes (ungültig, abgelaufen, benutzt, widerrufen) & \checkmark \\
+\hline
+Validierung von Eingabedaten (Geburtsdatum, Consent) & \checkmark \\
+\hline
+JWT-Token-Erstellung und Rollenprüfung & \checkmark \\
+\hline
+AuthController-Endpunkte (Service-Delegation, Fehlerweitergabe) & \checkmark \\
+\hline
+\end{tabular}
+\caption{Testergebnisse des Auth-Moduls}
+\end{table}
 
 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+Anzahl Unit-Tests (Service) & 21\\
+Anzahl Unit-Tests (Controller) & 5\\
+Bestandene Tests & 26(100\%) \\
+Fehlgeschlagene Tests & 0 \\
+Code Coverage (Service-Schicht) & 75\% \\
+\hline
+\end{tabular}
+\caption{Zusammenfassung der Testergebnisse für das Auth-Modul}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Getesteter Funktionsbereich} & \textbf{Status} \\
+\hline
+Verwaltung von Patienten- und Arzt-Zuordnungen & \checkmark \\
+\hline
+Behandlung fehlender oder ungültiger Patientendaten & \checkmark \\
+\hline
+Generierung, Statusverwaltung und Deaktivierung von Einmal-Codes & \checkmark \\
+\hline
+Berechnung und Rückgabe von Dashboard-Statistiken & \checkmark \\
+\hline
+Delegation der REST-Endpunkte an die jeweilige Service-Schicht & \checkmark \\
+\hline
 
 \end{tabular}
-\caption{Tabelle der durchgeführten Unit-Tests}
+\caption{Testergebnisse des ArztManagement-Moduls}
 \end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Metrik} & \textbf{Wert} \\
+\hline
+Anzahl Unit-Tests (ArztDashboardService) & 10 \\
+Anzahl Unit-Tests (ArztManagementService) & 20 \\
+Anzahl Unit-Tests (ArztManagementController) & 8\\
+Bestandene Tests & 38 (100\%) \\
+Fehlgeschlagene Tests & 0 \\
+Code Coverage (Service-Schicht) & 87\% \\
+\hline
+\end{tabular}
+\caption{Zusammenfassung der Testergebnisse für das ArztManagement-Modul}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Getesteter Funktionsbereich} & \textbf{Status} \\
+\hline
+Verarbeitung von Protokoll-Einreichungen verschiedener Benutzertypen & \checkmark \\
+\hline
+Validierung gültiger Anfragen & \checkmark \\
+\hline
+JSON-Serialisierung mit Sonderzeichen und Escaping & \checkmark \\
+\hline
+Unterstützung verschiedener Protokoll-Vorlagen und Sprachen & \checkmark \\
+\hline
+Automatische Zeitstempel-Generierung bei fehlenden Daten & \checkmark \\
+\hline
+Behandlung von Edge Cases und großen Datenmengen & \checkmark \\
+\hline
+Korrektes Mapping zwischen Entity und Response-DTO & \checkmark \\
+\hline
+Exception-Propagation von Service zu Controller & \checkmark \\
+\hline
+\end{tabular}
+\caption{Testergebnisse des Protocol-Moduls}
+\end{table}
+
+Im Rahmen der Testentwicklung wurden zusätzlich Sonderfälle mit
+\texttt{null}- oder leeren Eingaben berücksichtigt, um die Vollständigkeit
+der Testbetrachtung sicherzustellen.
+
+\begin{itemize}
+    \item Übergabe eines \texttt{null}-Request-Objekts
+    \item Übergabe einer \texttt{null}-Antwortliste
+    \item Übergabe einer leeren Antwortliste
+\end{itemize}
+
+Diese Szenarien treten im produktiven Betrieb nicht auf, da die Request-Objekte
+in der Controller-Schicht durch Spring Boot erzeugt, validiert und mit
+Default-Werten initialisiert werden.
+
+\textbf{Hinweis:} Die genannten Sonderfälle dienen der theoretischen
+Robustheitsbetrachtung und haben keine Auswirkung auf den realen Betrieb
+des Systems.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Metrik} & \textbf{Wert} \\
+\hline
+Anzahl Unit-Tests (Service) & 21 \\
+Anzahl Unit-Tests (Controller) & 8 \\
+Gesamtzahl Unit-Tests & 29 \\
+Bestandene Tests & 26 (90\%) \\
+Fehlgeschlagene Tests & 3 \\
+Code Coverage (Service-Schicht) & 94\% \\
+Code Coverage (Controller-Schicht) & 89\% \\
+\hline
+\end{tabular}
+\caption{Zusammenfassung der Testergebnisse für das Protocol-Modul}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Getesteter Funktionsbereich} & \textbf{Status} \\
+\hline
+Report-Generierung für Patienten (eigene Berichte) & \checkmark \\
+\hline
+Report-Generierung für Ärzte (Patientenberichte) & \checkmark \\
+\hline
+PDF-Export von Schlaftagebuch-Berichten & \checkmark \\
+\hline
+Zeitraum-basierte Report-Generierung (Date Range) & \checkmark \\
+\hline
+Tages-basierte Report-Generierung (Last N Days) & \checkmark \\
+\hline
+Automatische Patientenerkennung aus Authentifizierung & \checkmark \\
+\hline
+Behandlung verschiedener Eingabeformate (JSON) & \checkmark \\
+\hline
+Validierung von Eingabeparametern & \checkmark \\
+\hline
+Berechnung von Schlafstatistiken & \checkmark \\
+\hline
+Integration mit FHIR für medizinische Berichte & \checkmark \\
+\hline
+\end{tabular}
+\caption{Testergebnisse des Report-Moduls}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Metrik} & \textbf{Wert} \\
+\hline
+Anzahl Unit-Tests (Service) & 23 \\
+Anzahl Unit-Tests (Controller) & 9 \\
+Gesamtzahl Unit-Tests & 32 \\
+Bestandene Tests & 32 (100\%) \\
+Fehlgeschlagene Tests & 0\\
+Code Coverage (Service-Schicht) & 94\% \\
+Code Coverage (Controller-Schicht) & 89\% \\
+\hline
+\end{tabular}
+\caption{Zusammenfassung der Testergebnisse für das Report-Modul}
+\end{table}
+
+
+
+\subsection{Test mit Postman}
+
+Im Folgenden wird die Testdurchführung der relevanten API-Endpunkte mit Postman dokumentiert. Die Tests erfolgen lokal gegen \texttt{http://localhost:8080}. Für alle Requests mit JWT ist sicherzustellen, dass das Token vollständig kopiert und als Bearer Token gesetzt wird.
+
+\subsubsection{Als Arzt einloggen}
+\textbf{Methode:} \texttt{POST}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/auth/arzt/login}
+
+\textbf{Body (JSON):}
+\begin{verbatim}
+{
+  "username": "arzt1",
+  "password": "arztpass"
+}
+\end{verbatim}
+
+\textbf{Erwartete Antwort:} Es wird ein JWT zurückgegeben, z.\,B.:
+\begin{verbatim}
+{ "token": "eyJhbGciOi..." }
+\end{verbatim}
+Der Token muss vollständig kopiert werden.
+
+\subsubsection{Zugangscode generieren}
+\textbf{Methode:} \texttt{POST}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/auth/patients/generate-code}
+
+\textbf{Auth in Postman:} \texttt{Auth} $\rightarrow$ \texttt{Bearer Token} und das zuvor erhaltene Arzt-JWT einfügen.\\
+\textbf{Body:} kein Body
+
+\textbf{Erwartete Antwort:} \texttt{GenerateCodeResponse} mit \texttt{code} (und ggf. \texttt{patientId}).
+
+\subsubsection{Erster Login des Patienten}
+\textbf{Methode:} \texttt{POST}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/auth/patient/first-login}
+
+\textbf{Body (JSON, Code ersetzen):}
+\begin{verbatim}
+{
+  "code": "MQ4842",
+  "consentAccepted": true,
+  "givenName": "Test",
+  "familyName": "Patient",
+  "password": "pass123",
+  "birthDate": "2000-01-01"
+}
+\end{verbatim}
+
+\textbf{Ergebnis:} Der Patient wird initial registriert/aktiviert (abhängig von Backend-Implementierung) und kann anschließend authentifiziert werden.
+
+\subsubsection{Test-Login Patient (über Seed, DEV)}
+\textbf{Hinweis:} Funktioniert aktuell \emph{ohne} Authentifizierung und dient ausschließlich Testzwecken in der Entwicklungsumgebung.\\
+\textbf{Methode:} \texttt{POST}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/auth/patient/login}
+
+\textbf{Body (JSON):}
+\begin{verbatim}
+{
+  "username": "patient_test",
+  "password": "patientpass"
+}
+\end{verbatim}
+
+\textbf{Erwartete Antwort:} Enthält das JWT des Patienten (Patient-Token), welches für die folgenden geschützten Endpunkte verwendet wird.
+
+\subsubsection{Protokoll absenden}
+\textbf{Methode:} \texttt{POST}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/protocols/submissions}
+
+\textbf{Authorization Header:} \texttt{Authorization: Bearer <PATIENT\_TOKEN>}
+
+\textbf{Body (JSON):}
+\begin{verbatim}
+{
+  "templateKey": "schlaftagebuch_v1",
+  "locale": "de",
+  "filledAt": "2025-12-30T10:15:00Z",
+  "answers": [
+    { "id": 0, "result": "7" },
+    { "id": 1, "result": "22:45" }
+  ]
+}
+\end{verbatim}
+
+\textbf{Erwartetes Ergebnis:} Wenn eine \texttt{submissionId} zurückkommt, wurde das Protokoll gespeichert und dem Patienten zugeordnet.
+
+\subsubsection{Bericht erstellen (PDF) -- Test}
+\textbf{Methode:} \texttt{GET}\\
+\textbf{URL:} \texttt{http://localhost:8080/api/reports/me/pdf?days=14}
+
+\textbf{Authorization Header:} \texttt{Authorization: Bearer <PATIENT\_TOKEN>}
+
+\textbf{Ergebnis:} Es wird ein PDF-Bericht für den Patienten generiert (Zeitraum: letzte \texttt{days=14} Tage), sofern entsprechende Daten vorhanden sind.
+
+\newpage
+
+\subsection{Query-Parameter}
+
+\textbf{Warum benötigen wir einen Query-Parameter?}\\
+Im Produktivbetrieb ist es sinnvoll, im PDF-Bericht pro Kalendertag ausschließlich
+den jeweils neuesten Schlafprotokoll-Eintrag zu berücksichtigen. Dadurch bleibt
+der Bericht übersichtlich, gut vergleichbar und medizinisch sinnvoll interpretierbar.
+
+Für Test- und Entwicklungszwecke ist dieses Verhalten jedoch unpraktisch, da man
+ansonsten viele Kalendertage abwarten müsste, um ausreichend Daten für die
+Berichtserstellung und Visualisierung zu erzeugen.
+
+Aus diesem Grund wird ein zusätzlicher \textbf{Query-Parameter} eingeführt, mit dem
+das Verhalten der Berichtserstellung gezielt zwischen Produktiv- und Testmodus
+umgeschaltet werden kann.
+
+\begin{itemize}
+  \item \texttt{allSubmissions=false} (Standardbetrieb):\\
+        Pro Kalendertag wird nur die neueste Submission im Bericht berücksichtigt.
+        Dieses Verhalten ist für den regulären Einsatz vorgesehen.
+  \item \texttt{allSubmissions=true} (Testmodus):\\
+        Alle Submissions im gewählten Zeitraum werden berücksichtigt, auch wenn
+        mehrere Einträge am selben Tag existieren.
+\end{itemize}
+
+\textbf{Wie funktioniert das technisch?}\\
+Ein Query-Parameter ist ein optionaler Parameter, der bei einem HTTP-Request an den
+Endpoint angehängt wird. Er beginnt mit einem Fragezeichen (\texttt{?}); mehrere
+Parameter werden mit einem kaufmännischen Und-Zeichen (\texttt{\&}) getrennt.
+
+Im Backend wird der Parameter über das Spring-Framework mit
+\texttt{@RequestParam} entgegengenommen und steuert dort die interne Logik der
+Datenaggregation.
+
+\paragraph{Relevanter Endpoint}
+Der PDF-Bericht wird über folgenden Endpoint erzeugt:
+\[
+\texttt{GET /api/reports/me/pdf}
+\]
+
+\paragraph{Beispiele für die Verwendung}
+\begin{itemize}
+  \item \textbf{Standardbetrieb (Produktivmodus, 14 Tage):}
+  \[
+  \texttt{/api/reports/me/pdf?days=14}
+  \]
+
+  \item \textbf{Testmodus (alle Submissions im Zeitraum):}
+  \[
+  \texttt{/api/reports/me/pdf?days=14\&allSubmissions=true}
+  \]
+
+  \item \textbf{Schnelltest (ein Tag, mehrere Submissions):}
+  \[
+  \texttt{/api/reports/me/pdf?days=1\&allSubmissions=true}
+  \]
+\end{itemize}
+
+\textbf{Definition im Backend}\\
+Der Parameter ist im Controller wie folgt definiert:
+\[
+\texttt{@RequestParam(defaultValue = "false") boolean allSubmissions}
+\]
+
+Dadurch ist sichergestellt, dass ohne explizite Angabe automatisch das
+Standardverhalten (Produktivmodus) verwendet wird.
+
+\paragraph{Konkretes Testvorgehen}
+\begin{enumerate}
+  \item \textbf{Erzeugen mehrerer Submissions:}\\
+  Das Schlafprotokoll innerhalb der mobilen Anwendung mehrfach am selben Tag
+  ausfüllen und absenden.
+
+  \item \textbf{Abrufen des PDF-Berichts im Testmodus:}\\
+  Der Bericht wird innerhalb der App mit aktivierter Testkonfiguration
+  (\texttt{allSubmissions=true}) generiert.
+
+  \item \textbf{Erwartetes Ergebnis:}\\
+  Im generierten PDF erscheinen mehrere Einträge für denselben Kalendertag.
+  Die Diagramme enthalten entsprechend mehrere Datenpunkte mit eindeutig
+  unterscheidbaren Beschriftungen.
+
+  \item \textbf{Rückkehr zum Standardbetrieb:}\\
+  Wird der Parameter \texttt{allSubmissions} nicht gesetzt oder auf
+  \texttt{false} belassen, enthält der Bericht wieder ausschließlich den
+  jeweils neuesten Eintrag pro Tag.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
 
 

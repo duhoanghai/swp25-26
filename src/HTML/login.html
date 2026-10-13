@@ -6,62 +6,119 @@
   <title>Login – Digitales Schlaftagebuch</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
+
 <body>
+
+<!-- Wrapper für Login-Karte -->
   <div class="login-wrap">
-    <header class="login-header">
-      <div class="logo">Logo</div>
-      <div class="login-title">Digitales Schlaftagebuch</div>
-    </header>
+	<!-- Submit per JS abgefangen -->
+    <form class="login-card" id="loginForm" aria-label="Login">
 
-    <main class="login-center">
-      <form class="login-form" id="loginForm">
-        <div style="display:grid; gap:12px; justify-items:center;">
-          <div style="width:100%; max-width:320px;">
-            <label for="email">E-Mail eingeben</label>
-            <input id="email" type="email" autocomplete="username" required />
-          </div>
+	<!-- Icon + Titel -->
+      <div class="brand" style="margin-bottom:14px; color:var(--ink);">
+          <div aria-hidden="true" class="brand-badge">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+      d="M21.64 13a9 9 0 0 1-10.63-10.63A1 1 0 0 0 9.87 1.2
+         11 11 0 1 0 22.8 14.13 1 1 0 0 0 21.64 13z"/>
+  </svg>
+</div>
 
-          <div style="width:100%; max-width:320px;">
-            <label for="pw">Passwort eingeben</label>
-            <input id="pw" type="password" autocomplete="current-password" required />
-          </div>
-
-          <div class="login-actions" style="width:100%; max-width:320px; justify-content:space-between;">
-            <label class="checkbox">
-              <input type="checkbox" id="remember" />
-              angemeldet bleiben
-            </label>
-
-            <button type="submit">Anmelden</button>
-          </div>
-
-          <div class="forgot">
-            <a href="#" onclick="alert('Passwort-Reset (Demo)'); return false;">Passwort vergessen?</a>
-          </div>
+	<!-- Titel/Untertitel -->
+        <div class="brand-title">
+          <strong>Digitales Schlaftagebuch</strong>
+          <span>Schlaflabor</span>
         </div>
-      </form>
-    </main>
+      </div>
 
-    <footer style="text-align:center; color:var(--muted); font-size:12px;">
-      © Digitales Schlaftagebuch
-    </footer>
+
+	<!-- Überschrift + Hinweis -->
+      <h1>Anmelden</h1>
+      <p>Bitte melden Sie sich mit Ihren Zugangsdaten an.</p>
+
+
+	<!-- Benutzername -->
+      <div class="row" style="align-items:flex-end;">
+        <div class="field" style="flex:1; min-width: 240px;">
+          <label for="username">Benutzername</label>
+          <input id="username" class="control" type="text" autocomplete="username" required />
+        </div>
+      </div>
+
+
+	<!-- Passwort -->
+      <div class="row" style="margin-top:12px; align-items:flex-end;">
+        <div class="field" style="flex:1; min-width: 240px;">
+          <label for="pw">Passwort</label>
+          <input id="pw" class="control" type="password" autocomplete="current-password" required />
+        </div>
+      </div>
+
+
+	<!-- angemeldet bleiben -->
+      <div class="login-actions" style="margin-top:14px;">
+        <label class="checkbox">
+          <input type="checkbox" id="remember" />
+          angemeldet bleiben
+        </label>
+        <button class="btn btn-primary" type="submit" style="margin-left:auto; min-width:150px;">Anmelden</button>
+      </div>
+    </form>
   </div>
 
+  <script src="app.js"></script>
+
   <script>
-    // Demo-Login: ohne Backend. Leitet einfach weiter.
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
+    // Login über Backend: POST /api/auth/arzt/login
+    // erwartet JSON (username, password)
+    // speichert JWT in localStorage (auth_token) für spätere API-Aufrufe
+    //leitet danach auf dashboard.html weiter
+
+    const API_BASE_URL = (window.API_BASE || "");
+
+
+	//Submit-Handler (nutzt Fetch-Login)
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const remember = document.getElementById("remember").checked;
 
-      // Demo "Auth"
-      localStorage.setItem("auth_demo", "1");
-      if (!remember) {
-        // Falls nicht "angemeldet bleiben": simuliert Session durch Tab-Lebenszeit
-        // (hier super simpel: wir lassen es trotzdem im localStorage — wenn du willst,
-        // kann man das in sessionStorage ändern)
+
+	//liest Eingaben
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('pw').value;
+	//kleinere Validierung
+      if (!username || !password) return;
+
+	//Login-Request an Backend
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/arzt/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+	//Fehlerfall (Backend muss einen 2..-Status liefern
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || `Login fehlgeschlagen, falscher Benutzername oder Passwort (HTTP ${res.status})`);
+        }
+
+	//Token lesen (möglicher Fehler, wenn Token falsch)
+        const data = await res.json();
+        if (!data?.token) throw new Error('Login fehlgeschlagen: kein Token erhalten.');
+
+
+	//Sessiondaten für spätere API-Aufrufe speichern
+        localStorage.setItem('auth_token', data.token);
+        localStorage.setItem('auth_role', data.role || '');
+        localStorage.setItem('auth_subjectRef', data.subjectRef || '');
+        localStorage.setItem('auth_username', data.username || username);
+
+	//Weiterleitung zum Dashboard
+        location.href = 'dashboard.html';
+      } catch (err) {
+        alert(err?.message || String(err));
       }
-
-      location.href = "dashboard.html";
     });
   </script>
 </body>

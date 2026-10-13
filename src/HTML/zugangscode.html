@@ -3,65 +3,492 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zugangscode – Digitales Schlaftagebuch</title>
+  <title>Zugangscodes – Digitales Schlaftagebuch</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="app">
   <div class="app">
     <aside class="sidebar">
-      <div class="logo">Logo</div>
+      <div class="brand">
+
+	<!-- Mond-Icon -->
+        <div aria-hidden="true" class="brand-badge">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+      d="M21.64 13a9 9 0 0 1-10.63-10.63A1 1 0 0 0 9.87 1.2
+         11 11 0 1 0 22.8 14.13 1 1 0 0 0 21.64 13z"/>
+  </svg>
+</div>
+	<!-- Titel der Website + Untertitel -->
+        <div class="brand-title">
+          <strong>Digitales Schlaftagebuch</strong>
+          <span>Schlaflabor</span>
+        </div>
+      </div>
+
+	<!-- Seitenleiste -->
       <nav class="nav" aria-label="Seitennavigation">
-        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
-        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
-        <a href="bericht.html" data-page="bericht">Bericht</a>
-        <a href="patient.html" data-page="patient">Patient:in</a>
+
+	<!-- Dashboard-Seite -->
+        <a href="dashboard.html" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Übersicht
+        </a>
+
+	<!-- Patient:innen-Seite -->
+        <a href="patient.html" data-page="patient">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Patient:innen
+        </a>
+
+	<!-- Zugangscode-Seite -->
+        <a href="zugangscode.html" data-page="zugangscode">
+          <svg viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true">
+  <!-- Schlüssel -->
+  <circle cx="7" cy="14" r="3.5"></circle>
+  <circle cx="7" cy="14" r="1.2"></circle>
+  <path d="M10.5 14H21"></path>
+  <path d="M17 14v3"></path>
+  <path d="M20 14v2"></path>
+</svg>
+          Zugangscodes
+        </a>
+
+	<!-- Bericht-Seite -->
+        <a href="bericht.html" data-page="bericht">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+            <path d="M10 9H8"/>
+          </svg>
+          Berichte
+        </a>
       </nav>
-      <div class="spacer"></div>
-      <div class="home-icon" title="Home"></div>
+
+	<!-- Logout-Button -->
+      <div class="sidebar-bottom">
+        <a class="logout-btn" href="login.html" data-logout>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <path d="M16 17l5-5-5-5"/>
+            <path d="M21 12H9"/>
+          </svg>
+          Abmelden
+        </a>
+      </div>
     </aside>
 
     <main class="main">
-      <div class="topbar">
-        <div class="title">Digitales Schlaftagebuch</div>
-        <a class="logout" href="login.html" data-logout>Log out</a>
-      </div>
-
-      <div class="card">
-        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
-          Digitales Schlaftagebuch – Zugangscodes
+      <header class="header">
+        <div class="header-left">
+          <h1>Zugangscodes</h1>
+          <p>Erstellen und verwalten Sie App-Zugänge für Patient:innen.</p>
         </div>
-
-        <div class="row" style="margin-bottom:14px;">
-          <button type="button" onclick="alert('Liste anzeigen (Demo)')">aktuelle Zugangscodes einsehen</button>
+        <div class="userbox" aria-label="Angemeldete Person">
+          <div class="meta">
+            <strong id="loggedInDoctor">–</strong>
+            <span>Arzt</span>
+          </div>
+          <div class="avatar" aria-hidden="true">A1</div>
         </div>
+      </header>
 
-        <div style="margin-bottom:18px; color:var(--muted); font-size:13px;">
-          Patient | Code | Gültig bis | Status | [deaktivieren]
-        </div>
-
-        <div class="row" style="margin-bottom:14px;">
-          <button type="button" onclick="alert('Zugangscode erstellt (Demo)')">neuen Zugangscode erstellen</button>
-        </div>
-
-        <div class="row" style="margin-top:8px;">
-          <div>
-            <label for="zc-patient">Patient:</label>
-            <select id="zc-patient">
-              <option>Max Mustermann</option>
-              <option>Anna Müller</option>
-              <option>Lea Beispiel</option>
-            </select>
+      <div class="content">
+        <!-- Zugang erstellen-Karte -->
+        <section class="card" aria-label="Patient:in für App freischalten">
+          <div class="card-title">
+            <div class="icon-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14"/>
+                <path d="M5 12h14"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Patient:in für App freischalten</h2>
+              <p>Erstellt einen neuen Zugangscode.</p>
+            </div>
           </div>
 
-          <div>
-            <label for="zc-bis">Gültig bis:</label>
-            <input id="zc-bis" type="date" />
+          <div class="row">
+            <div class="field" style="flex: 1; min-width:280px;">
+              <label for="accessPatient">Patient:in auswählen</label>
+              <select id="accessPatient" class="control">
+                <option value="" selected disabled>Bitte wählen…</option>
+                <!-- Hinweis: value = Patient-ID (FHIR) oder __new__ für neuen Patienten -->
+                <option value="__new__">Neuer Patient</option>
+              </select>
+            </div>
+
+            <div class="field" style="flex: 1; min-width:280px;">
+              <label for="accessValidUntil">Gültig bis (bis zum Ende des ausgewählten Tages)</label>
+              <input id="accessValidUntil" class="control" type="date" />
+            </div>
+
+            <div class="field" style="flex: 1; min-width:280px;">
+              <label for="appointmentDate">Termin (Kalenderauswahl)</label>
+              <input id="appointmentDate" class="control" type="date" />
+              
+            </div>
+
+            <button id="createAccess" class="btn btn-primary" type="button" style="min-width:220px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 7h3a2 2 0 0 1 2 2v3"/>
+                <path d="M10 14L21 3"/>
+                <path d="M21 3l-6 18-4-4-4-4z"/>
+              </svg>
+              Code generieren
+            </button>
           </div>
-        </div>
+        </section>
+
+        <!-- Vergebene Zugänge-Tabelle -->
+        <section class="card" aria-label="Vergebene Zugänge">
+          <div class="table-head">
+            <h3>Vergebene Zugänge</h3>
+            <div class="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.3-4.3"/>
+              </svg>
+              <input id="accessSearch" class="control" type="date" />
+            </div>
+          </div>
+
+          <table aria-label="Liste vergebener Zugänge">
+            <thead>
+              <tr>
+                <th>PATIENT:IN</th>
+                <th>TERMIN</th>
+                <th>AKTIVER CODE</th>
+                <th>GÜLTIG BIS</th>
+                <th>STATUS</th>
+                <th style="text-align:right;">OPTIONEN</th>
+              </tr>
+            </thead>
+            <tbody id="accessTable">
+              <tr><td colspan="5" style="color:var(--muted);">Lade Codes…</td></tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </main>
   </div>
 
   <script src="app.js"></script>
+  <script>
+    // --- Live-Logik: Code wird vom Backend erzeugt ---
+    // Benötigt: Login als ARZT (login.html) -> JWT liegt in localStorage (auth_token)
+    // Endpunkte:
+    //  - POST /api/auth/patients/generate-code               (neuer Patient)
+    //  - POST /api/auth/patients/{patientId}/generate-code   (existierender Patient)
+
+	
+//Hilfsfunktionen:
+    const $ = (q) => document.querySelector(q);
+    const tableBody = $('#accessTable');
+
+	//Basis-URL des Backends
+    const API_BASE_URL = window.API_BASE || 'http://localhost:8080';
+    const patientNameMap = new Map();
+
+	//Nachname, Vorname für Patient
+    function formatPatientName(p){
+      if (!p) return '—';
+      const dn = p.displayName || p.display || p.patientDisplay;
+      if (dn && String(dn).trim()) return String(dn).trim();
+      const family = (p.familyName || '').trim();
+      const given  = (p.givenName || '').trim();
+      const combo = [family, given].filter(Boolean).join(', ');
+      if (combo) return combo;
+      return (p.username || p.patientId || '—');
+    }
+
+
+	//gibt Patient-ID aus
+    function extractPatientId(patientRefOrId){
+      const s = String(patientRefOrId || '');
+      const m = s.match(/Patient\/(.+)$/);
+      return m ? m[1] : s;
+    }
+
+
+	//ISO-Zeit (deutsche Uhrzeit)
+    function fmtDateTimeDE(isoInstant){
+      if (!isoInstant) return '';
+      const d = new Date(isoInstant);
+      return d.toLocaleString('de-DE');
+    }
+
+
+	//ISO-Datum
+    function fmtDateDE(isoDate){
+      if (!isoDate) return '';
+      // isoDate erwartet YYYY-MM-DD
+      const d = new Date(isoDate + 'T00:00:00');
+      return d.toLocaleDateString('de-DE');
+    }
+
+
+	//markiert Tabellenzeile als inaktiv
+    function setRowInactive(tr){
+      const badgeCell = tr.children[3];
+      badgeCell.innerHTML = `<span class="badge badge-muted">Inaktiv</span>`;
+      const btn = tr.querySelector('[data-disable]');
+      if (btn){
+        btn.disabled = true;
+        btn.title = 'Bereits deaktiviert';
+        btn.style.opacity = .35;
+        btn.style.cursor = 'not-allowed';
+      }
+    }
+
+
+	//Zugang deaktivieren
+    tableBody.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-disable]');
+      if (!btn) return;
+      const tr = btn.closest('tr');
+      if (!tr) return;
+
+      const codeId = tr.dataset.codeId;
+      if (!codeId){
+        // Fallback (alte statische Reihen)
+        setRowInactive(tr);
+        return;
+      }
+
+      try {
+        await authFetchJson(`${API_BASE_URL}/api/arzt/codes/${encodeURIComponent(codeId)}/deactivate`, { method: 'POST' });
+        setRowInactive(tr);
+      } catch (err) {
+        alert(err?.message || String(err));
+      }
+    });
+
+	//Suche in der Code-Tabelle
+    $('#accessSearch').addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      for (const tr of tableBody.querySelectorAll('tr')){
+        const txt = tr.innerText.toLowerCase();
+        tr.style.display = txt.includes(q) ? '' : 'none';
+      }
+    });
+
+
+	//Fetch mit JWT + Behandlung Auth-Fehler
+    async function authFetchJson(url, opts = {}) {
+      const token = localStorage.getItem('auth_token');
+      if (!token){ location.href = 'login.html'; return; }
+
+      const res = await fetch(url, {
+        ...opts,
+        headers: {
+          ...(opts.headers || {}),
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+
+	//ungültiger Token oder falsche Rolle
+      if (res.status === 401 || res.status === 403){
+        localStorage.removeItem('auth_token');
+        location.href = 'login.html';
+        return;
+      }
+
+      if (!res.ok){
+        const t = await res.text();
+        throw new Error(t || `Fehler (HTTP ${res.status})`);
+      }
+      return res.json();
+    }
+
+
+	//Status für Zugangscodes
+    function statusBadge(status){
+      if (status === 'ACTIVE') {
+        return `<span class="badge badge-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>Aktiv</span>`;
+      }
+      if (status === 'USED') return `<span class="badge badge-muted">Benutzt</span>`;
+      if (status === 'EXPIRED') return `<span class="badge badge-muted">Abgelaufen</span>`;
+      if (status === 'REVOKED') return `<span class="badge badge-muted">Deaktiviert</span>`;
+      return `<span class="badge badge-muted">${status || '—'}</span>`;
+    }
+
+
+	//baut eine Tabellenzeile für einen Zugangscode
+    function renderCodeRow(item){
+      const tr = document.createElement('tr');
+      tr.dataset.codeId = item.id;
+      tr.innerHTML = `
+        <td><strong>${item.patientName || '—'}</strong></td>
+        <td>${fmtDateDE(item.appointmentDate)}</td>
+        <td><span class="code-pill" title="Zum Kopieren anklicken" style="cursor:pointer;">${item.code}</span></td>
+        <td>${fmtDateTimeDE(item.expiresAt)}</td>
+        <td>${statusBadge(item.status)}</td>
+        <td style="text-align:right;">
+          <button class="icon-btn" type="button" title="Zugang deaktivieren" data-disable ${item.status !== 'ACTIVE' ? 'disabled style="opacity:.35;cursor:not-allowed;"' : ''}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M4.9 4.9l14.2 14.2"/>
+            </svg>
+          </button>
+        </td>`;
+
+      tr.querySelector('.code-pill')?.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(item.code); } catch (_) {}
+      });
+      return tr;
+    }
+
+	//lädt Patienten für Dropdown
+    async function loadPatients(){
+      const select = $('#accessPatient');
+      const keepNew = select.querySelector('option[value="__new__"]');
+      select.innerHTML = '<option value="" selected disabled>Bitte wählen…</option>';
+      if (keepNew) select.appendChild(keepNew);
+
+      try {
+        const patients = await authFetchJson(`${API_BASE_URL}/api/arzt/patients`);
+        for (const p of (patients || [])){
+          const opt = document.createElement('option');
+          opt.value = p.patientId;
+          const name = formatPatientName(p);
+          patientNameMap.set(String(p.patientId), name);
+          patientNameMap.set(`Patient/${p.patientId}`, name);
+          opt.textContent = name;
+          select.appendChild(opt);
+        }
+      } catch (e) {
+        // fallback: nichts
+      }
+    }
+
+
+	//lädt bestehende Zugangscodes
+    async function loadCodes(){
+      tableBody.innerHTML = '';
+      try {
+        const codes = await authFetchJson(`${API_BASE_URL}/api/arzt/codes`);
+        for (const c of (codes || [])){
+          const pid = c.patientId || extractPatientId(c.patientRef);
+          const pname = patientNameMap.get(String(pid)) || patientNameMap.get(String(c.patientRef)) || c.patientDisplay || c.display || c.patientRef || pid || '—';
+          tableBody.appendChild(renderCodeRow({ ...c, patientName: pname }));
+        }
+      } catch (e) {
+        // fallback: nichts
+      }
+    }
+
+    async function requestCode(patientIdOrNew, validUntilDate, appointmentDate){
+      const token = localStorage.getItem('auth_token');
+      if (!token){
+        location.href = 'login.html';
+        return;
+      }
+
+      const isNew = patientIdOrNew === '__new__';
+      const url = isNew
+        ? `${API_BASE_URL}/api/auth/patients/generate-code`
+        : `${API_BASE_URL}/api/auth/patients/${encodeURIComponent(patientIdOrNew)}/generate-code`;
+
+      const payload = {};
+      if (validUntilDate) payload.validUntilDate = validUntilDate;
+      if (appointmentDate) payload.appointmentDate = appointmentDate;
+      const body = Object.keys(payload).length ? JSON.stringify(payload) : null;
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          ...(body ? { 'Content-Type': 'application/json' } : {})
+        },
+        ...(body ? { body } : {})
+      });
+
+      if (res.status === 401 || res.status === 403){
+        // Token ungültig/abgelaufen oder falsche Rolle
+        localStorage.removeItem('auth_token');
+        location.href = 'login.html';
+        return;
+      }
+
+      if (!res.ok){
+        const text = await res.text();
+        throw new Error(text || `Fehler beim Generieren (HTTP ${res.status})`);
+      }
+
+      return res.json();
+    }
+
+    $('#createAccess').addEventListener('click', async () => {
+      const select = $('#accessPatient');
+      const patientVal = select.value;
+      const patientLabel = select.options[select.selectedIndex]?.textContent?.trim() || '';
+      const validUntilDate = $('#accessValidUntil')?.value || '';
+      const appointmentDate = $('#appointmentDate')?.value || '';
+
+      if (!patientVal){
+        alert('Bitte Patient:in auswählen.');
+        return;
+      }
+
+      if (!appointmentDate){
+        alert('Bitte Termin auswählen.');
+        return;
+      }
+
+      try {
+        const data = await requestCode(patientVal, validUntilDate, appointmentDate);
+        if (!data?.code || !data?.id) throw new Error('Backend-Antwort enthält keinen Code (id/code).');
+
+        // Wenn der Nutzer kein Datum gewählt hat, kann man optional das vom Backend zurückgeben
+        // (Backend liefert immer expiresAt). Für ein type="date"-Input wird YYYY-MM-DD gesetzt.
+        const validField = $('#accessValidUntil');
+        if (validField && data.expiresAt){
+          validField.value = new Date(data.expiresAt).toISOString().slice(0,10);
+        }
+
+        const item = {
+          id: data.id,
+          code: data.code,
+          patientRef: data.patientRef || (patientVal === '__new__' ? (data.patientRef || 'Patient/?') : `Patient/${patientVal}`),
+          patientName: patientLabel || patientNameMap.get(String(patientVal)) || (data.patientDisplay || data.display || data.patientRef) || (patientVal === '__new__' ? 'Neuer Patient' : patientVal),
+          expiresAt: data.expiresAt,
+          status: 'ACTIVE'
+        };
+        tableBody.prepend(renderCodeRow(item));
+      } catch (err) {
+        alert(err?.message || String(err));
+      }
+    });
+
+    // Initialer Seitenstart
+    (async () => {
+      await loadPatients();
+      await loadCodes();
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider-Paths:
+  Wir teilen nur Dateien aus dem App-eigenen External-Files-Verzeichnis.
+  PdfUtils.savePdfToAppDownloads(...) schreibt genau dort hinein.
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- z.B. /storage/emulated/0/Android/data/<package>/files/Download/... -->
+    <external-files-path
+        name="external_files"
+        path="." />
+</paths>

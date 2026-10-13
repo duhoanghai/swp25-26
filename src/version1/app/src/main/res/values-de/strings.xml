@@ -1,0 +1,169 @@
+<resources>
+    <string name="app_name">Schlaftagebuch v1</string>
+    <string name="language_long">Deutsch</string>
+    <string name="language_short">DE</string>
+
+    <!-- Language Select -->
+    <string name="language_select_btn_next">Weiter</string>
+    <string name="language_select_subtitle">Bitte wählen Sie Ihre Sprache</string>
+    <string name="language_select_title">Willkommen</string>
+
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_accept_btn">Weiter</string>
+    <string name="privacy_policy_accept_text">Ich habe die Datenschutzhinweise gelesen und zur Kenntnis genommen</string>
+    <string name="privacy_policy_content">Ihre personenbezogenen und medizinischen Daten werden im Rahmen der Behandlung durch die Medizinische Universität Lausitz - Carl Thiem verarbeitet. Weitere Informationen zu Art, Umfang und Zweck der Datenverarbeitung sowie zu Ihren Rechten finden sie in der Datenschutzerklärung der MUL-CT:
+    </string>
+    <string name="privacy_policy_link">Datenschutzerklärung öffnen</string>
+    <string name="privacy_policy_title">Datenschutz</string>
+
+    <!-- Auth Choice -->
+    <string name="auth_choice_btn_activate">Konto aktivieren (Einmalcode)</string>
+    <string name="auth_choice_btn_login">Anmelden</string>
+    <string name="auth_choice_title">Zugang</string>
+
+    <!-- Registration -->
+    <string name="registration_box_birthday">Geburtsdatum</string>
+    <string name="registration_box_code">Code</string>
+    <string name="registration_box_name_first">Vorname</string>
+    <string name="registration_box_name_last">Nachname</string>
+    <string name="registration_box_password">Passwort (eigenes)</string>
+    <string name="registration_btn_back">Zurück</string>
+    <string name="registration_btn_finish">Konto erstellen</string>
+    <string name="registration_error_birthday_1">Geburtsdatum eintragen</string>
+    <string name="registration_error_birthday_2">Geburtsdatum im Format TT.MM.JJJJ (z.B.  01.01.2000)</string>
+    <string name="registration_error_birthday_3">Ungültiges Geburtsdatum</string>
+    <string name="registration_error_password_1">Passwort mindestens 8 Zeichen</string>
+    <string name="registration_error_password_2">Passwort mindestens 1 Buchstaben</string>
+    <string name="registration_error_password_3">Passwort mindestens 1 Zahl</string>
+    <string name="registration_title">Erster Login</string>
+
+    <!-- Login -->
+    <string name="login_box_password">Passwort</string>
+    <string name="login_box_username">Benutzername</string>
+    <string name="login_btn_activate">Konto aktivieren</string>
+    <string name="login_btn_login">Anmelden</string>
+    <string name="login_error">Bitte Benutzernamen und Passwort eingeben</string>
+    <string name="login_icon_password_hidden">Versteckt</string>
+    <string name="login_icon_password_visible">Sichtbar</string>
+    <string name="login_title">Anmelden</string>
+
+    <!-- Alert Message -->
+    <string name="alert_message_content">Zeit deinen Schlaf zu bewerten</string>
+    <string name="alert_message_title">Schlaftagebuch</string>
+
+    <!-- Menu -->
+    <string name="menu_btn_PDF">Bericht herunterladen (PDF)</string>
+    <string name="menu_btn_PDF_desc">Die Schlafprotokolle als PDF exportieren</string>
+    <string name="menu_btn_questions_personal">Persönliche Fragen</string>
+    <string name="menu_btn_questions_protocol">Fragebogen starten</string>
+    <string name="menu_btn_settings">Einstellungen</string>
+    <string name="menu_btn_settings_desc">Benutzername einsehbar</string>
+    <string name="menu_btn_sleep_control">Schlaf-Messung starten</string>
+    <string name="menu_btn_smartwatch">Schlafdaten einsehen</string>
+    <string name="menu_btn_smartwatch_desc">Daten der Smartwatch aus der Nacht einsehen</string>
+    <string name="menu_title">Hauptmenü</string>
+    <string name="menu_toast_pdf_fail_1">Download der PDF fehlgeschlagen</string>
+    <string name="menu_toast_pdf_fail_2">PDF ist leer.</string>
+    <string name="menu_toast_pdf_fail_3">"Server Fehler: "</string>
+
+    <!-- Questions Protocol -->
+    <string name="questions_protocol_back">Zurück</string>
+    <string name="questions_protocol_btn_finish">Fertig</string>
+    <string name="questions_protocol_btn_next">Weiter</string>
+    <string name="questions_protocol_error_no_questions">Keine Fragen vorhanden oder laden fehlgeschlagen</string>
+    <string name="questions_protocol_explanation_close">Schließen</string>
+    <string name="questions_protocol_explanation_icon">Hilfe anzeigen</string>
+    <string name="questions_protocol_explanation_title">Erklärung</string>
+
+    <!-- Analysis Result -->
+    <string name="analysis_result_btn_next">Weiter</string>
+    <string name="analysis_result_error_invalid_data">Keine verwertbaren Daten gefunden.</string>
+    <string name="analysis_result_legend_item_pulse">Puls</string>
+    <string name="analysis_result_legend_item_restless">Unruhig</string>
+    <string name="analysis_result_legend_item_sleep">Schlaf</string>
+    <string name="analysis_result_legend_item_very_restless">Sehr unruhig</string>
+    <string name="analysis_result_legend_item_wake">Wach</string>
+    <string name="analysis_result_legend_motion">Bewegung (ENMO)</string>
+    <string name="analysis_result_legend_sleep_pulse">Schlafphasen &amp; Puls</string>
+    <string name="analysis_result_stats_avg_pulse">Durchschnittspuls:</string>
+    <string name="analysis_result_stats_phase_unrest">• Unruhig (>=0.12g):</string>
+    <string name="analysis_result_stats_phase_very_unrest">• Sehr Unruhig (>=0.16g):</string>
+    <string name="analysis_result_stats_phase_wake">• Wach (>=0.22g):</string>
+    <string name="analysis_result_stats_phases_title">Phasen:</string>
+    <string name="analysis_result_stats_total_duration">Gesamtdauer</string>
+    <string name="analysis_result_status_computing">Berechne…</string>
+    <string name="analysis_result_status_no_data">Keine Daten.</string>
+    <string name="analysis_result_summary">Zusammenfassung</string>
+    <string name="analysis_result_switch_zoom">Detail-Zoom</string>
+    <string name="analysis_result_title_main">Schlaf-Auswertung</string>
+
+    <!-- Sync Evaluation -->
+    <string name="sync_evaluation_box_data">Noch keine Daten Empfangen.</string>
+    <string name="sync_evaluation_btn_delet">Löschen</string>
+    <string name="sync_evaluation_btn_delete">Löschen</string>
+    <string name="sync_evaluation_btn_next">Überspringen</string>
+    <string name="sync_evaluation_btn_refresh">Liste aktualisieren</string>
+    <string name="sync_evaluation_card_action">Antippen für Auswertung</string>
+    <string name="sync_evaluation_card_collected">Empfangen:</string>
+    <string name="sync_evaluation_card_title">Schlaf-Auzeichnung</string>
+    <string name="sync_evaluation_delete_break">Abbrechen</string>
+    <string name="sync_evaluation_delete_confirm">Alles löschen</string>
+    <string name="sync_evaluation_delete_warning">Warnung</string>
+    <string name="sync_evaluation_delete_warning_text">Wirklich alle gesammelten Daten unwiderruflich löschen?</string>
+    <string name="sync_evaluation_title">Empfangene Daten</string>
+
+    <!-- Questions Personal -->
+    <string name="questions_personal_btn_next">Speichern und Fortfahren</string>
+    <string name="questions_personal_title">Benachrichtigung</string>
+    <string name="questions_personal_toast_saved">Gespeichert!</string>
+
+    <!-- Summary -->
+    <string name="summary_btn_back">Zurück</string>
+    <string name="summary_btn_save">Jetzt Speichern</string>
+    <string name="summary_title">Zusammenfassung</string>
+    <string name="summary_toast_saved">Gespeichert!</string>
+
+    <!-- Settings -->
+    <string name="settings_btn_back">Zurück</string>
+    <string name="settings_btn_language">Sprache</string>
+    <string name="settings_color_bright">Helles Theme</string>
+    <string name="settings_color_dark">Dunkles Theme</string>
+    <string name="settings_color_system">Systemeinstellungen</string>
+    <string name="settings_color_title">Farbschema</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_toast_saved">Gespeichert!</string>
+    <string name="settings_username">Benutzername:</string>
+
+    <!-- UI Questions -->
+    <string name="ui_question_date_null">Datum eingeben</string>
+    <string name="ui_question_date_text">Datum ausgewählt:</string>
+    <string name="ui_question_duration_text">Dauer eingeben:</string>
+    <string name="ui_question_multiple_choice_text">Bitte auswählen (Mehrfachnennung möglich):</string>
+    <string name="ui_question_slider_text">Aktueller Wert:</string>
+    <string name="ui_question_yesno_no">Nein:</string>
+    <string name="ui_question_yesno_yes">Ja:</string>
+
+    <!-- Credential Info -->
+    <string name="credential_info_btn_next">Weiter</string>
+    <string name="credential_info_code">Ihr Benutzername wurde automatisch erstellt. Bitte notieren Sie ihn oder speichern Sie ihn zusammen mit Ihrem Passwort im Passwort-Manager.</string>
+    <string name="credential_info_copy_1">Kopieren</string>
+    <string name="credential_info_copy_2">Kopiert!</string>
+    <string name="credential_info_title">Wichtig!</string>
+
+    <!-- Notification -->
+    <string name="notification_btn_change_time">Zeit ändern</string>
+    <string name="notification_format_clock">Uhr</string>
+    <string name="notification_switch_off">Aus</string>
+    <string name="notification_switch_on">An</string>
+    <string name="notification_title">Tägliche Erinnerung</string>
+
+    <!-- Sleep Control -->
+    <string name="sleep_control_btn_back">Zurück</string>
+    <string name="sleep_control_btn_finish">Aufgewacht? (Ende)</string>
+    <string name="sleep_control_btn_start">Schlafen gehen (Start)</string>
+    <string name="sleep_control_content_ready">Bereit</string>
+    <string name="sleep_control_content_recording">Aufzeichnung läuft…</string>
+    <string name="sleep_control_title">Schlaf-Monitor</string>
+    <string name="sleep_control_toast_finish">Ende gesendet</string>
+    <string name="sleep_control_toast_start">Start gesendet</string>
+</resources>

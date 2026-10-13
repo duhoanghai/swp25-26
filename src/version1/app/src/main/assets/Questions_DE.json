@@ -61,7 +61,7 @@
     "id": 8,
     "type": "QuestionDuration",
     "title": "Dauer Tagesschlaf",
-    "explanation": "Wie lange hast du tagsüber insgesamt geschlafen? (Minuten)"
+    "explanation": "Wie lange hast du tagsüber insgesamt geschlafen?"
   },
   {
     "id": 9,
@@ -97,7 +97,7 @@
     "id": 12,
     "type": "QuestionDuration",
     "title": "Dauer Wachphasen",
-    "explanation": "Wie lange warst du nachts insgesamt wach? (Minuten)"
+    "explanation": "Wie lange warst du nachts insgesamt wach?"
   },
   {
     "id": 13,

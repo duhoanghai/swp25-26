@@ -1,49 +1,139 @@
-# SWP25_26
+# SWP25_26 - Schlaftagebuch App – Gruppe A
 
-## Anweisungen
+## Gruppe
 
-* **Forken** Sie das Projekt (einmal pro Gruppe); passen Sie den Projektnamen entsprechend dem Gruppennamen an, z.B. **Projektname:** `Gruppe A`.
-* Laden Sie die restlichen **Gruppenmitglieder** in das Projekt ein.
-* Laden Sie den Nutzer ***Taisiya Khakharova*** (@khakhtai) in das Projekt ein und weisen Sie ihr die Rolle ***Owner*** zu.
-* Ändern Sie die **Projektstruktur nicht**; verwenden Sie jeden Ordner gemäß den Anweisungen im ersten Plenum.
-* Unabhängig von anderen Dateien, die sich in Unterordnern innerhalb von `docs` befinden können, z.B. zusätzliche LaTeX-Dateien, stellen Sie sicher, dass diese Unterordner **immer** die im Plenum genannten Dateien (mit dem richtigen Namen) enthalten:
-    * `docs > product.pdf`
-    * `docs > project.pdf`
-    * `docs > presentation.pdf` und `docs > intermediate-presentation.pdf` (sobald Sie mit der Arbeit an Präsentationen beginnen)
-* Vorlagen für Präsentationen werden in **Moodle** veröffentlicht.
-* Präsentationen müssen als **PDFs** eingereicht werden.
-* Die Projektdokumentation, das dokumentierte Softwareprodukt und ggf. die Präsentation müssen bis zur **Frist** des jeweiligen Meilensteins im **Git-Repository** verfügbar sein. Ein **Pull Request** in den `main`-Branch muss fristgerecht für jeden Meilenstein erfolgen!
-* Bearbeiten Sie dieses `README` mit Informationen zur Gruppe: Listen Sie die **Gruppenmitglieder**, die **Architektur- & Qualitäts-Coaches** und die **Tutoren** auf.
+**Mitglieder**
+- Marwa Al Siyamji Al Mousli -- [AlSiyamjiAlMousli.Marwa@b-tu.de](mailto:AlSiyamjiAlMousli.Marwa@b-tu.de)
+- Valentina Aseeva -- [Valentina.Aseeva@b-tu.de](mailto:Valentina.Aseeva@b-tu.de)
+- Bruno Schreier -- [Bruno.Schreier@b-tu.de](mailto:Bruno.Schreier@b-tu.de)
+- Eric Staudt -- [Eric.Staudt@b-tu.de](mailto:IEric.Staudt@b-tu.de)
+- Hai Hoang Du -- [HaiHoang.Du@b-tu.de](mailto:HaiHoang.Du@b-tu.de)
+
+**Architektur- & Qualitäts-Coaches**
+* **Isa Zenker** -- [Isabelle.Zenker@b-tu.de](mailto:Isabelle.Zenker@b-tu.de)
+
+**Tutor:in**
+* **Leonie Ziechmann** -- [Leonie.Ziechmann@b-tu.de](mailto:Leonie.Ziechmann@b-tu.de)
+
 
 ---
 
 ## Projektübersicht
 
-Hier wird eine **kurze, prägnante Zusammenfassung** des Projekts, dessen Hauptziele und der gelösten Problemstellung eingefügt.
+Dieses Projekt entsteht im Rahmen der Lehrveranstaltung **Softwarepraktikum (SWP) WS 2025/26** an der BTU Cottbus-Senftenberg.  
+Das **Schlaftagebuch** ist ein System zur digitalen Erfassung des Schlafverhaltens von Jugendlichen ab 14 Jahren.
+Patient:innen füllen täglich ein Morgenprotokoll in der Android-App aus (optional mit Smartwatch‑Daten),
+Ärzt:innen erhalten automatisch ausgewertete Berichte als PDF.
+Das System besteht aus einem Spring‑Boot‑Backend, einer Android‑App (mit optionaler Wear‑OS‑App)
+und einer Web‑GUI für Ärzt:innen.
 
 ---
 
 ## Installation
 
-Dieser Abschnitt dient der **detaillierten Beschreibung der Schritte**, die zur lokalen Installation und Inbetriebnahme des Projekts notwendig sind (z.B. Klonen des Repositories, benötigte Abhängigkeiten, Konfigurationsschritte).
+### Repository klonen
+```bash
+git clone <gitlab-url>
+cd swp-25-26-groupe-a
+```
+
+### Voraussetzungen
+- **JDK 17**
+- **Docker Desktop** (inkl. Docker Compose)
+- **Android Studio** (für Android/Wear‑OS)
+- **VS Code + Live Server** (für die Web‑GUI)
+
+### Backend (Spring Boot + PostgreSQL)
+```bash
+cd src/back
+# Datenbank starten
+docker compose up -d
+# Backend starten
+./gradlew bootRun
+```
+### API-Base
+- **API-Base URL:** `http://localhost:8080`
+- Die angezeigten **Hibernate-Abfragen** sowie der laufende `bootRun`-Prozess zeigen, dass das Backend erfolgreich gestartet ist und betriebsbereit ist.
+- Der **Gradle-Fortschritt** verbleibt typischerweise bei ca. **80 %** (erwartetes Verhalten).
+
+> **Hinweis:**  
+> Eine Überprüfung über den Webbrowser ist nicht möglich, da das Backend ausschließlich REST-Endpunkte bereitstellt.
+
+Die Funktionsfähigkeit kann wie folgt überprüft werden:
+
+- **Über ein API-Testtool**  
+  z. B. Postman
+
+- **Über angebundene Frontends**
+  - Android-App
+  - Web-GUI
+
+### Datenbank
+- **PostgreSQL** läuft lokal auf Port `5433`
+- Alle notwendigen Verbindungsdaten (Port, User, Passwort, Datenbankname) sind in der Datei `docker-compose.yml` definiert.
+- Alle Datenbanktabellen sind direkt in der IDE (z. B. IntelliJ IDEA) über das integrierte Database-Tool einsehbar. 
+
+---
+
+### Web‑GUI (Ärzt:innen‑Dashboard)
+- Ordner `src/HTML` öffnen
+- `login.html` über einen lokalen Webserver öffnen (z. B. VS Code Live Server)
+- Optional: API‑Base setzen
+  ```js
+  localStorage.setItem('api_base', 'http://localhost:8080')
+  ```
+
+### Android‑App (Patient:innen)
+- Projektordner `src/version1` in Android Studio öffnen
+- Modul **app** ausführen (Emulator oder Gerät)
+
+### Wear‑OS‑App (optional)
+- Modul **wear** ausführen (Wear‑OS‑Emulator oder Gerät)
 
 ---
 
 ## Nutzung / Features
 
-Hier werden die **Hauptfunktionen** des Softwareprodukts aufgelistet und eine **kurze Anleitung** zur Nutzung gegeben. Es sollte klar werden, was das Programm kann und wie man es startet.
+**Patient:innen (Android App)**
+- Erstlogin via Zugangscode
+- Tägliches Schlafprotokoll (Morgenfragebogen)
+- Erinnerungen & Einstellungen
+- Optional: Smartwatch‑Sync
+- Bericht als PDF abrufen
+
+**Ärzt:innen (Web‑GUI & API)**
+- Login und Dashboard (Statistiken, Aktivitäten)
+- Patient:innenübersicht
+- Zugangscodes generieren
+- Berichte abrufen
+
+**Testzugänge (Dev Seed)**
+- Arzt: `arzt1` / `arztpass`
+- Patient: `patient_test` / `patientpass`
 
 ---
 
 ## Technische Details
 
-Dieser Abschnitt beinhaltet **technische Informationen** über die verwendete Technologie (z.B. Programmiersprachen, Frameworks, Datenbanken) sowie die **Architektur** des Systems.
+**Backend**
+- Java 17, Spring Boot 3
+- PostgreSQL, JWT‑Auth
+- HAPI‑FHIR (R4)
+- PDF‑/Report‑Erstellung (OpenPDF, JFreeChart)
+
+**Android / Wear OS**
+- Kotlin, Jetpack Compose
+- Retrofit/OkHttp
+- Wearable API
+
+**Web‑GUI**
+- HTML/CSS/JavaScript
 
 ---
 
 ## Lizenz
 
-Fügen Sie hier die **Lizenzinformationen** des Projekts ein (z.B. MIT, GPL).
+Dieses Projekt dient ausschließlich **Lehr- und Studienzwecken** im Rahmen des Softwarepraktikums.
 
 ---
 

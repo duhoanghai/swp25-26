@@ -12,55 +12,141 @@ Randbedingungen und Qualitätsziele:
 	\item \textbf{Zuverlässigkeit und Sicherheit}: Verschlüsselte Datenspeicherung, fehlerfreie Übertragung.
 \end{itemize}
 
+\subsection{Qualitätsszenarien}
+
+\textit{Datenschutz / Privacy}
+\begin{itemize}
+  \item[] \textbf{Quelle:} Systembetrieb
+  \item[] \textbf{Stimulus:} Speicherung und Verarbeitung personenbezogener Daten (z.\,B. Name, Geburtsdatum).
+  \item[] \textbf{Artefakt:} Backend und Datenbank
+  \item[] \textbf{Umgebung:} Produktivbetrieb.
+  \item[] \textbf{Reaktion:} Es werden ausschließlich notwendige personenbezogene Daten gespeichert. Der Zugriff auf Patientendaten ist strikt rollenbasiert und erfolgt ausschließlich über gültige Authentifizierungs-Tokens (JWT).
+  \item[] \textbf{Messgröße:} Kein Zugriff auf fremde Patientendaten; Einhaltung der Datenminimierung.
+\end{itemize}
+
+\textit{Benutzerfreundlichkeit}
+\begin{itemize}
+  \item[] \textbf{Quelle:} Patient:in (Jugendliche/r ab 14 Jahren)
+  \item[] \textbf{Stimulus:} Öffnet die App am Morgen, um das tägliche Schlafprotokoll auszufüllen.
+  \item[] \textbf{Artefakt:} Android-Anwendung (Patient:in GUI)
+  \item[] \textbf{Umgebung:} Normalbetrieb, mobile Nutzung.
+  \item[] \textbf{Reaktion:} Die App führt Schritt für Schritt durch das Protokoll, validiert Eingaben und bestätigt die erfolgreiche Speicherung.
+  \item[] \textbf{Messgröße:} Das Ausfüllen des Protokolls ist in ungefähr 5 Minuten möglich; Eingabefehler werden verständlich angezeigt.
+\end{itemize}
+
+\textit{Zuverlässigkeit / Offline-Fähigkeit}
+\begin{itemize}
+  \item[] \textbf{Quelle:} Netzwerk / Infrastruktur
+  \item[] \textbf{Stimulus:} Patient:in sendet ein Schlafprotokoll, während Backend oder Netzwerk nicht verfügbar ist.
+  \item[] \textbf{Artefakt:} Android-App und Backend-API
+  \item[] \textbf{Umgebung:} Offline-Betrieb oder instabile Verbindung.
+  \item[] \textbf{Reaktion:} Das Protokoll wird lokal gespeichert und kann nach Wiederherstellung der Verbindung erneut gesendet werden.
+  \item[] \textbf{Messgröße:} Kein Datenverlust; lokale Speicherung bleibt nach App-Neustart erhalten.
+\end{itemize}
+
+\textit{Sicherheit / Authentifizierung}
+\begin{itemize}
+  \item[] \textbf{Quelle:} Unautorisierte Nutzer:in oder abgelaufene Sitzung
+  \item[] \textbf{Stimulus:} Zugriff auf geschützte API-Endpunkte ohne gültigen JWT-Token.
+  \item[] \textbf{Artefakt:} Systembackend (Auth-, Report- und Management-Module)
+  \item[] \textbf{Umgebung:} Normalbetrieb.
+  \item[] \textbf{Reaktion:} Der Zugriff wird verweigert; das System liefert einen entsprechenden Fehlercode (401/403).
+  \item[] \textbf{Messgröße:} 100 \% der nicht autorisierten Zugriffe werden blockiert; keine sensiblen Daten werden ausgeliefert.
+\end{itemize}
+
+\textit{Performance / Berichtserstellung}
+\begin{itemize}
+  \item[] \textbf{Quelle:} Ärzt:in oder Patient:in
+  \item[] \textbf{Stimulus:} Anforderung eines PDF-Berichts über einen definierten Zeitraum (z.\,B. 14 Tage).
+  \item[] \textbf{Artefakt:} Backend (Report-Service)
+  \item[] \textbf{Umgebung:} Normalbetrieb, lokale Demonstrationsumgebung.
+  \item[] \textbf{Reaktion:} Der Bericht wird generiert und als PDF ausgeliefert oder es erfolgt eine Fehlermeldung ohne Systemabsturz.
+  \item[] \textbf{Messgröße:} Die PDF-Generierung erfolgt innerhalb von maximal 5 Sekunden unter Normalbedingungen; es treten keine ungefangenen Exceptions oder Systemabstürze auf.
+\end{itemize}
+
 \subsection{Glossar}
 
 \subsubsection{Fachbegriffe}
-\textbf{Patient:in} — Nutzer:in der Anwendung, die/der täglich ein Schlafprotokoll ausfüllt. Verantwortlich für das optionale Koppeln einer Smartwatch. \\
-\textbf{Ärzt:in} — Medizinisches Fachpersonal, das die exportierten Berichte zur Auswertung erhält. \\
-\textbf{Nutzer:in} — Eine Person, die das System verwendet. Der Begriff umfasst sowohl Patient:innen als auch Ärzt:innen. \\
-Patient:innen nutzen das System zur täglichen Eingabe und Verwaltung ihrer Schlafdaten. \\
-Ärzt:innen verwenden das System, um Berichte einzusehen und die Schlafdiagnostik zu unterstützen. \\
-\textbf{Nutzerkonto} — Persönliches App-Konto einer Patient:in oder Ärzt:in, das mit einem einmaligen Zugangscode aktiviert wird. \\
-\textbf{Personenbezogene Daten (PbD)} — Alle Informationen, die eine natürliche Person eindeutig identifizieren oder identifizierbar machen. \\
+\textbf{Patient:in} — Nutzer:in der Anwendung, die/der täglich ein Schlafprotokoll ausfüllt. Verantwortlich für das optionale Koppeln einer Smartwatch.
+
+\textbf{Ärzt:in} — Medizinisches Fachpersonal, das die exportierten Berichte zur Auswertung erhält.
+
+\textbf{Nutzer:in} — Eine Person, die das System verwendet. Der Begriff umfasst sowohl Patient:innen als auch Ärzt:innen.
+
+Patient:innen nutzen das System zur täglichen Eingabe und Verwaltung ihrer Schlafdaten. 
+
+Ärzt:innen verwenden das System, um Berichte einzusehen und die Schlafdiagnostik zu unterstützen. 
+
+\textbf{Nutzerkonto} — Persönliches App-Konto einer Patient:in oder Ärzt:in, das mit einem einmaligen Zugangscode aktiviert wird. 
+
+\textbf{Personenbezogene Daten (PbD)} — Alle Informationen, die eine natürliche Person eindeutig identifizieren oder identifizierbar machen. 
+
 Im Kontext unseres Schlaf-Tagebuchs gehören dazu ausschließlich die Stammdaten der Nutzer:innen:
 \begin{itemize}
     \item Vorname
     \item Nachname
     \item Geburtsdatum
 \end{itemize}
-Diese Daten dienen ausschließlich der Zuordnung eines Nutzerkontos zu einer konkreten Person und sind gemäß DSGVO besonders zu schützen. \\
-\textbf{Erziehungsberechtigte} — Gesetzliche Vertretung einer minderjährigen Patient:in; ab 18 übernimmt die/der Patient:in diese Rolle selbst. \\
-\textbf{Schlaftagebuch} — Digitale Anwendung zur täglichen Dokumentation des Schlafverhaltens. Speichert, verwaltet und synchronisiert Schlafdaten und Protokolle und steuert den Anmeldevorgang. Leitet Daten an Berichte weiter und ermöglicht den Export. \\
-\textbf{Einwilligung zur Datenverarbeitung} — Zustimmung zur Erhebung, Speicherung und Verarbeitung personenbezogener Gesundheitsdaten gemäß DSGVO. \\
-\textbf{Einmaliger Zugangscode} — Von der Klinik ausgegebener Code zur erstmaligen Anmeldung und Aktivierung des Nutzerkontos. \\
-\textbf{Anmeldung} — Zugang zur App und Aktivierung des Nutzerkontos; umfasst auch die Verwaltung und Änderung der Zugangscodes.\\
-\textbf{Benachrichtigung} — Tägliche Erinnerung der App an das Ausfüllen des Schlafprotokolls.\\
-\textbf{Benachrichtigungszeit} — Von der Patient:in gewählte Uhrzeit für die tägliche Erinnerung.\\
-\textbf{Schlafprotokoll} — Fragebogen zur Selbsteinschätzung der gesundheitlichen und emotionalen Verfassung, zur Schlafsituation sowie zur Erfassung der Schlafdauer.\\
-\textbf{Schlafdauer} — Automatisch berechnete Zeitspanne zwischen Einschlafzeit und Aufwachzeit.\\
-\textbf{Smartwatch} — Tragbares Gerät, das Schlafdaten automatisch erfasst und mit der App synchronisiert; optional.\\
-\textbf{Schlafdaten} — Von der Smartwatch gesammelte Daten der Nacht; optional und werden vom Schlaftagebuch verwaltet. \\
-\textbf{Synchronisation} — Abgleich der in der App eingegebenen Daten mit automatisch erfassten Smartwatch-Daten. \\
-\textbf{Visualisierung} — Grafische Darstellung der erfassten Schlafdaten.\\ 
-\textbf{Bericht / Dokument} — Automatisch generiertes Dokument, das die gespeicherten Schlafdaten zusammenfasst.\\
-\textbf{Generierung / Erstellung} — Automatischer Prozess der Berichtserzeugung.\\
+Diese Daten dienen ausschließlich der Zuordnung eines Nutzerkontos zu einer konkreten Person und sind gemäß DSGVO besonders zu schützen. 
+
+\textbf{Erziehungsberechtigte} — Gesetzliche Vertretung einer minderjährigen Patient:in; ab 18 übernimmt die/der Patient:in diese Rolle selbst. 
+
+\textbf{Schlaftagebuch} — Digitale Anwendung zur täglichen Dokumentation des Schlafverhaltens. Speichert, verwaltet und synchronisiert Schlafdaten und Protokolle und steuert den Anmeldevorgang. Leitet Daten an Berichte weiter und ermöglicht den Export. 
+
+\textbf{Einwilligung zur Datenverarbeitung} — Zustimmung zur Erhebung, Speicherung und Verarbeitung personenbezogener Gesundheitsdaten gemäß DSGVO. 
+
+\textbf{Einmaliger Zugangscode/Zugangscode/Einmalcode} — Von der Klinik ausgegebener Code zur erstmaligen Anmeldung und Aktivierung des Nutzerkontos. 
+
+\textbf{Anmeldung} — Zugang zur App und Aktivierung des Nutzerkontos; umfasst auch die Verwaltung und Änderung der Zugangscodes.
+
+\textbf{Benachrichtigung} — Tägliche Erinnerung der App an das Ausfüllen des Schlafprotokolls.
+
+\textbf{Benachrichtigungszeit} — Von der Patient:in gewählte Uhrzeit für die tägliche Erinnerung.
+
+\textbf{Schlafprotokoll} — Fragebogen zur Selbsteinschätzung der gesundheitlichen und emotionalen Verfassung, zur Schlafsituation sowie zur Erfassung der Schlafdauer.
+
+\textbf{Schlafdauer} — Automatisch berechnete Zeitspanne zwischen Einschlafzeit und Aufwachzeit.
+
+\textbf{Smartwatch} — Tragbares Gerät, das Schlafdaten automatisch erfasst und mit der App synchronisiert; optional.
+
+\textbf{Schlafdaten} — Von der Smartwatch gesammelte Daten der Nacht; optional und werden vom Schlaftagebuch verwaltet. 
+
+\textbf{Synchronisation} — Abgleich der in der App eingegebenen Daten mit automatisch erfassten Smartwatch-Daten. 
+
+\textbf{Visualisierung} — Grafische Darstellung der erfassten Schlafdaten.
+
+\textbf{Bericht / Dokument} — Automatisch generiertes Dokument, das die gespeicherten Schlafdaten zusammenfasst.
+
+\textbf{Generierung / Erstellung} — Automatischer Prozess der Berichtserzeugung.
+
 \textbf{Export} — Bereitstellung des Berichts zum Herunterladen oder sicheren Übermitteln an die Klinik.
 
 \subsubsection{Prozessbegriffe}
-\textbf{Einmaligen Zugangscode erhalten} — Empfang des von der Klinik bereitgestellten Codes zur Aktivierung des Nutzerkontos.\\
-\textbf{Anmelden} — Erstellung eines Nutzerkontos mit klinischen Zugangsdaten; umfasst auch deren Änderung.\\
-\textbf{Zugangsdaten ändern} — Ändern des Anmeldepassworts durch die Patient:in.\\
-\textbf{Einwilligung erteilen} — Zustimmung zur Datenverarbeitung innerhalb der App. \\
-\textbf{Einstellungen verwalten} — Übergeordneter Begriff für Spracheinstellung und Benachrichtigungszeit.\\
-\textbf{Sprache auswählen} — Festlegung der App-Sprache (Deutsch, Englisch, Russisch).\\
-\textbf{Benachrichtigungszeit auswählen} — Festlegung der Uhrzeit für die tägliche Erinnerung.\\
-\textbf{Benachrichtigung erhalten} — Empfang der Erinnerung zum Ausfüllen des Schlafprotokolls.\\
-\textbf{Smartwatch koppeln} — Verbinden der App mit einer kompatiblen Smartwatch zur Synchronisation.\\
-\textbf{Daten synchronisieren} — Abgleich der manuell eingegebenen Informationen mit Smartwatch-Daten.\\
-\textbf{Visualisierung ansehen} — Öffnen und Betrachten der grafischen Darstellung der Schlafdaten.\\
-\textbf{Schlafprotokoll ausfüllen} — Beantworten der Fragen zum Schlafverhalten und Tagesbefinden.\\
-\textbf{Bericht erstellen / generieren} — Automatische Erstellung eines Berichts aus allen vorhandenen Daten.\\
-\textbf{Daten exportieren} — Übermittlung des Berichts an die/den Ärzt:in und Speichern im Protokoll.\\
+\textbf{Einmaligen Zugangscode erhalten} — Empfang des von der Klinik bereitgestellten Codes zur Aktivierung des Nutzerkontos.
+
+\textbf{Anmelden} — Erstellung eines Nutzerkontos mit klinischen Zugangsdaten; umfasst auch deren Änderung.
+
+\textbf{Einwilligung erteilen} — Zustimmung zur Datenverarbeitung innerhalb der App. 
+
+\textbf{Einstellungen verwalten} — Übergeordneter Begriff für Spracheinstellung und Benachrichtigungszeit.
+
+\textbf{Sprache auswählen} — Festlegung der App-Sprache (Deutsch, Englisch, Russisch).
+
+\textbf{Benachrichtigungszeit auswählen} — Festlegung der Uhrzeit für die tägliche Erinnerung.
+
+\textbf{Benachrichtigung erhalten} — Empfang der Erinnerung zum Ausfüllen des Schlafprotokolls.
+
+\textbf{Smartwatch koppeln} — Verbinden der App mit einer kompatiblen Smartwatch zur Synchronisation.
+
+\textbf{Daten synchronisieren} — Abgleich der manuell eingegebenen Informationen mit Smartwatch-Daten.
+
+\textbf{Visualisierung ansehen} — Öffnen und Betrachten der grafischen Darstellung der Schlafdaten.
+
+\textbf{Schlafprotokoll ausfüllen} — Beantworten der Fragen zum Schlafverhalten und Tagesbefinden.
+
+\textbf{Bericht erstellen / generieren} — Automatische Erstellung eines Berichts aus allen vorhandenen Daten.
+
+\textbf{Daten exportieren} — Übermittlung des Berichts an die/den Ärzt:in und Speichern im Protokoll.
 
 \newpage
 
@@ -98,7 +184,7 @@ indem sie digitale Schlafprotokolle sammelt, vervollständigt, validiert und in 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.6\textwidth]{images/meilenstein1/Aktivität.pdf} 
+	\includegraphics[width=0.6\textwidth]{images/meilenstein1/Aktivitaet.pdf} 
 	\caption{Geschäftsprozessdiagramm: Schlaftagebuch}
 	\label{fig:activitydiagramgeneral}
 \end{figure}
@@ -109,15 +195,17 @@ indem sie digitale Schlafprotokolle sammelt, vervollständigt, validiert und in 
 
 \subsubsection{Übersicht}
 Die dargestellte Use-Case-Diagramm zeigt die zentralen Systemfunktionen des Schlaftagebuchs aus der Perspektive der beiden Hauptakteure: \textbf{Patient:in} und \textbf{Arzt:in}. 
-Es veranschaulicht, welche Aktionen die jeweiligen Nutzergruppen mit dem System durchführen können und wie sie mit den Kernfunktionalitäten interagieren.\\
+Es veranschaulicht, welche Aktionen die jeweiligen Nutzergruppen mit dem System durchführen können und wie sie mit den Kernfunktionalitäten interagieren.
+
 Patient:innen sind die primären Anwender:innen des Systems. Sie können sich im Schlaftagebuch anmelden, ihre Einstellungen verwalten und eine Smartwatch mit dem System koppeln, 
-um Schlafdaten automatisiert zu erfassen. Darüber hinaus haben Patient:innen die Möglichkeit, täglich ein Schlafprotokoll auszufüllen, in dem subjektive und objektive Angaben zum Schlafverhalten erfasst werden. \\
-Ärzt:innen nutzen das System vor allem zur Einsicht und Auswertung der protokollierten Daten. 
-Sie können die von Patient:innen erstellten PDF-Berichte ansehen, um einen Überblick über Schlafmuster, Auffälligkeiten und relevante Gesundheitsinformationen zu erhalten. \\
+um Schlafdaten automatisiert zu erfassen. Darüber hinaus haben Patient:innen die Möglichkeit, täglich ein Schlafprotokoll auszufüllen, in dem subjektive und objektive Angaben zum Schlafverhalten erfasst werden. 
+
+Ärzt:innen nutzen das System zur Verwaltung ihrer Patient:innen.
+Sie können Zugangscodes für Patient:innen erstellen, haben Zugriff auf Informationen von den Patient:innen und ihnen steht eine Berichtsübersicht zur Verfügung, die alle erstellten PDF-Berichte der zugeordneten Patient:innen umfasst.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{images/meilenstein1/usecase.pdf} 
+	\includegraphics[width=0.6\textwidth]{images/meilenstein1/usecase.pdf} 
 	\caption{Use-Case-Diagramm: Schlaftagebuch}
 	\label{fig:usecasediagram}
 \end{figure}
@@ -130,29 +218,72 @@ Sie können die von Patient:innen erstellten PDF-Berichte ansehen, um einen Übe
 \textbf{Titel:} Anmelden
 
 \textbf{Kurzbeschreibung:}  
-Aktivierung und Anmeldung des Nutzerkontos mithilfe eines einmaligen Zugangscodes.
+Aktivierung und Anmeldung des Nutzerkontos.
 
 \textbf{Aktoren:}  
 Nutzer:in (Patient:in oder Ärzt:in)
 
 \textbf{Vorbedingungen:}  
-Ein einmaliger Zugangscode liegt vor.
+Patient:in: Ein einmaliger Zugangscode liegt vor.
+
+Ärzt:in: Anmeldedaten von IT-Personal (Username, Passwort)
 
 \textbf{Ablauf:}  
 
-1. Patient:in gibt den Zugangscode ein.  
+Patient:in: 
+
+1. Gibt den Zugangscode und PbD ein, erstellt ein eigenes Passwort.  
 
 2. System aktiviert das Nutzerkonto.  
 
-3. Patient:in meldet sich an.
+3. Angemeldet.
+
+Ärzt:in:
+
+1. Gibt Username und Passwort ein.
+
+2. Angemeldet.
 
 \textbf{Auswirkungen:}  
-Nutzerkonto wird freigeschaltet und ist vollständig nutzbar.
+Nutzerkonto wird vollständig nutzbar.
 
 \textbf{Anmerkungen:}  
-Bei falschem Zugangscode erscheint eine Fehlermeldung.
+Für Patientin:nen wird ein Username erstellt, die sie (mit eigenem Passwort) für künftige Login ohne Zugangscode nutzen können. 
 
 
+\subsubsection*{Use Case: Patient:innen verwalten}
+
+\textbf{Titel:} Patient:innen verwalten
+
+\textbf{Kurzbeschreibung:}
+Ärzt:innen verwalten Patient:innen, erstellen Zugangscodes für die Registrierung und können Patientendaten ansehen.
+
+\textbf{Aktoren:}
+Ärzt:in
+
+\textbf{Vorbedingungen:}
+Ärzt:in ist im System angemeldet.
+
+\textbf{Ablauf:}
+
+1. Ärzt:in öffnet die Übersicht (Dashboard).
+
+2. System zeigt eine Übersicht, z.\,B. Anzahl der Patient:innen und Anzahl der verfügbaren Berichte.
+
+3. Ärzt:in öffnet die Seite zur Generierung von Zugangscodes.
+
+4. Ärzt:in erstellt einen neuen Zugangscode für eine:n Patient:in.
+
+5. System speichert den Zugangscode und zeigt ihn in der Liste aller generierten Codes an.
+
+6. Ärzt:in öffnet die Patientenübersicht.
+
+7. Ärzt:in wählt eine:n Patient:in aus.
+
+8. System zeigt grundlegende Patientendaten.
+
+\textbf{Auswirkungen:}
+Zugangscodes werden gespeichert und stehen für die Registrierung zur Verfügung. Ärzt:innen können Patient:innen einsehen.
 
 \subsubsection*{Use Case: Einstellungen verwalten}
 
@@ -190,7 +321,7 @@ Einstellungen können jederzeit geändert werden.
 \textbf{Titel:} Smartwatch koppeln
 
 \textbf{Kurzbeschreibung:}  
-Verbindung der App mit einer kompatiblen Smartwatch zur automatischen Synchronisation von Schlafdaten.
+Verbindung der App mit einer kompatiblen Smartwatch zur Sendung von Start und Stopp signalen der Sammlung von Schlafdaten sowie Synchronisation dieser gesammelten Daten.
 
 \textbf{Aktoren:}  
 Patient:in
@@ -200,20 +331,18 @@ Eine Smartwatch ist vorhanden und eingeschaltet.
 
 \textbf{Ablauf:}  
 
-1. Patient:in startet den Kopplungsvorgang.
+1. Patient:in verbindet die Smartwatch mit dem Handy (außerhalb der App über Bluetooth, wenn nicht bereits verbunden).
 
-2. App sucht verfügbare Geräte.
+2. Patient:in sendet ein Startsignal der Messung.
 
-3. Patient:in wählt die Smartwatch aus.
+3. Die Smartwatch sammelt dauerhaft Herzfrequenz und Bewegungsdaten des Accelerometers.
 
-4. System stellt die Verbindung her.
+3. Patient:in sendet ein Stoppsignal der Messung
+
+4. Smartwatch sendet die gesammelten Daten an das Smartphone.
 
 \textbf{Auswirkungen:}  
-Nutzerkonto wird freigeschaltet und ist vollständig nutzbar.
-
-\textbf{Anmerkungen:}  
-Bei falschem Zugangscode erscheint eine Fehlermeldung.
-
+Daten von Smartwatch werden auf Wunsch erfasst und an die App übermittelt.
 
 
 \subsubsection*{Use Case: Schlafprotokoll ausfüllen}
@@ -233,17 +362,15 @@ Nutzerkonto ist angemeldet.
 
 1. Öffnen des Formulars für den aktuellen Tag.
 
-2. Eintragen von Schlafdauer, Einschlafzeit und Aufwachzeit.
+2. Antworten auf die Fragen.
 
-3. Bewertung der Schlafqualität und des Wohlbefindens.
-
-4. System speichert das Protokoll.
+3. System speichert das Protokoll.
 
 \textbf{Auswirkungen:}  
 Das Tagesprotokoll ist vollständig gespeichert.
 
 \textbf{Anmerkungen:}  
-Pro Tag kann nur ein Protokoll abgegeben werden.
+Pro Tag können mehrere Protokolle abgegeben werden. Gespeichert und für den Bericht verwendet wird jedoch nur das letzte Protokoll.
 
 \clearpage 
 
@@ -252,15 +379,17 @@ Pro Tag kann nur ein Protokoll abgegeben werden.
 \textbf{Titel:} Bericht ansehen
 
 \textbf{Kurzbeschreibung:}  
-Ärzt:in öffnet den automatisch generierten Bericht über die Schlafdaten.
+Der Bericht wird aus den Protokollen erstellt und zur Ansicht bereitgestellt.
 
 \textbf{Aktoren:}  
-Ärzt:in
+Patient:in, Ärzt:in
 
 \textbf{Vorbedingungen:}  
-Ein Bericht wurde erstellt und die Ärzt:in ist autorisiert.
+Nutzer ist autorisiert. Patient hat mindestens ein Protokoll ausgefüllt.
 
 \textbf{Ablauf:}  
+
+Ärzt:in:
 
 1. Ärzt:in öffnet die Berichtsübersicht.
 
@@ -268,11 +397,15 @@ Ein Bericht wurde erstellt und die Ärzt:in ist autorisiert.
 
 3. System lädt und zeigt das Dokument.
 
-\textbf{Auswirkungen:}  
-Ärzt:in kann Schlafmuster analysieren und diagnostische Einschätzungen treffen.
+Patient:in:
 
-\textbf{Anmerkungen:}  
-Zugriff nur auf Berichte der zu betreuenden Patient:innen.
+1. Der Knopf „Bericht herunterladen“ wird angeklickt.
+
+2. System lädt und zeigt das Dokument.
+
+\textbf{Auswirkungen:}  
+Bericht kann ausgewertet werden.
+
 
 \newpage
 
@@ -284,8 +417,7 @@ Zugriff nur auf Berichte der zu betreuenden Patient:innen.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{images/meilenstein1/systemtests.png} 
+	\includegraphics[width=0.8\textwidth]{images/meilenstein1/systemstest.pdf} 
 	\caption{Systemtests}
 	\label{fig:systemtests}
 \end{figure}
-

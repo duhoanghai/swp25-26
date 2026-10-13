@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- folgende Anfragen wurden gestellt -->
+
+    <!-- Benachrichtigungen in Statusleiste -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Zugriff auf Alarmfunktionen -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <!-- Backend -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_moon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_moon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SchlaftagebuchV1"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name="com.example.schlaftagebuch_vers_1.api.App">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,6 +39,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".helper.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!--
+          FileProvider damit wir PDFs, die wir in getExternalFilesDir()/Downloads speichern,
+          sicher mit anderen Apps (PDF-Viewer) teilen können.
+          PdfUtils.openPdf(...) verwendet genau diese authority.
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service
+            android:name=".smartwatch.MobileDataReceiverService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data android:scheme="wear" android:host="*" android:pathPrefix="/sleep_data_file" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

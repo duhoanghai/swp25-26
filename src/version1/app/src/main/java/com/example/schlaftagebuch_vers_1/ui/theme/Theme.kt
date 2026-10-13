@@ -1,26 +1,64 @@
 package com.example.schlaftagebuch_vers_1.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    // Erklärungen siehe Hell
+    primary = MintSoft,
+    onPrimary = BlueDark,
+
+    background = BlackRich,
+    onBackground = OffWhite,
+
+    surface = SlateDark,
+    onSurface = GreyLight,
+
+    secondary = CardDark,
+    onSecondary = OffWhite,
+
+    tertiary = Periwinkle,
+    onTertiary = BlueDark,
+
+    outline = GreyMedium,
+
+    //Nur im Dunklen, kräftigeres Error Rot, Standard sehr Pastell
+    error = RedErrorDark,
+    onError = OffWhite
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    // Buttons & Interaktion
+    primary = MintStrong,                 // Alles interaktive
+    onPrimary = BlueDark,           // Schrift und Elemente auf Interaktiven
+
+    // Hintergrund
+    background = OffWhite,          // Haupt Hintergrund
+    onBackground = BlueDark,        // Haupt Schriftfarbe
+
+    // Oberflächen
+    surface = SlateLight,           // Das neue, sehr helle Grau für Cards
+    onSurface = BlueDark,           // Standardschrift
+
+    // Sekundäre Elemente
+    secondary = CardLight,          // Zweitfarbe
+    onSecondary = BlueDark,         // Hellere Schrit auf dunkel
+
+    // Andere Aktive Elemente wie Switch oder Checkbox
+    tertiary = IndigoDeep,
+    onTertiary = OffWhite,
+
+    // Linien
+    outline = GreyLight
+)
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -31,28 +69,37 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
-)
 
 @Composable
-fun SchlaftagebuchV1Theme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+fun SchlaftagebuchColorTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(), //Errechnet in Main
+
+    //Dynamic Color deaktivieren (macht nur Stress)
+    dynamicColor: Boolean = false,
+
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
+    // --- Statusleiste anpassen ---
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            // Färbt die Leiste oben passend zum Hintergrund
+            window.statusBarColor = colorScheme.background.toArgb()
+
+            // Steuert, ob die Icons (Uhrzeit, Batterie) weiß oder schwarz sind
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+        }
+    }
+
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = Typography, // Verweist auf Type.kt
         content = content
     )
 }

@@ -4,15 +4,84 @@
 \subsubsection{Komponentendiagramm}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/meilenstein2/komponentendiagramme.pdf} 
+	\includegraphics[width=0.8\textwidth]{images/komponenten und klassen/komponent.pdf} 
 	\caption{Komponentendiagramm}
 	\label{fig:komponentendiagramm}
 \end{figure}
 
-\subsubsection{Klassendiagramm}
+Die Systemübersicht zeigt die Hauptkomponenten der Anwendung und deren Interaktion.
+
+\textbf{Smartwatch}\\
+Die Verbindung zur Smartwatch dient ausschließlich der Datenerfassung; die Smartwatch selbst greift nicht direkt auf das Backend zu.
+
+\textbf{Patient:in GUI}\\
+Das Patient:in GUI stellt die mobile Benutzeroberfläche für Patient:innen dar. Es kommuniziert über die REST-Schnittstelle PatientAPI mit dem Systembackend,
+um schlafbezogene Daten zu übertragen und Funktionen des Systems zu nutzen. 
+
+\textbf{Ärzt:in Web-GUI}\\
+Das Ärzt:in Web-GUI stellt die Weboberfläche für medizinisches Fachpersonal dar. Es kommuniziert ebenfalls über eine REST-Schnittstelle (ArztAPI) mit dem 
+Systembackend und ermöglicht den Zugriff auf ärztliche Funktionen wie die Verwaltung von Patient:innen und die Einsicht in Berichte.
+
+\textbf{Systembackend}\\
+Das Systembackend stellt die notwendigen REST-Schnittstellen für das Patient:in GUI und das Ärzt:in Web-GUI bereit und ist zuständig für die Verarbeitung 
+und persistente Speicherung solcher Daten, die sowohl für Patient:innen als auch für Ärzt:innen zugänglich sein müssen, z. B. Zugangscodes, 
+übermittelte Schlafprotokolle und daraus generierte Berichte. Lokale Daten, wie benutzerspezifische Einstellungen, Spracheinstellungen oder direkt 
+von der Smartwatch erfasste Rohdaten, werden ausschließlich im jeweiligen Frontend verarbeitet und gespeichert und sind nicht Bestandteil 
+der serverseitigen Verarbeitung.
+
+\textbf{Datenbank}\\
+Die Datenbank dient der persistenten Speicherung der Anwendungsdaten. Der Zugriff auf die Datenbank erfolgt ausschließlich über das Systembackend.
+
+\medskip
+
+\noindent\textbf{Komponent Systembackend (Detaliiert)}
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=1\textwidth]{images/meilenstein2/klassendiagramme.pdf} 
+	\includegraphics[width=0.8\textwidth]{images/komponenten und klassen/backend.pdf} 
+	\caption{Komponent Systembackend}
+	\label{fig:systembackend}
+\end{figure}
+
+\noindent
+Die detaillierte Komponentendiagramm zeigt die interne Struktur des Systembackends.
+Der Zugriff auf die bereitgestellten REST-Schnittstellen erfolgt über die Ports PG (PatientAPI) und AWG (ArztAPI). Alle eingehenden Anfragen werden zunächst durch das Modul security verarbeitet. Dieses Modul ist für Authentifizierung, Token-Validierung und Rollenprüfung zuständig und wirkt als vorgelagerte Sicherheitskomponente vor der Fachlogik.
+Die fachliche Verarbeitung erfolgt in den folgenden Modulen:
+
+•	auth: Verwaltung von Benutzerkonten, Rollen und Authentifizierungsprozessen.
+
+•	arztManagement: Bereitstellung ärztlicher Funktionen zur Verwaltung von Patient:innen und zugehörigen Daten.
+
+•	protocol: Verarbeitung und Verwaltung der von Patient:innen erfassten Schlafprotokolle.
+
+•	report: Erzeugung und Bereitstellung von Schlafberichten auf Basis der gespeicherten Protokolldaten.
+
+Der Zugriff auf die Datenbank erfolgt zentral über Repositories innerhalb des Backends. 
+
+\newpage
+
+\textbf{Anmerkung bezüglich FHIR:}
+
+Im Projekt ist ein FHIR-Modul als Grundlage für eine spätere Anbindung an einen externen HL7-FHIR-Server implementiert. 
+
+Aktuell dient dieses Modul als technisches Template und kapselt die FHIR-spezifische Logik (z. B. die Abbildung interner 
+Domänenobjekte auf FHIR-Ressourcen wie QuestionnaireResponse, Consent oder DiagnosticReport sowie die Verwendung von Referenzen 
+wie Patient/<UUID> und Practitioner/<UUID> für Benutzerkonten als subjectRef).
+
+Die FHIR-Daten werden derzeit ausschließlich in-memory verarbeitet, da kein externer FHIR-Server angebunden ist. Wesentliche 
+Patientendaten (PatientEntity), Berichte (ReportEntity) sowie Einwilligungen (ConsentEntity) werden jedoch unabhängig davon noch dauerhaft 
+in der PostgreSQL-Datenbank gespeichert.
+
+Konzeptionell ist das FHIR-Modul als separater externer Dienst vorgesehen, der auf einem eigenen Server betrieben wird. 
+In einer erweiterten Ausbaustufe würde dieser Dienst als eigenständige Komponente in der Systemarchitektur modelliert und über eine REST-basierte Schnittstelle 
+angebunden werden. Da diese Infrastruktur im aktuellen Projektumfang nicht realisiert wurde, ist das FHIR-Modul derzeit als interner Bestandteil des Systembackends 
+implementiert.
+
+\newpage
+
+\subsubsection{Klassendiagramm}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\textwidth]{images/meilenstein2/klassendiagramm.pdf} 
 	\caption{Klassendiagramm}
 	\label{fig:klassendiagramm}
 \end{figure}
@@ -20,82 +89,171 @@
 \newpage
 
 \subsection{Laufzeitsicht}
+Allgemeiner Hinweis zu den Sequenzdiagrammen
+In den folgenden Sequenzdiagrammen werden ausschließlich sogenannte \textit{Happy-Path}-Szenarien dargestellt, um eine übersichtliche und verständliche Darstellung der Abläufe zu gewährleisten. 
+Mögliche Fehlerfälle und Ausnahmebedingungen werden nicht grafisch modelliert, sondern ergänzend in der textuellen Beschreibung der jeweiligen Anwendungsfälle erläutert.
+
 \subsubsection{Anmeldung}
-\begin{figure}[h]
+\noindent\textbf{Arzt-Login (Benutzername und Passwort)}
+\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.7\textwidth]{images/meilenstein2/Sequenz_Anmeldung.drawio.png} 
-	\caption{Anmeldung 1}
-	\label{fig:anmeldung1}
+	\includegraphics[width=1.0\textwidth]{images/sequenz/arzt_login.pdf} 
+	\caption{Anmeldung für Arzt}
+	\label{fig:arzt_login}
 \end{figure}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.7\textwidth]{images/meilenstein2/Sequenz_Anmeldung2.drawio.png} 
-	\caption{Anmeldung 2}
-	\label{fig:anmeldung2}
-\end{figure}
-
-\newpage 
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{images/meilenstein2/Aktivitaet_Anmeldung.drawio.png} 
-	\caption{Anmeldung 3}
-	\label{fig:anmeldung3}
-\end{figure}
-
-\subsubsection{Einwilligung erteilen}
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\textwidth]{images/meilenstein2/sqd_Einwilligung_erteilen_angepasst.png} 
-	\caption{Einwilligung erteilen}
-	\label{fig:einwilligung_erteilen}
-\end{figure}
+\noindent\textbf{Anmerkungen:}\\
+Bei Auftreten eines der folgenden Fehlerfälle wird der Anmeldevorgang abgebrochen und es erfolgt keine Authentifizierung:
+\textbf{Der Benutzer existiert nicht} (falscher Benutzername), \textbf{das eingegebene Passwort ist falsch, ein technischer Fehler tritt auf}, 
+z.\,B. wenn das Backend oder die Datenbank nicht erreichbar sind.
 
 \newpage
 
-\subsubsection{Einstellungen verwalten}
-\begin{figure}[h]
+\noindent\textbf{Patienten-Login (Benutzername und Passwort)}
+\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=1\textwidth]{images/meilenstein2/Einstellungen_verwalten_Sprache .drawio.png} 
-	\caption{Einstellungen verwalten Sprache}
-	\label{fig:einstellungen_verwalten_sprache}
+	\includegraphics[width=1.0\textwidth]{images/sequenz/patient_login.pdf} 
+	\caption{Anmeldung für Patient}
+	\label{fig:patient_login}
 \end{figure}
 
-\begin{figure}[h]
+\FloatBarrier
+\noindent\textbf{Anmerkungen:}\\
+Bei Auftreten eines der folgenden Fehlerfälle wird der Anmeldevorgang abgebrochen und es erfolgt keine Authentifizierung:
+\textbf{Der Benutzer existiert nicht} (falscher Benutzername), \textbf{das eingegebene Passwort ist falsch, ein technischer Fehler tritt auf}, 
+z.\,B. wenn das Backend oder die Datenbank nicht erreichbar sind.
+
+\newpage
+
+\noindent\textbf{Patienten-First Login (Zugangscode)}
+\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=1\textwidth]{images/meilenstein2/Einstellungen_verwalten_Zeit.png} 
-	\caption{Einstellungen verwalten Zeit}
-	\label{fig:einstellungen_verwalten_zeit}
+	\includegraphics[width=1.0\textwidth]{images/sequenz/patient_firstlogin.pdf} 
+	\caption{Konto erstellen für Patient}
+	\label{fig:patient_first_login}
 \end{figure}
+
+\FloatBarrier
+\noindent\textbf{Anmerkungen:}\\
+
+Die Registrierung wird abgebrochen, wenn einer der folgenden Fehler auftritt:
+
+Der eingegebene \textbf{Zugangscode ist ungültig} (z.\,B. falsch eingegeben oder bereits verwendet).
+
+Die erforderliche \textbf{Einwilligung wurde nicht erteilt.} In diesem Fall ist der Button \glqq Weiter\grqq{} deaktiviert und die Patientin bzw. 
+der Patient erhält keinen Zugriff auf die App.
+
+Die definierten \textbf{Eingaberegeln werden nicht erfüllt} (z.\,B. falsches Datumsformat \texttt{TT.MM.JJJJ} 
+oder \textbf{nicht erfüllte Passwortregeln:} mindestens acht Zeichen, davon mindestens ein Buchstabe und eine Ziffer). 
+In diesem Fall wird ein entsprechender Hinweis angezeigt und die Eingabe muss korrigiert werden.
+Ein \textbf{technischer Fehler tritt auf}, z.\,B. wenn das Backend oder die Datenbank nicht erreichbar sind.
+
+\newpage
+
+\textit{Zusätzlich:} \noindent\textbf{ Zugangscode erstellen}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1.0\textwidth]{images/sequenz/zugangscode.pdf} 
+	\caption{Zugangscode in Arzt Web-GUI erstellen}
+	\label{fig:zugangscode}
+\end{figure}
+
+\FloatBarrier
+\noindent\textbf{Anmerkungen:}\\
+\textit{Die Erstellung eines Zugangscodes erfolgt über die Web-GUI für Ärztinnen und Ärzte. 
+Ohne einen gültigen Zugangscode ist eine Registrierung von Patientinnen und Patienten nicht möglich.}
+
+Der Vorgang kann nicht durchgeführt werden, wenn das \textbf{Backend oder die Datenbank nicht erreichbar sind}.
+
+\textit{Das zugehörige Sequenzdiagramm beschreibt exemplarisch die Generierung eines Zugangscodes nur für neue Patientinnen und Patienten.}
+
+\newpage
+
+\newpage
+
+\subsubsection{Smartwatch Koppeln}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/sequenz/smartwatch_koppeln_start.pdf} 
+	\caption{Smartwatch koppeln: Datenmessung starten}
+	\label{fig:smartwatch_koppeln_start}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/sequenz/smartwatch_koppeln_stop.pdf} 
+	\caption{Smartwatch koppeln: Datenmessung beenden}
+	\label{fig:smartwatch_koppeln_stop}
+\end{figure}
+
+\noindent\textbf{Anmerkungen:}\\Folgende Fehler könnten in der Kommunikation auftreten und wurden berücksichtigt:
+\begin{itemize}
+	\item\textbf{Verbindung:} Ohne bestehende Verbindung zwischen Smartwatch und Handy ist keine Steuerung über die App möglich. Bei einem Verbindungsabbruch wird die Kommunikation erst nach Wiederherstellung fortgesetzt.
+	\item\textbf{Start und Beenden:} Befehle sind unabhängig voneinander. Ein Beenden vor dem Start ist wirkungslos; es werden keine Daten übertragen und keine Datei in der App erstellt.
+	\item\textbf{Signalfolge:} Aufeinanderfolgende identische Signale (Start und Beenden) werden ignoriert. Es zählt jeweils nur das erste Signal.
+	\item\textbf{Autonomie:} Die Smartwatch misst bei Verbindungsverlust weiter, sofern zuvor ein Start erfolgte. Nach erneuter Verbindung wirkt das Beenden Signal wie vorgesehen. Signale während Verbindungsverlust werden ignoriert.
+\end{itemize}
 
 \newpage
 
 \subsubsection{Schlafprotokoll ausfüllen}
-\begin{figure}[h]
+\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Protokoll_ausfullen.drawio.png} 
-	\caption{Schlafprotokoll ausfüllen}
-	\label{fig:schlafprotokoll_ausfüllen}
+	\includegraphics[width=1.0\textwidth]{images/sequenz/protocol.pdf} 
+	\caption{Schlafprotokoll ausfüllen (und auf dem Server speichern)}
+	\label{fig:schlafprotokoll_ausfuellen}
 \end{figure}
+
+\noindent\textbf{Anmerkungen:}\\
+Tritt während des Ausfüllens oder Übermittelns eines Protokolls ein Fehler auf, verhält sich das System wie folgt:
+\begin{itemize}
+    \item Ist das \textbf{Backend oder die Datenbank nicht erreichbar}, wird das ausgefüllte Protokoll nicht an den Server übertragen, sondern ausschließlich lokal gespeichert.
+    \item Ist der Fehler auf einen \textbf{ungültigen oder abgelaufenen Authentifizierungs-Token} zurückzuführen, wird der Benutzer zur erneuten Anmeldung weitergeleitet.
+\end{itemize}
+\textit{Bereits eingegebene Antworten werden in beiden Fällen lokal gespeichert und können nach erfolgreicher erneuter Authentifizierung erneut an den Server übermittelt werden.}
 
 \newpage
 
 \subsubsection{Bericht ansehen}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Bericht_ansehen_Patient.drawio.png} 
-	\caption{Bericht ansehen Patient:in}
+	\includegraphics[width=0.7\textwidth]{images/sequenz/berichtAnsehen_patient.pdf} 
+	\caption{Bericht ansehen für Patientin}
 	\label{fig:bericht_ansehen_patient}
 \end{figure}
 
-\subsubsection{Bericht ansehen}
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.8\textwidth]{images/meilenstein2/Bericht_ansehen_Arzt.drawio.png} 
-	\caption{Bericht ansehen Ärzt:in}
+	\includegraphics[width=0.7\textwidth]{images/sequenz/berichtAnsehen_arzt.pdf} 
+	\caption{Bericht ansehen für Arzt}
 	\label{fig:bericht_ansehen_arzt}
 \end{figure}
+
+\noindent\textbf{Anmerkungen:}\\
+Bei Auftreten eines der folgenden Fehlerfälle wird der Vorgang zum Anzeigen des Berichts abgebrochen und es erfolgt keine Anzeige des PDF-Berichts: Der Benutzer ist nicht authentifiziert oder die Sitzung ist abgelaufen, ein technischer Fehler tritt auf, z.\,B. wenn das Backend oder die Datenbank nicht erreichbar sind, oder es liegen keine Berichte für den angefragten Zeitraum vor.
+
+\newpage
+
+\subsubsection{Patientenliste ansehen und Patientendetails anzeigen}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/sequenz/patientliste_arzt.pdf} 
+    \caption{Patientenliste ansehen für Arzt} 
+	\label{fig:patientenliste_ansehen_arzt}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/sequenz/patientdetails_arzt.pdf}
+	\caption{Patientendetails für Arzt}
+	\label{fig:patientdetails_arzt}
+\end{figure}
+
+\noindent\textbf{Anmerkungen:}\\
+Bei Auftreten eines der folgenden Fehlerfälle wird der Vorgang zum Anzeigen der Patientenliste bzw. der Patientendetails abgebrochen und es erfolgt keine Anzeige der entsprechenden Informationen: Die Ärztin oder der Arzt ist nicht authentifiziert oder nicht autorisiert, ein technischer Fehler tritt auf, z.\,B. wenn das Backend oder die Datenbank nicht erreichbar sind.
+
+Zusätzlich kann der Vorgang zum Anzeigen der Patientendetails fehlschlagen, wenn der angefragte Patient nicht existiert oder der Ärztin bzw. dem Arzt nicht zugeordnet ist.
 
 \newpage
 
@@ -107,8 +265,6 @@
 	\caption{Deploymentdiagramm}
 	\label{fig:deploymentdiagramm}
 \end{figure}
-
-\newpage
 
 \subsection{Integrationstests}
 

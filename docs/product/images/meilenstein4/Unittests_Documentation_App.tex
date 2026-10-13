@@ -1,0 +1,250 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{tabularx}
+
+\begin{document}
+
+\section{Test Dokumentation für Android App}
+\subsection{Unittest}
+Die Tests zeigen, dass zentrale Funktionen der Anwendung korrekt arbeiten. 
+Abgedeckt werden insbesondere:
+
+\begin{itemize}
+  \item Verarbeitung von Authentifizierungsdaten (JWT, Session-Handling)
+  \item Speicherung von Einstellungen und Sitzungsdaten über SharedPreferences
+  \item Konstruktion und Serialisierung von Data Classes und DTOs
+  \item JSON-Verarbeitung (Serialisierung, Deserialisierung, Fehlerfälle)
+  \item Fragen-Hierarchie und polymorphe Vererbung
+  \item Zeit-, Alarm- und Locale-Verwaltung
+  \item Utility- und Helper-Funktionen
+\end{itemize}
+Die Tests berücksichtigen sowohl Standardfälle als auch relevante
+Rand- und Fehlerfälle, darunter leere Eingaben, Sonderzeichen,
+extreme Werte und ungültige JSON-Strukturen.
+Durch Roundtrip-Tests wird sichergestellt, dass Daten konsistent
+serialisiert und wiederhergestellt werden können.
+Dies erhöht die Stabilität und Wartbarkeit der Anwendung.\\\\
+Bei den vorliegenden Tests handelt es sich ausschließlich um lokale
+Unit-Tests, welche im Verzeichnis \texttt{src/test/unit} ausgeführt werden. Diese Tests sind bewusst plattformunabhängig gehalten und testen keine
+direkten Android-UI-Komponenten oder Framework-Klassen. Android-spezifische Abhängigkeiten (z.B. \texttt{Context}, \texttt{SharedPreferences}) werden mittels Mockito gemockt, um isolierte Tests ohne Android-Umgebung zu ermöglichen.
+\subsubsection{AlleApiTests.kt}
+Diese Testklasse enthält Unit Tests für verschiedene API-bezogene Komponenten unserer Android-Anwendung. Sie testet JWT-Verarbeitung, Session-Management und Data Classes für Authentifizierung und Protokoll-API.
+Getestete Komponenten sind \textit{JWT Utils, Session, SessionStorage, Auth DTOsund Protocol DTOs}\\
+\vspace{1em}
+
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{ Beschreibung} & \textbf{Status} \\
+\hline
+1. JWT ohne Username & Gibt null zurück bei JWT ohne username-claim & OK \\
+\hline
+2. Session Management & Setzt und liest JWT in Session-Klasse & OK \\
+\hline
+3. Session null setzen & Setzt Session-JWT korrekt auf null zurück & OK \\
+\hline
+4. SessionStorage speichern & Speichert JWT in SharedPreferences (Mock) & OK \\
+\hline
+5. SessionStorage laden & Lädt JWT aus SharedPreferences (Mock) & OK \\
+\hline
+6. SessionStorage löschen & Löscht JWT aus SharedPreferences (Mock) & OK \\
+\hline
+7. Login Request & Testet alle Properties der Login-Data-Class & OK \\
+\hline
+8. Token Response & Testet TokenResponse Data Class Konstruktor & OK \\
+\hline
+9. Protocol Answer DTO & Testet einfache ProtocolAnswerDto Data Class & OK \\
+\hline
+10. Protocol Submission Request & Testet komplexe Request mit Antwortliste & OK \\
+\hline
+11. Protocol Submission Response & Testet Response Data Class mit 3 Feldern & OK \\
+\hline
+12. Data Class equals() & Vergleicht zwei identische Data Class Objekte & OK \\
+\hline
+13. Data Class toString() & Überprüft String-Repräsentation der Data Class & OK \\
+\hline
+14. Leere Antwort & Testet Edge Case mit leerem Ergebnis-String & OK \\
+\hline
+15. Sonderzeichen Passwort & Testet Passwort mit Sonderzeichen & OK \\
+\hline
+16. Cleanup & Bereinigt Session nach jedem Test & OK \\
+\hline
+
+\end{tabularx}
+
+\subsubsection{AlleDataServiceTests.kt}
+Diese Testklasse enthält Unit Tests für alle DataService-Komponenten der App. Sie testet Datenklassen, SharedPreferences-Operationen, JSON-Serialisierung und Fragen-Hierarchien.
+Getestete Komponenten sind \textit{Answer.kt, DataLoader.kt, Question.kt, QuestionTypeAdapter.kt}\\
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Answer Konstruktor & Testet Answer-Data-Class mit id und result & OK \\
+\hline
+2. QuestionSlider Properties & Testet alle Properties von QuestionSlider & OK \\
+\hline
+3. QuestionTime Properties & Testet alle Properties von QuestionTime & OK \\
+\hline
+4. QuestionDuration Properties & Testet alle Properties von QuestionDuration & OK \\
+\hline
+5. QuestionMultipleChoice Properties & Testet Multiple-Choice-Fragen mit Auswahlmöglichkeiten & OK \\
+\hline
+6. QuestionYesNo Properties & Testet Ja/Nein-Fragen mit skipIfNo Logik & OK \\
+\hline
+7. QuestionYesNo Empty Skip & Testet Ja/Nein-Fragen ohne skipIfNo Liste & OK \\
+\hline
+8. QuestionDate Properties & Testet alle Properties von QuestionDate & OK \\
+\hline
+9. Question Vererbung & Prüft dass alle Fragetypen von Question erben & OK \\
+\hline
+10. DataLoader Sprache speichern & Speichert Sprache in SharedPreferences & OK \\
+\hline
+11. DataLoader Sprache laden & Lädt Sprache aus SharedPreferences & OK \\
+\hline
+12. DataLoader Default Sprache & Lädt Standardsprache DE bei null & OK \\
+\hline
+13. DataLoader Alarm Status speichern & Speichert Alarm-aktiviert Status & OK \\
+\hline
+14. DataLoader Alarm Status laden & Lädt Alarm-aktiviert Status & OK \\
+\hline
+15. DataLoader Alarm Zeit speichern & Speichert Alarmzeit als LocalTime & OK \\
+\hline
+16. DataLoader Alarm Zeit laden & Lädt Alarmzeit aus SharedPreferences & OK \\
+\hline
+17. DataLoader Default Alarmzeit & Lädt Standard-Alarmzeit (20:00) & OK \\
+\hline
+18. DataLoader Farbschema speichern & Speichert Farbschema-Einstellung & OK \\
+\hline
+19. DataLoader Farbschema laden & Lädt Farbschema aus SharedPreferences & OK \\
+\hline
+20. DataLoader Default Farbschema & Lädt Standard-Farbschema "system" & OK \\
+\hline
+21. Fragen-Datei nicht gefunden & Handhabt IOException bei fehlender JSON-Datei & OK \\
+\hline
+22. Erster Start Default & Lädt Default-Wert für First-Time-Flag & OK \\
+\hline
+23. FirstTime Completed setzen & Setzt First-Time-Flag auf false & OK \\
+\hline
+24. Username speichern & Speichert Benutzername in SharedPreferences & OK \\
+\hline
+25. Username laden & Lädt gespeicherten Benutzernamen & OK \\
+\hline
+26. Gson Answer Serialisierung & Serialisiert Answer-Objekt zu JSON & OK \\
+\hline
+\end{tabularx}
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+27. Gson Answer Deserialisierung & Deserialisiert JSON zu Answer-Objekt & OK \\
+\hline
+28. Gson Question Liste & Serialisiert Liste von Answer-Objekten & OK \\
+\hline
+29. Gson QuestionSlider Roundtrip & Vollständiger Serialisierungs/Deserialisierungs-Test & OK \\
+\hline
+30. QuestionTypeAdapter TypeMap & Testet TypeAdapter für Frage-Typen & OK \\
+\hline
+31. Deserialisierung QuestionSlider & Deserialisiert QuestionSlider aus JSON & OK \\
+\hline
+32. Deserialisierung MultipleChoice & Deserialisiert QuestionMultipleChoice aus JSON & OK \\
+\hline
+33. Deserialisierung QuestionYesNo & Deserialisiert QuestionYesNo aus JSON & OK \\
+\hline
+34. Deserialisierung QuestionTime & Deserialisiert QuestionTime aus JSON & OK \\
+\hline
+35. Deserialisierung QuestionDuration & Deserialisiert QuestionDuration aus JSON & OK \\
+\hline
+36. Deserialisierung QuestionDate & Deserialisiert QuestionDate aus JSON & OK \\
+\hline
+37. Deserialisierung ungültiger Typ & Wirft Exception bei unbekanntem Typ & OK \\
+\hline
+38. Deserialisierung ohne Typ & Wirft Exception bei fehlendem Typ-Feld & OK \\
+\hline
+39. Deserialisierung leerer Typ & Wirft Exception bei leerem Typ-Feld & OK \\
+\hline
+40. DataLoader Antworten speichern & Schreibt Antworten in Datei & OK \\
+\hline
+41. Frage-Hierarchie & Testet Vererbungshierarchie aller Fragetypen & OK \\
+\hline
+42. Answer Listen Operationen & Testet Listen-Operationen mit Answer-Objekten & OK \\
+\hline
+43. Edge Cases - leere Strings & Testet mit leeren Strings in Antworten & OK \\
+\hline
+44. Edge Cases - Sonderzeichen & Testet Umlaute und Sonderzeichen in Texten & OK \\
+\hline
+45. Edge Cases - Maximalwerte & Testet mit Maximalwerten für IDs und Floats & OK \\
+\hline
+46. Edge Cases - negative Werte & Testet mit negativen Werten für Slider & OK \\
+\hline
+47. Liste contains Operation & Testet Listen-Operationen in QuestionYesNo & OK \\
+\hline
+48. JSON Format mit Quotes & Testet JSON-Serialisierung mit Anführungszeichen & OK \\
+\hline
+\end{tabularx}
+
+
+
+\subsubsection{AlleHelperTests.kt}
+Diese Testklasse enthält Unit Tests für alle Helper-Klassen der App. Sie testet Notification-Logik, Alarm-Berechnungen, Locale-Verwaltung und verschiedene Hilfsfunktionen.
+Getestete Komponenten sind \textit{NotificationHelper, AlarmReceiver (indirekt), updateLocale Funktion und Validierungs-Helfer}\\
+\vspace{1em}
+
+\begin{tabularx}{\textwidth}{|l|X|l|}
+\hline
+\textbf{Testfall} & \textbf{Beschreibung} & \textbf{Status} \\
+\hline
+1. Alarm-Berechnung heute & Berechnet Alarmzeit für heute (Zeit in Zukunft) & OK \\
+\hline
+2. Alarm-Berechnung morgen & Berechnet Alarmzeit für morgen (Zeit bereits vorbei) & OK \\
+\hline
+3. Millisekunden Konvertierung & Konvertiert LocalDateTime zu Millisekunden & OK \\
+\hline
+4. Alarm Edge Cases & Testet Mitternacht und gleiche Zeiten & OK \\
+\hline
+5. AlarmReceiver Konstanten & Testet Notification-ID (hardcoded) & OK \\
+\hline
+6. Notification Properties & Testet Channel-ID und Priority & OK \\
+\hline
+7. updateLocale Deutsch & Testet deutsche Locale Erstellung & OK \\
+\hline
+8. updateLocale Englisch & Testet englische Locale Erstellung & OK \\
+\hline
+9. updateLocale Default & Testet Default Locale & OK \\
+\hline
+10. Zeitvalidierung gültig & Testet gültige Uhrzeiten (00:00 - 23:59) & OK \\
+\hline
+11. Zeitvalidierung ungültig & Testet ungültige Uhrzeiten (negative/zu große Werte) & OK \\
+\hline
+12. Zeitformatierung & Formatiert Uhrzeiten als HH:mm und mit "Uhr" & OK \\
+\hline
+13. Datumsformatierung & Formatiert Datum als TT.MM.JJJJ & OK \\
+\hline
+14. Intent Actions & Testet Android Intent-Action Konstanten & OK \\
+\hline
+15. Package URI Format & Testet URI Format für Package-Namen & OK \\
+\hline
+16. SharedPreferences Keys & Testet Konsistenz der SharedPreferences Keys & OK \\
+\hline
+17. Mock Context & Testet Mock-Setup für Context und SharedPreferences & OK \\
+\hline
+18. Android Version Checks & Testet Android SDK Version Konstanten & OK \\
+\hline
+19. Alarm-Berechnung Helper & Testet Hilfsfunktion für Alarmzeit-Berechnung & OK \\
+\hline
+20. Locale Funktionalität & Testet Locale-Klassenmethoden & OK \\
+\hline
+21. String Resources Mock & Testet String-Resource-Namen & OK \\
+\hline
+22. Edge Cases Zeiten & Testet Extremfälle für Uhrzeiten & OK \\
+\hline
+23. Edge Cases Daten & Testet besondere Daten (Schaltjahre, 2038-Problem) & OK \\
+\hline
+24. TimeZone Handling & Testet Zeitzonen-Verarbeitung & OK \\
+\hline
+25. PendingIntent Flags & Testet Kombination von PendingIntent Flags & OK \\
+\hline
+\end{tabularx}
+
+\end{document}

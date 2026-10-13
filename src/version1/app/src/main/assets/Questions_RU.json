@@ -1,0 +1,141 @@
+[
+  {
+    "id": 0,
+    "type": "QuestionSlider",
+    "title": "Самочувствие сейчас",
+    "explanation": "Насколько хорошо ты себя чувствуешь? (1 - плохо, 5 - отлично)",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 1,
+    "type": "QuestionYesNo",
+    "title": "Сновидения",
+    "explanation": "Помнишь ли ты, что тебе сегодня снилось?",
+    "skipIfNo": []
+  },
+  {
+    "id": 2,
+    "type": "QuestionTime",
+    "title": "Время засыпания",
+    "explanation": "Напиши, во сколько примерно ты заснул(а)"
+  },
+  {
+    "id": 3,
+    "type": "QuestionTime",
+    "title": "Время пробуждения",
+    "explanation": "Напиши, во сколько ты окончательно проснулся(лась)"
+  },
+  {
+    "id": 4,
+    "type": "QuestionSlider",
+    "title": "Качество сна",
+    "explanation": "Насколько хорошо ты спал(а) ночью? (1 - плохо, 5 - отлично)",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 5,
+    "type": "QuestionSlider",
+    "title": "Самочувствие после пробуждения",
+    "explanation": "Насколько отдохнувшим(ей) ты чувствовал(а) себя утром?",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 6,
+    "type": "QuestionYesNo",
+    "title": "Дневной сон",
+    "explanation": "Спал(а) ли ты днём?",
+    "skipIfNo": [
+      7,
+      8
+    ]
+  },
+  {
+    "id": 7,
+    "type": "QuestionSlider",
+    "title": "Частота дневного сна",
+    "explanation": "Сколько раз ты ложился(лась) спать днём?",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 8,
+    "type": "QuestionDuration",
+    "title": "Длительность дневного сна",
+    "explanation": "Сколько времени ты всего спал(а) днём?"
+  },
+  {
+    "id": 9,
+    "type": "QuestionMultipleChoice",
+    "title": "Активности перед сном",
+    "explanation": "Что ты делал(а) перед тем, как лечь спать?",
+    "choices": [
+      "Телефон",
+      "Телевизор",
+      "Чтение",
+      "Учёба",
+      "Спорт",
+      "Музыка",
+      "Другое"
+    ]
+  },
+  {
+    "id": 10,
+    "type": "QuestionYesNo",
+    "title": "Пробуждение ночью",
+    "explanation": "Просыпался(лась) ли ты ночью?",
+    "skipIfNo": [
+      11,
+      12
+    ]
+  },
+  {
+    "id": 11,
+    "type": "QuestionSlider",
+    "title": "Частота пробуждений",
+    "explanation": "Сколько раз ты просыпался(лась) ночью",
+    "sliderMin": 1,
+    "sliderMax": 10
+  },
+  {
+    "id": 12,
+    "type": "QuestionDuration",
+    "title": "Длительность бодрствования",
+    "explanation": "Сколько времени ты всего был(а) бодр(а) ночью?"
+  },
+  {
+    "id": 13,
+    "type": "QuestionYesNo",
+    "title": "Лекарства",
+    "explanation": "Принимал(а) ли ты лекарства сегодня (включая постоянные)?",
+    "skipIfNo": [
+      14
+    ]
+  },
+  {
+    "id": 14,
+    "type": "QuestionMultipleChoice",
+    "title": "Частота приёма лекарств",
+    "explanation": "Как часто ты принимаешь эти лекарства?",
+    "choices": [
+      "ежедневно",
+      "иногда",
+      "однократно"
+    ]
+  },
+  {
+    "id": 15,
+    "type": "QuestionYesNo",
+    "title": "Кофеин или энергетики",
+    "explanation": "Пил(а) ли ты кофе, энергетики или другие сладкие/кофеинсодержащие напитки?",
+    "skipIfNo": []
+  },
+  {
+    "id": 16,
+    "type": "QuestionDuration",
+    "title": "Экранное время перед сном",
+    "explanation": "Сколько была твоя экранная активность в течение 2 часов перед сном? (минуты)"
+  }
+]

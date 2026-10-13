@@ -3,53 +3,146 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bericht – Digitales Schlaftagebuch</title>
+  <title>Berichte – Digitales Schlaftagebuch</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="app">
   <div class="app">
     <aside class="sidebar">
-      <div class="logo">Logo</div>
+      <div class="brand">
+
+	<!-- Mond-Icon -->
+        <div aria-hidden="true" class="brand-badge">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+      d="M21.64 13a9 9 0 0 1-10.63-10.63A1 1 0 0 0 9.87 1.2
+         11 11 0 1 0 22.8 14.13 1 1 0 0 0 21.64 13z"/>
+  </svg>
+</div>
+
+	<!-- Titel/Untertitel der Website -->
+        <div class="brand-title">
+          <strong>Digitales Schlaftagebuch</strong>
+          <span>Schlaflabor</span>
+        </div>
+      </div>
+
+	<!-- Seitenleiste -->
       <nav class="nav" aria-label="Seitennavigation">
-        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
-        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
-        <a href="bericht.html" data-page="bericht">Bericht</a>
-        <a href="patient.html" data-page="patient">Patient:in</a>
+
+
+	<!-- Dashboard -->
+        <a href="dashboard.html" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Übersicht
+        </a>
+
+
+	<!-- Patient -->
+        <a href="patient.html" data-page="patient">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Patient:innen
+        </a>
+
+
+	<!-- Zugangscode -->
+        <a href="zugangscode.html" data-page="zugangscode">
+          <svg viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true">
+  <!-- Schlüssel -->
+  <circle cx="7" cy="14" r="3.5"></circle>
+  <circle cx="7" cy="14" r="1.2"></circle>
+  <path d="M10.5 14H21"></path>
+  <path d="M17 14v3"></path>
+  <path d="M20 14v2"></path>
+</svg>
+          Zugangscodes
+        </a>
+
+
+	<!-- Bericht -->
+        <a href="bericht.html" data-page="bericht">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+            <path d="M10 9H8"/>
+          </svg>
+          Berichte
+        </a>
       </nav>
-      <div class="spacer"></div>
-      <div class="home-icon" title="Home"></div>
+
+
+	<!-- Bericht -->
+      <div class="sidebar-bottom">
+        <a class="logout-btn" href="login.html" data-logout>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <path d="M16 17l5-5-5-5"/>
+            <path d="M21 12H9"/>
+          </svg>
+          Abmelden
+        </a>
+      </div>
     </aside>
 
     <main class="main">
-      <div class="topbar">
-        <div class="title">Digitales Schlaftagebuch</div>
-        <a class="logout" href="login.html" data-logout>Log out</a>
-      </div>
-
-      <div class="card">
-        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
-          Digitales Schlaftagebuch – Bericht
+      <header class="header">
+        <div class="header-left">
+          <h1>Berichte</h1>
+          <p>Downloads und Auswertungen aus dem Schlaftagebuch.</p>
         </div>
+        <div class="userbox" aria-label="Angemeldete Person">
+          <div class="meta">
+            <strong id="loggedInDoctor">–</strong>
+            <span>Arzt</span>
+          </div>
+          <div class="avatar" aria-hidden="true">A1</div>
+        </div>
+      </header>
 
-        <table aria-label="Berichte">
-          <thead>
-            <tr>
-              <th style="width:35%;">Patient</th>
-              <th style="width:25%;">Datum</th>
-              <th>Bericht</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mustermann,<br/>Max</td>
-              <td>10.12.2025</td>
-              <td>
-                <a href="#" onclick="alert('Download: PDF (Demo)'); return false;">PDF herunterladen</a><br/>
-                <a href="#" onclick="alert('Download: Tabelle (Demo)'); return false;">Tabelle herunterladen</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="content">
+        <section class="card">
+          <div class="table-head">
+            <h3>Verfügbare Berichte</h3>
+            <div class="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.3-4.3"/>
+              </svg>
+              <input id="reportSearch" class="control" type="text" placeholder="Liste filtern…" />
+            </div>
+          </div>
+
+          <table aria-label="Berichte">
+            <thead>
+              <tr>
+                <th style="width:35%;">PATIENT:IN</th>
+                <th style="width:20%;">DATUM</th>
+                <th>DOWNLOADS</th>
+              </tr>
+            </thead>
+            <tbody id="reportTable">
+              <tr><td colspan="3" style="color:var(--muted);">Lade Berichte…</td></tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </main>
   </div>

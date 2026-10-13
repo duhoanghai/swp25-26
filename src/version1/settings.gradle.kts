@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Schlaftagebuch v1"
-include(":app")
+include(":app", ":wear")
  

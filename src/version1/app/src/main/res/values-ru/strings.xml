@@ -1,0 +1,169 @@
+<resources>
+    <string name="app_name">Дневник сна. Версия 1</string>
+    <string name="language_long">Русский</string>
+    <string name="language_short">RU</string>
+
+    <!-- Language Select -->
+    <string name="language_select_btn_next">Дальше</string>
+    <string name="language_select_subtitle">Пожалуйста, выбери язык интерфейса.</string>
+    <string name="language_select_title">Добро пожаловать</string>
+
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_accept_btn">Далее</string>
+    <string name="privacy_policy_accept_text">Я ознакомился(лась) с Политикой конфиденциальности и принимаю её</string>
+    <string name="privacy_policy_content">Ваши персональные и медицинские данные обрабатываются в рамках лечения Медицинским университетом Лаузица — Карл Тием (Medizinische Universität Lausitz - Carl Thiem). Дополнительную информацию о характере, объёме и целях обработки данных, а также о ваших правах вы можете найти в Политике конфиденциальности MUL-CT:</string>
+    <string name="privacy_policy_link">Показать Политику конфиденциальности</string>
+    <string name="privacy_policy_title">Политика конфиденциальности</string>
+
+    <!-- Auth Choice -->
+    <string name="auth_choice_btn_activate">Активировать аккаунт (с помощью кода)</string>
+    <string name="auth_choice_btn_login">Войти</string>
+    <string name="auth_choice_title">Вход</string>
+
+    <!-- Registration -->
+    <string name="registration_box_birthday">Дата рождения</string>
+    <string name="registration_box_code">Код</string>
+    <string name="registration_box_name_first">Имя (латинскими буквами)</string>
+    <string name="registration_box_name_last">Фамилия (латинскими буквами)</string>
+    <string name="registration_box_password">Пароль</string>
+    <string name="registration_btn_back">Назад</string>
+    <string name="registration_btn_finish">Создать аккаунт</string>
+    <string name="registration_error_birthday_1">Введи дату рождения</string>
+    <string name="registration_error_birthday_2">Формат даты рождения ДД.ММ.ГГГГ (01.01.2000)</string>
+    <string name="registration_error_birthday_3">Некорректная дата рождения</string>
+    <string name="registration_error_password_1">Пароль должен содержать минимум 8 символов</string>
+    <string name="registration_error_password_2">Пароль должен содержать минимум одну букву</string>
+    <string name="registration_error_password_3">Пароль должен содержать минимум одну цифру</string>
+    <string name="registration_title">Вход</string>
+
+    <!-- Login -->
+    <string name="login_box_password">Пароль</string>
+    <string name="login_box_username">Имя пользователя</string>
+    <string name="login_btn_activate">Активировать аккаунт</string>
+    <string name="login_btn_login">Войти</string>
+    <string name="login_error">Пожалуйста, введи имя пользователя и пароль</string>
+    <string name="login_icon_password_hidden">Показать</string>
+    <string name="login_icon_password_visible">Cкрыть</string>
+    <string name="login_title">Войти</string>
+
+    <!-- Alert Message -->
+    <string name="alert_message_content">Время заполнить протокол</string>
+    <string name="alert_message_title">Дневник сна</string>
+
+    <!-- Menu -->
+    <string name="menu_btn_PDF">Загрузить отчет (PDF)</string>
+    <string name="menu_btn_PDF_desc">Экспорт протокола сна (PDF)</string>
+    <string name="menu_btn_questions_personal">Персональные вопросы</string>
+    <string name="menu_btn_questions_protocol">Заполнить протокол</string>
+    <string name="menu_btn_settings">Настройки</string>
+    <string name="menu_btn_settings_desc">Показать имя пользователя</string>
+    <string name="menu_btn_sleep_control">Запустить измерение сна</string>
+    <string name="menu_btn_smartwatch">Посмотреть данные сна</string>
+    <string name="menu_btn_smartwatch_desc">Посмотреть данные умных часов за прошедшую ночь</string>
+    <string name="menu_title">Главное меню</string>
+    <string name="menu_toast_pdf_fail_1">Не удалось загрузить PDF</string>
+    <string name="menu_toast_pdf_fail_2">PDF пуст</string>
+    <string name="menu_toast_pdf_fail_3">"Ошибка сервера: "</string>
+
+    <!-- Questions Protocol -->
+    <string name="questions_personal_toast_saved">Сохранено!</string>
+    <string name="questions_protocol_back">Назад</string>
+    <string name="questions_protocol_btn_finish">Готово</string>
+    <string name="questions_protocol_btn_next">Далее</string>
+    <string name="questions_protocol_error_no_questions">Вопросы отсутствуют или не удалось загрузить</string>
+    <string name="questions_protocol_explanation_close">Закрыть</string>
+    <string name="questions_protocol_explanation_icon">Помощь</string>
+    <string name="questions_protocol_explanation_title">Пояснение</string>
+
+    <!-- Analysis Result -->
+    <string name="analysis_result_btn_next">Далее</string>
+    <string name="analysis_result_error_invalid_data">Данные для обработки не найдены</string>
+    <string name="analysis_result_legend_item_pulse">Пульс</string>
+    <string name="analysis_result_legend_item_restless">Беспокойный сон</string>
+    <string name="analysis_result_legend_item_sleep">Сон</string>
+    <string name="analysis_result_legend_item_very_restless">Очень беспокойный сон</string>
+    <string name="analysis_result_legend_item_wake">Бодрствование</string>
+    <string name="analysis_result_legend_motion">Активность во сне (ENMO)</string>
+    <string name="analysis_result_legend_sleep_pulse">Фазы сна и пульс</string>
+    <string name="analysis_result_stats_avg_pulse">Средняя частота пульса:</string>
+    <string name="analysis_result_stats_phase_unrest">Беспокойный сон (>=0.12g)</string>
+    <string name="analysis_result_stats_phase_very_unrest">Очень беспокойный сон (>=0.16g):</string>
+    <string name="analysis_result_stats_phase_wake">Бодрствование (>=0.22g):</string>
+    <string name="analysis_result_stats_phases_title">Фазы:</string>
+    <string name="analysis_result_stats_total_duration">Общая длительность</string>
+    <string name="analysis_result_status_computing">Расчёт...</string>
+    <string name="analysis_result_status_no_data">Нет данных</string>
+    <string name="analysis_result_switch_zoom">Детальный просмотр</string>
+    <string name="analysis_result_title_main">Оценка сна</string>
+
+    <!-- Sync Evaluation -->
+    <string name="analysis_result_summary">Обзор</string>
+    <string name="sync_evaluation_box_data">Данные еще не получены.</string>
+    <string name="sync_evaluation_btn_delet">Удалить</string>
+    <string name="sync_evaluation_btn_delete">Удалить</string>
+    <string name="sync_evaluation_btn_next">Обзор</string>
+    <string name="sync_evaluation_btn_refresh">Обновить список</string>
+    <string name="sync_evaluation_card_action">Нажми для анализа</string>
+    <string name="sync_evaluation_card_collected">Получено:</string>
+    <string name="sync_evaluation_card_title">Данные сна</string>
+    <string name="sync_evaluation_delete_break">Отменить</string>
+    <string name="sync_evaluation_delete_confirm">Удалить всё</string>
+    <string name="sync_evaluation_delete_warning">Предупреждение</string>
+    <string name="sync_evaluation_delete_warning_text">Удалить все собранные данные без возможности восстановления?</string>
+    <string name="sync_evaluation_title">Полученные данные</string>
+
+    <!-- Questions Personal -->
+    <string name="questions_personal_btn_next">Сохранить и продолжить</string>
+    <string name="questions_personal_title">Настройка уведомлений</string>
+
+    <!-- Summary  -->
+    <string name="summary_btn_back">Назад</string>
+    <string name="summary_btn_save">Сохранить</string>
+    <string name="summary_title">Обзор</string>
+    <string name="summary_toast_saved">Сохранено!</string>
+
+    <!-- Settings -->
+    <string name="settings_btn_back">Назад</string>
+    <string name="settings_btn_language">Язык</string>
+    <string name="settings_color_bright">Светлая</string>
+    <string name="settings_color_dark">Темная</string>
+    <string name="settings_color_system">Системные настройки</string>
+    <string name="settings_color_title">Тема</string>
+    <string name="settings_title">Настройки</string>
+    <string name="settings_toast_saved">Сохранено!</string>
+    <string name="settings_username">Имя пользователя:</string>
+
+    <!-- UI Questions -->
+    <string name="ui_question_date_null">Дата не выбрана</string>
+    <string name="ui_question_date_text">Дата:</string>
+    <string name="ui_question_duration_text">Введи длительность:</string>
+    <string name="ui_question_multiple_choice_text">Выбери подходящие варианты (можно несколько):</string>
+    <string name="ui_question_slider_text">Текущее значение:</string>
+    <string name="ui_question_yesno_no">Нет</string>
+    <string name="ui_question_yesno_yes">Да</string>
+
+    <!-- Credential Info -->
+    <string name="credential_info_btn_next">Далее</string>
+    <string name="credential_info_code">Твоё имя пользователя было создано автоматически. Пожалуйста, запиши его или сохрани вместе с паролем в менеджере паролей.</string>
+    <string name="credential_info_copy_1">Копировать</string>
+    <string name="credential_info_copy_2">Скопировано!</string>
+    <string name="credential_info_title">Важно</string>
+
+    <!-- Notification -->
+    <string name="notification_btn_change_time">Изменить время</string>
+    <string name="notification_format_clock">""</string>
+    <string name="notification_switch_off">Выкл</string>
+    <string name="notification_switch_on">Вкл</string>
+    <string name="notification_title">Ежедневные напоминания</string>
+
+
+    <!-- Sleep Control -->
+    <string name="sleep_control_btn_back">Назад</string>
+    <string name="sleep_control_btn_finish">Проснулся(лась)? (конец)</string>
+    <string name="sleep_control_btn_start">Ложусь спать (старт)</string>
+    <string name="sleep_control_content_ready">Готово</string>
+    <string name="sleep_control_content_recording">Запись выполняется...</string>
+    <string name="sleep_control_title">Монитор сна</string>
+    <string name="sleep_control_toast_finish">Команда завершения отправлена</string>
+    <string name="sleep_control_toast_start">Команда запуска отправлена</string>
+</resources>

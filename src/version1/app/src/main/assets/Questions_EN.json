@@ -1,40 +1,133 @@
 [
   {
-    "type": "QuestionSlider",
     "id": 0,
-    "title": "Scale question 1 to 10",
-    "explanation": "Description of the question",
-    "sliderMin": 1.0,
-    "sliderMax": 10.0
+    "type": "QuestionSlider",
+    "title": "Current condition",
+    "explanation": "How are you feeling overall right now?",
+    "sliderMin": 1,
+    "sliderMax": 5
   },
-
   {
-    "type": "QuestionTime",
     "id": 1,
-    "title": "Time question",
-    "explanation": "Hours - Minutes"
-  },
-
-  {
-    "type": "QuestionMultipleChoice",
-    "id": 2,
-    "title": "Multiple choice",
-    "explanation": "Select items",
-    "choices": ["OptionA", "OptionB", "OptionC"]
-  },
-
-  {
     "type": "QuestionYesNo",
-    "id": 3,
-    "title": "Yes/No question",
-    "explanation": "Yes and No",
+    "title": "Dreams",
+    "explanation": "Can you remember having a dream?",
     "skipIfNo": []
   },
-
   {
-    "type": "QuestionDate",
+    "id": 2,
+    "type": "QuestionTime",
+    "title": "Falling asleep time",
+    "explanation": "Time when you fell asleep"
+  },
+  {
+    "id": 3,
+    "type": "QuestionTime",
+    "title": "Wake-up time",
+    "explanation": "Time when you finally woke up"
+  },
+  {
     "id": 4,
-    "title": "Date selection",
-    "explanation": "Select date"
+    "type": "QuestionSlider",
+    "title": "Sleep quality",
+    "explanation": "How well did you sleep last night?",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 5,
+    "type": "QuestionSlider",
+    "title": "Feeling after waking up",
+    "explanation": "How tired or refreshed did you feel in the morning?",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 6,
+    "type": "QuestionYesNo",
+    "title": "Daytime sleep",
+    "explanation": "Did you sleep during the day?",
+    "skipIfNo": [7, 8]
+  },
+  {
+    "id": 7,
+    "type": "QuestionSlider",
+    "title": "Frequency of daytime sleep",
+    "explanation": "How often did you sleep during the day?",
+    "sliderMin": 1,
+    "sliderMax": 5
+  },
+  {
+    "id": 8,
+    "type": "QuestionDuration",
+    "title": "Duration of daytime sleep",
+    "explanation": "How long did you sleep in total during the day?"
+  },
+  {
+    "id": 9,
+    "type": "QuestionMultipleChoice",
+    "title": "Activities before sleep",
+    "explanation": "What did you do in the time before going to bed?",
+    "choices": [
+      "Mobile phone",
+      "TV",
+      "Reading",
+      "Studying",
+      "Sports",
+      "Music",
+      "Other"
+    ]
+  },
+  {
+    "id": 10,
+    "type": "QuestionYesNo",
+    "title": "Woke up at night",
+    "explanation": "Did you wake up during the night?",
+    "skipIfNo": [11, 12]
+  },
+  {
+    "id": 11,
+    "type": "QuestionSlider",
+    "title": "Frequency of waking up",
+    "explanation": "How often did you wake up during the night?",
+    "sliderMin": 1,
+    "sliderMax": 10
+  },
+  {
+    "id": 12,
+    "type": "QuestionDuration",
+    "title": "Duration of awake periods",
+    "explanation": "How long were you awake in total during the night?"
+  },
+  {
+    "id": 13,
+    "type": "QuestionYesNo",
+    "title": "Medication",
+    "explanation": "Did you take any medication (including long-term medication)?",
+    "skipIfNo": [14]
+  },
+  {
+    "id": 14,
+    "type": "QuestionMultipleChoice",
+    "title": "Medication frequency",
+    "explanation": "How often do you take this medication?",
+    "choices": [
+      "Daily",
+      "Occasionally",
+      "Once"
+    ]
+  },
+  {
+    "id": 15,
+    "type": "QuestionYesNo",
+    "title": "Caffeine or energy drinks",
+    "explanation": "Did you consume coffee, energy drinks or other sugary or caffeinated beverages?",
+    "skipIfNo": []
+  },
+  {
+    "id": 16,
+    "type": "QuestionDuration",
+    "title": "Screen time before sleep",
+    "explanation": "How long was your screen time within 2 hours before going to sleep? (minutes)"
   }
 ]

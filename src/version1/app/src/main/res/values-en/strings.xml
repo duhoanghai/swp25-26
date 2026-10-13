@@ -1,0 +1,173 @@
+<resources>
+    <string name="app_name">Sleep Diary v1</string>
+    <string name="language_long">English</string>
+    <string name="language_short">EN</string>
+
+    <!-- Language Select -->
+    <string name="language_select_title">Welcome</string>
+    <string name="language_select_subtitle">Please choose a Language</string>
+    <string name="language_select_btn_next">Next</string>
+
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="privacy_policy_content">
+        Your personal and medical data will be processed as part of your treatment
+        by the Medical University Lausitz - Carl Thiem.
+        Further information on the type, scope, and purpose of data processing
+        as well as your rights can be found in the MUL-CT privacy policy:
+    </string>
+    <string name="privacy_policy_accept_text">I have read and acknowledged the privacy policy</string>
+    <string name="privacy_policy_accept_btn">Continue</string>
+    <string name="privacy_policy_link">Open Privacy Policy</string>
+
+    <!-- Auth Choice -->
+    <string name="auth_choice_title">Entry</string>
+    <string name="auth_choice_btn_login">Login</string>
+    <string name="auth_choice_btn_activate">Activate Account (One-Time Code)</string>
+
+    <!-- Registration -->
+    <string name="registration_title">First Login</string>
+    <string name="registration_box_name_last">Last Name</string>
+    <string name="registration_box_name_first">First Name</string>
+    <string name="registration_box_birthday">Date of Birth</string>
+    <string name="registration_box_password">Password (create your own)</string>
+    <string name="registration_box_code">Code</string>
+    <string name="registration_btn_finish">Create Account</string>
+    <string name="registration_btn_back">Back</string>
+    <string name="registration_error_password_1">Password must be at least 8 characters</string>
+    <string name="registration_error_password_2">Password must contain at least 1 letter</string>
+    <string name="registration_error_password_3">Password must contain at least 1 number</string>
+    <string name="registration_error_birthday_3">Invalid date of birth</string>
+    <string name="registration_error_birthday_2">Date format DD.MM.YYYY (e.g. 01.01.2000)</string>
+    <string name="registration_error_birthday_1">Enter date of birth</string>
+
+    <!-- Login -->
+    <string name="login_title">Login</string>
+    <string name="login_box_username">Username</string>
+    <string name="login_box_password">Password</string>
+    <string name="login_btn_login">Login</string>
+    <string name="login_btn_activate">Activate Account</string>
+    <string name="login_error">Enter Username and Password</string>
+    <string name="login_icon_password_visible">Visible</string>
+    <string name="login_icon_password_hidden">Hidden</string>
+
+    <!-- Alert Message -->
+    <string name="alert_message_title">Sleep Diary</string>
+    <string name="alert_message_content">Time to rate your sleep</string>
+
+    <!-- Menu -->
+    <string name="menu_title">Main Menu</string>
+    <string name="menu_btn_questions_protocol">Start Questionnaire</string>
+    <string name="menu_btn_questions_personal">Personal Questions</string>
+    <string name="menu_btn_settings">Settings</string>
+    <string name="menu_btn_sleep_control">Start Sleep Measurement</string>
+    <string name="menu_toast_pdf_fail_1">PDF download failed</string>
+    <string name="menu_toast_pdf_fail_2">PDF is empty.</string>
+    <string name="menu_btn_PDF">Download Report (PDF)</string>
+    <string name="menu_toast_pdf_fail_3">"Server Error: "</string>
+    <string name="menu_btn_settings_desc">Username</string>
+    <string name="menu_btn_smartwatch">Sleepdata</string>
+    <string name="menu_btn_smartwatch_desc">View smartwatch data from the night</string>
+    <string name="menu_btn_PDF_desc">Export PDF with sleep protocols</string>
+
+    <!-- Questions Protocol -->
+    <string name="questions_protocol_btn_next">Next</string>
+    <string name="questions_protocol_btn_finish">Finish</string>
+    <string name="questions_protocol_back">Back</string>
+    <string name="questions_protocol_explanation_icon">Show Help</string>
+    <string name="questions_protocol_explanation_title">Explanation</string>
+    <string name="questions_protocol_explanation_close">Close</string>
+    <string name="questions_protocol_error_no_questions">No questions available or loading failed</string>
+
+    <!-- Analysis Result -->
+    <string name="analysis_result_title_main">Sleep Analysis</string>
+    <string name="analysis_result_switch_zoom">Detail Zoom</string>
+    <string name="analysis_result_status_computing">Computing…</string>
+    <string name="analysis_result_status_no_data">No data.</string>
+    <string name="analysis_result_error_invalid_data">No usable data found.</string>
+    <string name="analysis_result_legend_sleep_pulse">Sleep Phases &amp; Pulse</string>
+    <string name="analysis_result_legend_item_sleep">Sleep</string>
+    <string name="analysis_result_legend_item_pulse">Pulse</string>
+    <string name="analysis_result_legend_motion">Movement (ENMO)</string>
+    <string name="analysis_result_legend_item_wake">Awake</string>
+    <string name="analysis_result_legend_item_very_restless">Very restless</string>
+    <string name="analysis_result_legend_item_restless">Restless</string>
+    <string name="analysis_result_stats_total_duration">Total Duration</string>
+    <string name="analysis_result_stats_phases_title">Phases:</string>
+    <string name="analysis_result_stats_phase_unrest">• Restless (>=0.12g):</string>
+    <string name="analysis_result_stats_phase_very_unrest">• Very Restless (>=0.16g):</string>
+    <string name="analysis_result_stats_phase_wake">• Awake (>=0.22g):</string>
+    <string name="analysis_result_stats_avg_pulse">Average Pulse:</string>
+    <string name="analysis_result_btn_next">Next</string>
+
+    <!-- Sync Evaluation -->
+    <string name="analysis_result_summary">Summary</string>
+    <string name="sync_evaluation_title">Received Data</string>
+    <string name="sync_evaluation_btn_refresh">Refresh List</string>
+    <string name="sync_evaluation_box_data">No data received yet.</string>
+    <string name="sync_evaluation_btn_next">Summary</string>
+    <string name="sync_evaluation_card_collected">Received:</string>
+    <string name="sync_evaluation_card_title">Sleep Recording</string>
+    <string name="sync_evaluation_card_action">Tap for Analysis</string>
+    <string name="sync_evaluation_btn_delete">Delete</string>
+    <string name="sync_evaluation_delete_warning">Warning</string>
+    <string name="sync_evaluation_delete_warning_text">Really permanently delete all collected data?</string>
+    <string name="sync_evaluation_delete_confirm">Delete all</string>
+    <string name="sync_evaluation_delete_break">No thanks</string>
+    <string name="sync_evaluation_btn_delet">Delete</string>
+
+    <!-- Questions Personal -->
+    <string name="questions_personal_title">Notification</string>
+    <string name="questions_personal_btn_next">Save and Continue</string>
+    <string name="questions_personal_toast_saved">Saved!</string>
+
+    <!-- Summary -->
+    <string name="summary_title">Summary</string>
+    <string name="summary_btn_back">Back</string>
+    <string name="summary_btn_save">Save Now</string>
+    <string name="summary_toast_saved">Saved!</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_btn_back">Back</string>
+    <string name="settings_btn_language">Language</string>
+    <string name="settings_username">Username:</string>
+    <string name="settings_color_system">System</string>
+    <string name="settings_color_dark">Dark Theme</string>
+    <string name="settings_color_bright">Bright theme</string>
+    <string name="settings_toast_saved">Saved!</string>
+    <string name="settings_color_title">Color scheme</string>
+
+    <!-- UI Questions -->
+    <string name="ui_question_slider_text">Current Value:</string>
+    <string name="ui_question_multiple_choice_text">Please select (multiple choices possible):</string>
+    <string name="ui_question_duration_text">Enter duration:</string>
+    <string name="ui_question_yesno_yes">Yes:</string>
+    <string name="ui_question_yesno_no">No:</string>
+    <string name="ui_question_date_text">Date selected:</string>
+    <string name="ui_question_date_null">Enter date</string>
+
+    <!-- Credential Info -->
+    <string name="credential_info_code">Your username was created automatically. Please note it down or save it along with your password in your password manager.</string>
+    <string name="credential_info_copy_1">Copy</string>
+    <string name="credential_info_copy_2">Copied!</string>
+    <string name="credential_info_btn_next">Next</string>
+    <string name="credential_info_title">Important!</string>
+
+    <!-- Notification -->
+    <string name="notification_title">Daily Reminder</string>
+    <string name="notification_format_clock">o\'clock</string>
+    <string name="notification_switch_on">On</string>
+    <string name="notification_switch_off">Off</string>
+    <string name="notification_btn_change_time">Change Time</string>
+
+    <!-- Sleep Control -->
+    <string name="sleep_control_title">Sleep Monitor</string>
+    <string name="sleep_control_content_recording">Recording in progress…</string>
+    <string name="sleep_control_content_ready">Ready</string>
+    <string name="sleep_control_toast_start">Start sent</string>
+    <string name="sleep_control_btn_start">Go to sleep (Start)</string>
+    <string name="sleep_control_btn_finish">Woke up? (End)</string>
+    <string name="sleep_control_toast_finish">End sent</string>
+    <string name="sleep_control_btn_back">Back</string>
+</resources>

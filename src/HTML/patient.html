@@ -3,52 +3,161 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Patient:in – Digitales Schlaftagebuch</title>
+  <title>Patient:innen – Digitales Schlaftagebuch</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body data-page="app">
   <div class="app">
     <aside class="sidebar">
-      <div class="logo">Logo</div>
+      <div class="brand">
+
+	<!-- Mond-Icon -->
+        <div aria-hidden="true" class="brand-badge">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+      d="M21.64 13a9 9 0 0 1-10.63-10.63A1 1 0 0 0 9.87 1.2
+         11 11 0 1 0 22.8 14.13 1 1 0 0 0 21.64 13z"/>
+  </svg>
+</div>
+
+
+	<!-- Titel/Untertitel -->
+        <div class="brand-title">
+          <strong>Digitales Schlaftagebuch</strong>
+          <span>Schlaflabor</span>
+        </div>
+      </div>
+
+
+	<!-- Seitenleiste -->
       <nav class="nav" aria-label="Seitennavigation">
-        <a href="dashboard.html" data-page="dashboard">Dashboard</a>
-        <a href="zugangscode.html" data-page="zugangscode">Zugangscode</a>
-        <a href="bericht.html" data-page="bericht">Bericht</a>
-        <a href="patient.html" data-page="patient">Patient:in</a>
+
+
+	<!-- Dashboard -->
+        <a href="dashboard.html" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Übersicht
+        </a>
+
+
+	<!-- Patient -->
+        <a href="patient.html" data-page="patient">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Patient:innen
+        </a>
+
+
+	<!-- Zugangscode -->
+        <a href="zugangscode.html" data-page="zugangscode">
+          <svg viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="2"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true">
+  <!-- Schlüssel -->
+  <circle cx="7" cy="14" r="3.5"></circle>
+  <circle cx="7" cy="14" r="1.2"></circle>
+  <path d="M10.5 14H21"></path>
+  <path d="M17 14v3"></path>
+  <path d="M20 14v2"></path>
+</svg>
+          Zugangscodes
+        </a>
+
+
+	<!-- Bericht -->
+        <a href="bericht.html" data-page="bericht">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+            <path d="M10 9H8"/>
+          </svg>
+          Berichte
+        </a>
       </nav>
-      <div class="spacer"></div>
-      <div class="home-icon" title="Home"></div>
+
+
+	<!-- Logout -->
+      <div class="sidebar-bottom">
+        <a class="logout-btn" href="login.html" data-logout>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <path d="M16 17l5-5-5-5"/>
+            <path d="M21 12H9"/>
+          </svg>
+          Abmelden
+        </a>
+      </div>
     </aside>
 
     <main class="main">
-      <div class="topbar">
-        <div class="title">Digitales Schlaftagebuch</div>
-        <a class="logout" href="login.html" data-logout>Log out</a>
-      </div>
-
-      <div class="card">
-        <div class="title" style="margin:0 0 14px 0; font-weight:600;">
-          Digitales Schlaftagebuch – Patient:in
+      <header class="header">
+        <div class="header-left">
+          <h1>Patient:innen</h1>
+          <p>Stammdaten, Status und nächste Schritte.</p>
         </div>
-
-        <div class="row" style="margin-bottom:18px;">
-          <div style="min-width:160px;">Patient:in auswählen:</div>
-          <select id="p-select">
-            <option value="anna">Anna Müller</option>
-            <option value="max">Max Mustermann</option>
-            <option value="lea">Lea Beispiel</option>
-          </select>
+        <div class="userbox" aria-label="Angemeldete Person">
+          <div class="meta">
+            <strong id="loggedInDoctor">–</strong>
+            <span>Arzt</span>
+          </div>
+          <div class="avatar" aria-hidden="true">A1</div>
         </div>
+      </header>
 
-        <div style="font-weight:600; margin-bottom:8px;">Daten:</div>
-        <div style="line-height:1.7;">
-          <div>- Geschlecht: <span id="p-g">Weiblich</span></div>
-          <div>- Geburtsdatum: <span id="p-b">23.10.2007</span></div>
-          <div>- Zugangscode: <span id="p-z">aktiv (AC3-DP0)</span></div>
-          <div>- Bericht: <span id="p-r">nicht verfügbar</span></div>
-          <div>- Termin: <span id="p-t">01.01.2026</span></div>
-        </div>
-      </div>
+      <div class="content">
+        <section class="card">
+          <div class="card-title">
+            <div class="icon-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="6" r="4"/>
+                <path d="M8 20h8"/>
+              </svg>
+            </div>
+            <div>
+              <h2>Patient:in auswählen</h2>
+              <p>Wählen Sie eine Patient:in aus, um die Details zu sehen.</p>
+            </div>
+          </div>
+<div class="row" style="align-items:flex-end;">
+  <div class="field" style="flex:1; min-width:280px;">
+    <label for="p-select">Patient:in</label>
+    <select id="p-select" class="control">
+      <option value="">Lade Patient:innen…</option>
+    </select>
+  </div>
+  <div class="field" style="margin-left:10px;">
+    <button type="button" class="btn" id="refresh-btn">
+      🔄 Aktualisieren
+    </button>
+  </div>
+</div>
+
+<div id="patient-details" style="margin-top:20px; display:none;">
+  <div class="info-grid">
+    <div><span class="info-label">Geburtsdatum:</span> <strong id="p-b">—</strong></div>
+    <div><span class="info-label">Zugangscode:</span> <strong id="p-z">—</strong></div>
+    <div><span class="info-label">Termin:</span> <strong id="p-apt">—</strong></div>
+    <div><span class="info-label">Berichte:</span> <strong id="p-r">—</strong></div>
+    <div><span class="info-label">Erstellt am:</span> <strong id="p-c">—</strong></div>
+    <div><span class="info-label">Patient-ID:</span> <strong id="p-id">—</strong></div>
+  </div>
+</div>
     </main>
   </div>
 
